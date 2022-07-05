@@ -1,0 +1,65 @@
+/*
+ * +-------------------+
+ * | :: C U R S O R :: |
+ * +-------------------+
+ */
+
+:root {
+	--cursor-z: 9; /* cursor layer */
+	--cursor-icon-z: 10; /* cursor icon layer */
+	--cursor-speed: 0.135s; /* cursor transform speed */
+}
+
+.cursor {
+	position: absolute;
+	z-index: var(--cursor-z);
+	opacity: 0; /* default visibility disabled */
+}
+
+.cursor-icon {
+	/*background-color: rgba(51, 51, 51, 0.9);*/
+	background-color: rgba(var(--cursor-color), 0.9);
+	border-radius: 2em;
+	transform-origin: 50% 50%;
+	transition: transform var(--cursor-speed) ease-out, background-color var(--cursor-speed) ease-in, width var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), height var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), border var(--cursor-speed) ease-out;
+	transform: translate(-50%, -50%);
+	z-index: var(--cursor-icon-z);
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.cursor-icon, .cursor {
+	width: 1rem;
+	height: 1rem;
+	pointer-events: none;
+}
+
+.cursor-hidden { /* effects while hidden */
+}
+
+.cursor-visible { /* effects while visible */
+	opacity: 1;
+}
+
+.cursor-focus {
+	width: 0.75rem !important;
+	height: 0.75rem !important;
+}
+
+.dragged { /* effects while focused */
+}
+
+* { /* disable default cursor */
+	cursor: none; 
+}
+ 
+@media (pointer: none), (pointer: coarse) { /* disable custom cursor for gadgets */
+    .cursor, .cursor-icon {
+		display: none !important; 
+		visibility: hidden; 
+		opacity: 0; 
+	}
+ 
+    * { 
+		cursor: auto !important; 
+	}
+}
