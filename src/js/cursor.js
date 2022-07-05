@@ -70,11 +70,11 @@ const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses
 		}
 
 		if (additionalTargetClasses != undefined) {
-			additionalTargetClasses.forEach(item => {e.currentTarget.classList.toggle(item)});
+			additionalTargetClasses.forEach(item => {e.currentTarget.classList.add(item)});
 		}
 
 		if (additionalCursorClasses != undefined) {
-			additionalCursorClasses.forEach(item => {cursorIcon.classList.toggle(item)});
+			additionalCursorClasses.forEach(item => {cursorIcon.classList.add(item)});
 		}
 
 		if (f != undefined) {
@@ -152,11 +152,11 @@ const unsetCursor = (e, additionalCursorClasses, additionalTargetClasses, f) => 
 		e.currentTarget.style.transform = null;
 
 		if (additionalTargetClasses != undefined) {
-			additionalTargetClasses.forEach(item => {e.currentTarget.classList.toggle(item)});
+			additionalTargetClasses.forEach(item => {e.currentTarget.classList.remove(item)});
 		}
 
 		if (additionalCursorClasses != undefined) {
-			additionalCursorClasses.forEach(item => {cursorIcon.classList.toggle(item)});
+			additionalCursorClasses.forEach(item => {cursorIcon.classList.remove(item)});
 		}
 
 		if (f != undefined) {
@@ -217,14 +217,8 @@ document.querySelectorAll(".icon").forEach(item => {
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
 });
 
-document.querySelectorAll(".toggle-theme").forEach(item => { 
-	item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["theme-toggle-dragged"], undefined, true)});
+document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach(item => { 
+	item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["toggle-dragged"], undefined, true)});
 	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.2)"], true)});
-	item.addEventListener("mouseout", e => {unsetCursor(e, ["theme-toggle-dragged"])});
-});
-
-document.querySelectorAll(".toggle-lang").forEach(item => { 
-	item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["theme-toggle-dragged"], undefined, true)});
-	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.2)"], true)});
-	item.addEventListener("mouseout", e => {unsetCursor(e, ["theme-toggle-dragged"])});
+	item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
 });
