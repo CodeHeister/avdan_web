@@ -1,6 +1,6 @@
-el_intro = document.querySelector("#cover");
+let intro = document.querySelector(".intro");
 if (getCookie("intro")!=""){
-	document.body.removeChild(el_intro);
+	document.body.removeChild(intro);
 }
 else {
 	setCookie("intro", 1, 20);
