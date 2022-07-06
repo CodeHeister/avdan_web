@@ -30,8 +30,14 @@
 var mouseX; // global X cursor position
 var mouseY; // global Y cursor position
 
+var realMouseX;
+var realMouseY;
+
 const moveCursor = e => { // follow real cursor
 	showCursor(); // show custom cursor
+
+	realMouseX = e.clientX; 
+	realMouseY = e.clientY;
 
 	if(!cursorIcon.classList.contains('dragged')) {
 		mouseX = e.clientX; // refresh global cursor X
@@ -44,7 +50,10 @@ const moveCursor = e => { // follow real cursor
 const moveCursorScroll = e => { // scroll sync
 	showCursor(); // show custom cursor
 	
-	cursor.style.transform = `translate3d(${window.scrollX+mouseX}px, ${window.scrollY+mouseY}px, 0)`; // set position (px)
+	mouseX = window.scrollX+realMouseX;
+	mouseY = window.scrollY+realMouseY;
+
+	cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`; // set position (px)
 }
 
 const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses, addScrollOffset, f) => { // get target position
