@@ -223,7 +223,7 @@ document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
 });
 
-document.querySelectorAll(".join-discord a").forEach(item => { 
+document.querySelectorAll(".join-discord a, .view-more a").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 1, ["link-dragged"], ["link-active"])});
 	item.addEventListener("mousemove", e => {coordinateCursor(e)});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"], ["link-active"])});
