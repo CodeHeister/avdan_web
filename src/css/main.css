@@ -4,7 +4,6 @@
 	--cursor-color: 225,225,225;
 	--scrollbar-track-bg: #101010;
 	--scrollbar-thumb-bg: #333;
-	--body-bg: black;
 	--icon-fill: white;
 	--swap-speed: 0.2s;
 	--toggle-theme-color: #ffc107;
@@ -15,19 +14,19 @@
 
 @font-face {
 	font-family: "Iosevka";
-	src 		: url(src/fonts/iosevka-regular.ttf);
+	src 		: url(../fonts/iosevka-regular.ttf);
 	font-display: swap;
 }
 
 @font-face {
 	font-family: "Inter";
-	src 		: url(src/fonts/inter.ttf);
+	src 		: url(../fonts/inter.ttf);
 	font-display: swap;
 }
 
 @font-face {
 	font-family: "FiraCode";
-	src 		: url(src/fonts/firacode.ttf);
+	src 		: url(../fonts/firacode.ttf);
 	font-display: swap;
 }
 	
@@ -47,7 +46,7 @@ body, html {
 }
 
 body {
-	background: var(--body-bg);
+	background: black;
 	overflow-x: hidden;
 }
 
@@ -133,7 +132,7 @@ body {
 	margin: 0.25rem 0 0.25rem 0;
 	padding: 0.25rem 0.3rem .25rem 0.3rem;
 	border-radius: 0.5rem;
-	background-color: rgba(var(--map-bg),0.6);
+	background-color: rgba(var(--map-bg),0.7);
 }
 
 .menu .map .map-item {
@@ -146,7 +145,7 @@ body {
 	font-size: 0.9rem;
 }
 
-.map-item span {
+.map-item a {
 	position:relative;
 	padding: 0 1rem 0.2rem 1rem;
 	width: 100%;
@@ -167,7 +166,7 @@ body {
 	border-radius: 0.15rem;
 }
 
-.menu .map .current span {
+.menu .map .current a {
 	font-weight: 600;
 	color: var(--font-primary) !important;
 }
@@ -235,8 +234,11 @@ body {
 
 a {
 	text-decoration: none;
-	color: var(--link-color);
+}
+
+.join-discord a {
 	padding: 0.25rem;
+	color: var(--link-color);
 }
 
 :root {

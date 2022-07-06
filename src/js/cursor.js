@@ -205,7 +205,7 @@ window.addEventListener('mouseup', cursorUnfocus);
 
 document.body.addEventListener('mouseleave', hideCursor);
 
-document.querySelectorAll(".map-item span").forEach(item => { 
+document.querySelectorAll(".map-item a").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 1, ["default-dragged"], ["map-item-active"], true)});
 	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.1)"], true)});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"], ["map-item-active"])});
@@ -223,7 +223,7 @@ document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
 });
 
-document.querySelectorAll("a").forEach(item => { 
+document.querySelectorAll(".join-discord a").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 1, ["link-dragged"])});
 	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.2, undefined, undefined, ["scale(1.1)"])});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"])});
