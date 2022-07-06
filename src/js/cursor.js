@@ -121,8 +121,8 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 			if (targetMovementRate != undefined) {
 				if (coordinationPercent == undefined) {
 					var defaultCoordination = 20;
-					var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.offsetWidth-0.5)*defaultCoordination);
-					var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.offsetHeight-0.5)*defaultCoordination);
+					var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.clientWidth-0.5)*defaultCoordination);
+					var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.clientHeight-0.5)*defaultCoordination);
 				}
 				
 				if (centrify) {
@@ -231,6 +231,6 @@ document.querySelectorAll(".join-discord a").forEach(item => {
 
 document.querySelectorAll(".demo-button, .download-button").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 0.2, ["button-dragged"])});
-	item.addEventListener("mousemove", e => {coordinateCursor(e, undefined, 0.4, undefined, undefined, ["scale(1.15)"])});
+	item.addEventListener("mousemove", e => {coordinateCursor(e, undefined, undefined, undefined, undefined, ["scale(1.15)"])});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["button-dragged"])});
 });

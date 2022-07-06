@@ -52,7 +52,6 @@ body, html {
 
 body {
 	background: black;
-	overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -229,7 +228,11 @@ body {
 	top:0;
 	left:0;
 	z-index:-1;
-	height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.header-video video {
 	width: 100%;
 }
 
@@ -298,6 +301,8 @@ a {
 	padding: 0.5rem 2rem 0.5rem 2rem;
 	border-radius: 0.25rem;
 	font-size: 0.9rem;
+	transform: scale(1);
+	transition: transform 0.15s ease;
 }
 
 .info {
