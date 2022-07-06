@@ -232,13 +232,18 @@ body {
 	border-radius: 0.25rem;
 }
 
+.join-discord .link-active {
+	font-size: 0.95rem;
+}
+
 a {
 	text-decoration: none;
 }
 
 .join-discord a {
-	padding: 0.25rem;
 	color: var(--link-color);
+	padding: 0 0.25rem 0 0.25rem;
+	transition: font-size 0.1s ease;
 }
 
 :root {
