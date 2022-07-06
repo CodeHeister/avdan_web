@@ -53,8 +53,8 @@ const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses
 			var addScrollOffset = false;
 		}
 
-		mouseX = e.currentTarget.offsetLeft+e.currentTarget.clientWidth/2; // may be commented to optimize
-		mouseY = e.currentTarget.offsetTop+e.currentTarget.clientHeight/2; // may be commented to optimize
+		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // may be commented to optimize
+		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // may be commented to optimize
 
 		cursorIcon.classList.add("dragged"); // disables cursor following
 		if (addScrollOffset) { 
@@ -65,8 +65,8 @@ const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses
 		}
 		
 		if (sizeRate != undefined) {
-			cursorIcon.style.width = `${e.currentTarget.clientWidth*sizeRate}px`; // set new width
-			cursorIcon.style.height = `${e.currentTarget.clientHeight*sizeRate}px`; // set new height
+			cursorIcon.style.width = `${e.currentTarget.offsetWidth*sizeRate}px`; // set new width
+			cursorIcon.style.height = `${e.currentTarget.offsetHeight*sizeRate}px`; // set new height
 		}
 
 		if (additionalTargetClasses != undefined) {
@@ -89,14 +89,14 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 			var addScrollOffset = false;
 		}
 
-		mouseX = e.currentTarget.offsetLeft+e.currentTarget.clientWidth/2; // may be commented to optimize
-		mouseY = e.currentTarget.offsetTop+e.currentTarget.clientHeight/2; // may be commented to optimize
+		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // may be commented to optimize
+		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // may be commented to optimize
 
 		var coordinateX = 0;
 		var coordinateY = 0;
 		if (coordinationPercent != undefined) {
-			var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.clientWidth-0.5)*coordinationPercent);
-			var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.clientHeight-0.5)*coordinationPercent);
+			var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.offsetWidth-0.5)*coordinationPercent);
+			var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.offsetHeight-0.5)*coordinationPercent);
 		}
 
 		if (addScrollOffset) { 
@@ -107,8 +107,8 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 		}
 		
 		if (sizeRate != undefined) {
-			cursorIcon.style.width = `${e.currentTarget.clientWidth*sizeRate}px`; // set new width
-			cursorIcon.style.height = `${e.currentTarget.clientHeight*sizeRate}px`; // set new height
+			cursorIcon.style.width = `${e.currentTarget.offsetWidth*sizeRate}px`; // set new width
+			cursorIcon.style.height = `${e.currentTarget.offsetHeight*sizeRate}px`; // set new height
 		}
 
 		if (targetMovementRate != undefined || additionalEffects != undefined) {
@@ -121,8 +121,8 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 			if (targetMovementRate != undefined) {
 				if (coordinationPercent == undefined) {
 					var defaultCoordination = 20;
-					var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.clientWidth-0.5)*defaultCoordination);
-					var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.clientHeight-0.5)*defaultCoordination);
+					var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.offsetWidth-0.5)*defaultCoordination);
+					var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.offsetHeight-0.5)*defaultCoordination);
 				}
 				
 				if (centrify) {
@@ -206,9 +206,9 @@ window.addEventListener('mouseup', cursorUnfocus);
 document.body.addEventListener('mouseleave', hideCursor);
 
 document.querySelectorAll(".map-item span").forEach(item => { 
-	item.addEventListener("mouseover", e => {setCursor(e, 1, ["default-dragged"], undefined, true)});
+	item.addEventListener("mouseover", e => {setCursor(e, 1, ["default-dragged"], ["map-item-active"], true)});
 	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.1)"], true)});
-	item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
+	item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"], ["map-item-active"])});
 });
 
 document.querySelectorAll(".icon").forEach(item => { 
@@ -221,4 +221,10 @@ document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach
 	item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["toggle-dragged"], undefined, true)});
 	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.2)"], true)});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
+});
+
+document.querySelectorAll("a").forEach(item => { 
+	item.addEventListener("mouseover", e => {setCursor(e, 1, ["link-dragged"])});
+	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.2, undefined, undefined, ["scale(1.1)"])});
+	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"])});
 });

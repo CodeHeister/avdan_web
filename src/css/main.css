@@ -1,5 +1,6 @@
 :root {
 	--font-primary: #fff;
+	--font-secondary: #a0a0a0;
 	--cursor-color: 225,225,225;
 	--scrollbar-track-bg: #101010;
 	--scrollbar-thumb-bg: #333;
@@ -8,7 +9,8 @@
 	--swap-speed: 0.2s;
 	--toggle-theme-color: #ffc107;
 	--map-bg: 48,48,48;
-	--menu-bg: rgba(225.225.225,0);
+	--menu-bg: rgba(48,48,48,0);
+	--link-color: #3291ff;
 }
 
 @font-face {
@@ -73,6 +75,13 @@ body {
 	background-color: rgba(var(--cursor-color), 0) !important;
 }
 
+.link-dragged {
+	border-bottom: 0.25rem solid rgba(var(--cursor-color), 1);
+	background-color: rgba(var(--cursor-color), 0) !important;
+	border-radius: 0.1rem !important;
+	box-shadow: none !important;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -124,7 +133,7 @@ body {
 	margin: 0.25rem 0 0.25rem 0;
 	padding: 0.25rem 0.3rem .25rem 0.3rem;
 	border-radius: 0.5rem;
-	background-color: rgba(var(--map-bg),0.5);
+	background-color: rgba(var(--map-bg),0.6);
 }
 
 .menu .map .map-item {
@@ -135,15 +144,19 @@ body {
 	gap: 0.5rem;
 	justify-content: center;
 	font-size: 0.9rem;
-	transform: translate 0.135s ease;
 }
 
 .map-item span {
 	position:relative;
 	padding: 0 1rem 0.2rem 1rem;
 	width: 100%;
+	color: var(--font-secondary);
 	box-sizing: border-box;
 	text-rendering: geometricPrecision;
+}
+
+.map-item-active {
+	color: var(--font-primary) !important;
 }
 
 .menu .map .map-item::after {
@@ -154,8 +167,9 @@ body {
 	border-radius: 0.15rem;
 }
 
-.menu .map .current {
+.menu .map .current span {
 	font-weight: 600;
+	color: var(--font-primary) !important;
 }
 
 .menu .map .current::after {
@@ -172,6 +186,7 @@ body {
 .toggle-theme {
 	display: flex;
 	align-items: center;
+	border-radius: 100%;
 }
 
 .toggle-theme svg, .menu-download svg {
@@ -197,7 +212,8 @@ body {
 }
 
 .main {
-	padding: 7.5rem 2rem 1rem 2rem;
+	padding: 6.5rem 2rem 1rem 2rem;
+	/*background: linear-gradient( 0deg, #000 0%, rgba(0,0,0,0) 100% );*/
 }
 
 .header-video {
@@ -205,11 +221,22 @@ body {
 	top:0;
 	left:0;
 	z-index:-1;
-}
-
-.header-video {
 	height: 100%;
 	width: 100%;
+}
+
+.join-discord {
+	background-color: rgba(var(--map-bg),0.8);
+	font-size: 0.9rem;
+	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+	margin: 0.5rem 1.5rem 0.5rem 1.5rem;
+	border-radius: 0.25rem;
+}
+
+a {
+	text-decoration: none;
+	color: var(--link-color);
+	padding: 0.25rem;
 }
 
 :root {
