@@ -1,12 +1,13 @@
 
 const panelModify = e => {
-	if (window.scrollY > 0) {
+	if (window.scrollY > 30) {
 		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download").forEach(item => {item.style.display = "none";});
 		document.querySelector(".icon").style.display = "none";
 		document.querySelector(".menu").style.backgroundColor = "var(--menu-bg-scrolled)";
 		document.querySelector(".menu").style.padding = "0";
 		document.querySelector(".menu").style.height = "3.5rem";
 		document.querySelector(".map").style.background = "none";
+		document.querySelector(".map").style.margin = "auto";
 		document.querySelector(".map").style.margin = "initial";
 	}
 	else {

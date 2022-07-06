@@ -11,6 +11,10 @@
 	--menu-bg: rgba(48,48,48,0);
 	--menu-bg-scrolled: rgba(48,48,48,0.8);
 	--link-color: #3291ff;
+	--demo-color: black;
+	--demo-bg: white;
+	--shadow-color: black;
+	--title-shadow-color: black;
 }
 
 @font-face {
@@ -80,6 +84,10 @@ body {
 	background-color: rgba(var(--cursor-color), 0) !important;
 	border-radius: 0.1rem !important;
 	box-shadow: none !important;
+}
+
+.button-dragged {
+	opacity: 0 !important;
 }
 
 .noselect {
@@ -213,8 +221,7 @@ body {
 }
 
 .main {
-	padding: 6.5rem 2rem 1rem 2rem;
-	/*background: linear-gradient( 0deg, #000 0%, rgba(0,0,0,0) 100% );*/
+	padding: 6.5rem 0 1rem 0;
 }
 
 .header-video {
@@ -246,6 +253,55 @@ a {
 	color: var(--link-color);
 	padding: 0 0.25rem 0.1rem 0.25rem;
 	transition: font-size 0.1s ease;
+}
+
+
+.frame {
+	height: 100vh;
+	width: 100%;
+	padding: 0 2rem 0 2rem;
+	box-sizing: border-box;
+}
+
+.introduction {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 6rem;
+	background: linear-gradient( 0deg, var(--shadow-color) 0%, transparent 100% );
+}
+
+.introduction .title {
+	font-size: 3.5rem;
+	font-weight: 900;
+	text-shadow: 0 0 1rem var(--title-shadow-color);
+}
+
+.introduction .buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+}
+
+.introduction .demo-button {
+	color: var(--demo-color);
+	background-color: var(--demo-bg);
+}
+
+.introduction .download-button {
+	color: white;
+	background-color: #0070f3;
+}
+
+.introduction .demo-button, .introduction .download-button {
+	padding: 0.5rem 2rem 0.5rem 2rem;
+	border-radius: 0.25rem;
+	font-size: 0.9rem;
+}
+
+.info {
+	background: var(--shadow-color);
 }
 
 :root {

@@ -228,3 +228,9 @@ document.querySelectorAll(".join-discord a").forEach(item => {
 	item.addEventListener("mousemove", e => {coordinateCursor(e)});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"], ["link-active"])});
 });
+
+document.querySelectorAll(".demo-button, .download-button").forEach(item => { 
+	item.addEventListener("mouseover", e => {setCursor(e, 0.2, ["button-dragged"])});
+	item.addEventListener("mousemove", e => {coordinateCursor(e, undefined, 0.4, undefined, undefined, ["scale(1.15)"])});
+	item.addEventListener("mouseout", e => {unsetCursor(e, ["button-dragged"])});
+});
