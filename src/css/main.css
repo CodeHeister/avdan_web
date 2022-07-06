@@ -16,6 +16,7 @@
 	--shadow-color: black;
 	--title-shadow-color: black;
 	--card-bg: rgba(48,48,48,0.5);
+	--card-black: black;
 }
 
 @font-face {
@@ -39,6 +40,9 @@
 * {
     font-family: Inter;
     color: var(--font-primary);
+}
+
+body * {
 	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, fill var(--swap-speed) ease-in-out, stroke var(--swap-speed) ease-in-out;
 }
 
@@ -52,7 +56,8 @@ body, html {
 }
 
 body {
-	background: black;
+	background: var(--body-bg);
+	overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -101,10 +106,6 @@ body {
 }
 
 /*--------------------------*/
-
-.intro {
-	position: fixed;
-}
 
 .menu {
 	display: flex;
@@ -359,6 +360,7 @@ a {
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
 	border-radius: 0.25rem;
+	box-shadow: var(--card-shadow);
 }
 
 .repo-info .title {

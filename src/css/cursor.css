@@ -12,6 +12,8 @@
 
 .cursor {
 	position: absolute;
+	top: 0;
+	left: 0;
 	z-index: var(--cursor-z);
 	opacity: 0; /* default visibility disabled */
 }
