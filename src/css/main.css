@@ -15,6 +15,7 @@
 	--demo-bg: white;
 	--shadow-color: black;
 	--title-shadow-color: black;
+	--card-bg: rgba(48,48,48,0.5);
 }
 
 @font-face {
@@ -220,7 +221,7 @@ body {
 }
 
 .main {
-	padding: 6.5rem 0 1rem 0;
+	padding-top: 6.5rem;
 }
 
 .header-video {
@@ -307,14 +308,15 @@ a {
 .info {
 	background: var(--shadow-color);
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(620px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
 	width: 100%;
 	padding: 3rem 2rem 3rem 2rem;
 	box-sizing: border-box;
 }
 
 .discord-list, .github-list {
-	margin: 0 calc(2rem + 3vw) 2rem calc(2rem + 3vw);	
+	margin: 0 calc(2rem + 3vw) calc(2rem + 2vh) calc(2rem + 3vw);	
+	maxwudth: 50vw;
 }
 
 .discord-list {
@@ -330,7 +332,7 @@ a {
 	align-items: center;
 	gap: 0.5vw;
 	padding: 2rem;
-	background-color: var(--menu-bg-scrolled);
+	background-color: var(--card-bg);
 	border-radius: 0.25rem;
 }
 
@@ -341,7 +343,9 @@ a {
 
 
 .github-list .main-title {
-	font-size: 2rem;
+	font-size: calc(0.75rem + 2vw);
+	line-height: calc(1.5rem + 1vh + 1vw);
+	text-align: center;
 	font-weight: 900;
 }
 
@@ -351,9 +355,9 @@ a {
 	align-items: center;
 	flex-direction: column;
 	gap: 1.1rem;
-	margin: calc(.75rem + 2vh);
-	padding: calc(.75rem + 2vh);
-	background-color: var(--menu-bg-scrolled);
+	margin: calc(1rem + 1vh);
+	padding: calc(1rem + 1vh);
+	background-color: var(--card-bg);
 	border-radius: 0.25rem;
 }
 
