@@ -225,6 +225,6 @@ document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach
 
 document.querySelectorAll(".join-discord a").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 1, ["link-dragged"], ["link-active"])});
-	item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.2)});
+	item.addEventListener("mousemove", e => {coordinateCursor(e)});
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"], ["link-active"])});
 });
