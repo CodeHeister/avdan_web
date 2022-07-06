@@ -108,13 +108,13 @@ body {
 	background-color: var(--menu-bg);
 	padding: .75rem 2rem .75rem 2rem;
 	box-sizing: border-box;
+	transition: height 0.01s ease-in-out;
 }
 
 .menu .icon {
 	margin-right: auto;
 	box-sizing: border-box;
 	padding: .75rem 2rem .75rem 2rem;
-	transform: translate 0.135s ease;
 }
 
 .menu .icon svg {
