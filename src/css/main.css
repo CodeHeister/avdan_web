@@ -276,7 +276,7 @@ a {
 }
 
 .introduction .title {
-	font-size: 3.5rem;
+	font-size: calc(2rem + 2vw);
 	font-weight: 900;
 	text-shadow: 0 0 1rem var(--title-shadow-color);
 }
@@ -301,12 +301,76 @@ a {
 	padding: 0.5rem 2rem 0.5rem 2rem;
 	border-radius: 0.25rem;
 	font-size: 0.9rem;
-	transform: scale(1);
 	transition: transform 0.15s ease;
 }
 
 .info {
 	background: var(--shadow-color);
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(620px, 1fr));
+	width: 100%;
+	padding: 3rem 2rem 3rem 2rem;
+	box-sizing: border-box;
+}
+
+.discord-list, .github-list {
+	margin: 0 calc(2rem + 3vw) 2rem calc(2rem + 3vw);	
+}
+
+.discord-list {
+	display: flex;
+	align-self: center;
+	cursor: default;
+}
+
+.github-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5vw;
+	padding: 2rem;
+	background-color: var(--menu-bg-scrolled);
+	border-radius: 0.25rem;
+}
+
+.github-list .container {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+
+.github-list .main-title {
+	font-size: 2rem;
+	font-weight: 900;
+}
+
+.repo-info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 1.1rem;
+	margin: calc(.75rem + 2vh);
+	padding: calc(.75rem + 2vh);
+	background-color: var(--menu-bg-scrolled);
+	border-radius: 0.25rem;
+}
+
+.repo-info .title {
+	font-size: 1.4rem;
+	font-weight: 700;
+	text-align: center;
+}
+
+.repo-info .content {
+	text-align: center;
+}
+
+.github-list hr {
+	width: 90%;
+	border-radius: 0.25rem;
+	background-color: var(--font-primary);
 }
 
 :root {
