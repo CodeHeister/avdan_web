@@ -17,6 +17,8 @@
 	--title-shadow-color: black;
 	--card-bg: rgba(48,48,48,0.5);
 	--card-black: black;
+	--card-shadow: rgba(0,0,0,0.1);
+	--footer-bg: rgba(48,48,48,1); 
 }
 
 @font-face {
@@ -56,7 +58,7 @@ body, html {
 }
 
 body {
-	background: var(--body-bg);
+	background: var(--shadow-color);
 	overflow-x: hidden;
 }
 
@@ -221,6 +223,11 @@ body {
 	stroke: var(--toggle-theme-color);
 }
 
+.toggle-theme svg, .menu-download svg, .toggle-lang {
+	cursor: pointer;
+}
+
+
 .main {
 	padding-top: 6.5rem;
 }
@@ -232,6 +239,15 @@ body {
 	z-index:-1;
 	width: 100%;
 	overflow-x: hidden;
+}
+
+.video-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient( 0deg, var(--shadow-color) 0%, transparent 100% );
 }
 
 .header-video video {
@@ -317,7 +333,7 @@ a {
 
 .discord-list, .github-list {
 	margin: 0 calc(2rem + 3vw) calc(2rem + 2vh) calc(2rem + 3vw);	
-	maxwudth: 50vw;
+	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
 .discord-list {
@@ -360,7 +376,7 @@ a {
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
 	border-radius: 0.25rem;
-	box-shadow: var(--card-shadow);
+	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
 .repo-info .title {
@@ -379,6 +395,76 @@ a {
 	background-color: var(--font-primary);
 }
 
+footer {
+	background-color: var(--footer-bg);
+}
+
+.footer-links {
+	display: grid;
+	grid-template-columns: 1fr 0.1fr 1fr;
+}
+
+.footer-links svg {
+	fill: var(--icon-fill);
+}
+
+.footer-left, .footer-right {
+	display: grid;
+	margin: calc(0.5rem + 1vw);
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+.footer-center {
+	display: flex;
+	justify-content: center;
+}
+
+.overview, .external-links, .footer-icon, .legal, .extra-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.footer-icon {
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer-title {
+	font-weight: 900;
+	font-size: 1.1rem;
+}
+
+.footer-text span {
+	color: var(--font-secondary);
+}
+
+.footer-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-text:hover span, .footer-text:hover::before {
+   color: var(--font-primary) !important;
+}
+
+.footer-text::before {
+    content: "- ";
+    color: var(--font-secondary);
+}
+
+footer p {
+	text-align: center;
+	font-size: 0.9rem;
+	padding-bottom: 0.25rem;
+}
+
+footer p a {
+   font-weight: 900;
+}
+
+/*
 :root {
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;

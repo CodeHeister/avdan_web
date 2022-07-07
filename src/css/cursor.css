@@ -22,7 +22,7 @@
 	background-color: rgba(var(--cursor-color), 0.9);
 	border-radius: 2em;
 	transform-origin: 50% 50%;
-	transition: transform var(--cursor-speed) ease-out, background-color var(--cursor-speed) ease-in, width var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), height var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), border var(--cursor-speed) ease-out;
+	transition:  background-color var(--cursor-speed) ease-in, width var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), height var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), border var(--cursor-speed) ease-out;
 	transform: translate(-50%, -50%);
 	z-index: var(--cursor-icon-z);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -48,12 +48,12 @@
 
 .dragged { /* effects while focused */
 }
-
-* { /* disable default cursor */
+/*
+* { 
 	cursor: none; 
 }
- 
-@media (pointer: none), (pointer: coarse) { /* disable custom cursor for gadgets */
+
+@media (pointer: none), (pointer: coarse) { 
     .cursor, .cursor-icon {
 		display: none !important; 
 		visibility: hidden; 
@@ -64,3 +64,4 @@
 		cursor: auto !important; 
 	}
 }
+*/
