@@ -340,6 +340,8 @@ a {
 	display: flex;
 	align-self: center;
 	cursor: default;
+	border-radius: 1rem;
+	overflow: hidden;
 }
 
 .github-list {
@@ -350,7 +352,7 @@ a {
 	gap: 0.5vw;
 	padding: 2rem;
 	background-color: var(--card-bg);
-	border-radius: 0.25rem;
+	border-radius: 1rem;
 }
 
 .github-list .container {
@@ -375,7 +377,7 @@ a {
 	margin: calc(1rem + 1vh);
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
-	border-radius: 0.25rem;
+	border-radius: 1rem;
 	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
