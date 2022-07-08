@@ -51,11 +51,11 @@
 .dragged { /* effects while focused */
 	transition-delay: var(--cursor-delay);
 }
-/*
+
 * { 
 	cursor: none !important; 
 }
-*/
+
 @media (pointer: none), (pointer: coarse) { 
     .cursor, .cursor-icon {
 		display: none !important; 
