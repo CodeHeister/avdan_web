@@ -7,8 +7,8 @@ toggle_theme.addEventListener('click', e => {
     root.style.setProperty('--cursor-color', '232,233,235');
     root.style.setProperty('--font-primary', '#000');
     root.style.setProperty('--font-secondary', '#5E5E5E');
-    root.style.setProperty('--scrollbar-thumb-bg', '#9e9e9e');
-    root.style.setProperty('--scrollbar-track-bg', '#5e5e5e');
+    root.style.setProperty('--scrollbar-thumb-bg', '#5e5e5e');
+    root.style.setProperty('--scrollbar-track-bg', '#9e9e9e');
     root.style.setProperty('--icon-fill', 'black');
     root.style.setProperty('--map-bg', '225,225,225');
     root.style.setProperty('--toggle-theme-color', '#0dcaf0');

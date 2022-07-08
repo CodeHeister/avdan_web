@@ -50,6 +50,10 @@
 	background-color: var(--inner-first-color);
 }
 
+.intro-title {
+	width: 50vh;
+}
+
 #a1, #v, #d-outer, #a2, #n, #o-outer, #s {
 	/*fill: var(--outer-first-color);*/
 	fill: var(--inner-first-color);

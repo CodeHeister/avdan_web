@@ -11,8 +11,6 @@
 	--menu-bg: rgba(48,48,48,0);
 	--menu-bg-scrolled: rgba(48,48,48,0.8);
 	--link-color: #3291ff;
-	--demo-color: black;
-	--demo-bg: white;
 	--shadow-color: black;
 	--title-shadow-color: black;
 	--card-bg: rgba(48,48,48,0.5);
@@ -22,23 +20,11 @@
 }
 
 @font-face {
-	font-family: "Iosevka";
-	src 		: url(../fonts/iosevka-regular.ttf);
-	font-display: swap;
-}
-
-@font-face {
 	font-family: "Inter";
 	src 		: url(../fonts/inter.ttf);
 	font-display: swap;
 }
 
-@font-face {
-	font-family: "FiraCode";
-	src 		: url(../fonts/firacode.ttf);
-	font-display: swap;
-}
-	
 * {
     font-family: Inter;
     color: var(--font-primary);
@@ -48,11 +34,9 @@ body * {
 	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, fill var(--swap-speed) ease-in-out, stroke var(--swap-speed) ease-in-out;
 }
 
-
 body, html {
     margin: 0;
     padding: 0;
-    line-height: 1.5rem;
     height: 100%;
     width: 100%;
 }
@@ -66,13 +50,14 @@ body {
 	width: 8px;
     background: var(--scrollbar-track-bg);
 }
- ::-webkit-scrollbar-thumb {
+
+::-webkit-scrollbar-thumb {
 	border-radius: 0.5rem;
 	background-color: var(--scrollbar-thumb-bg);
 }
 
 ::selection {
-    background-color: var(--scrollbar-thumb-bg);
+    background-color: var(--selection-bg); /* !!!!!!!!!!!!!!!!!! */ 
     color: var(--font-primary);
 }
 
@@ -87,7 +72,7 @@ body {
 }
 
 .link-dragged {
-	border-bottom: 0.15rem solid rgba(var(--cursor-color), 1);
+	border-bottom: 0.15rem solid var(--font-primary);
 	background-color: rgba(var(--cursor-color), 0) !important;
 	border-radius: 0.1rem !important;
 	box-shadow: none !important;
@@ -238,7 +223,6 @@ body {
 	left:0;
 	z-index:-1;
 	width: 100%;
-	overflow-x: hidden;
 }
 
 .video-shadow {
@@ -290,12 +274,12 @@ a {
 	justify-content: center;
 	align-items: center;
 	gap: 6rem;
-	background: linear-gradient( 0deg, var(--shadow-color) 0%, transparent 100% );
 }
 
 .introduction .title {
 	font-size: calc(2rem + 2vw);
 	font-weight: 900;
+	text-align: center;
 	text-shadow: 0 0 1rem var(--title-shadow-color);
 }
 
@@ -325,7 +309,7 @@ a {
 .info {
 	background: var(--shadow-color);
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 	width: 100%;
 	padding: 3rem 2rem 3rem 2rem;
 	box-sizing: border-box;
@@ -363,7 +347,6 @@ a {
 
 .github-list .main-title {
 	font-size: calc(0.75rem + 2vw);
-	line-height: calc(1.5rem + 1vh + 1vw);
 	text-align: center;
 	font-weight: 900;
 }
@@ -377,6 +360,7 @@ a {
 	margin: calc(1rem + 1vh);
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
+	transition: transform 0.1s ease-in-out;
 	border-radius: 1rem;
 	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
@@ -403,7 +387,7 @@ footer {
 
 .footer-links {
 	display: grid;
-	grid-template-columns: 1fr 0.1fr 1fr;
+	grid-template-columns: minmax(100px, 1fr) minmax(50px, 0.1fr) minmax(100px, 1fr);
 }
 
 .footer-links svg {
@@ -413,12 +397,13 @@ footer {
 .footer-left, .footer-right {
 	display: grid;
 	margin: calc(0.5rem + 1vw);
-	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .footer-center {
 	display: flex;
 	justify-content: center;
+	margin: calc(0.5rem + 2vh) 0 calc(0.5rem + 2vh) 0;
 }
 
 .overview, .external-links, .footer-icon, .legal, .extra-info {
@@ -428,9 +413,12 @@ footer {
 }
 
 .footer-icon {
-	width: 100%;
 	justify-content: center;
 	align-items: center;
+}
+
+.footer-icon, .footer-icon a {
+	width: 100%;
 }
 
 .footer-title {
@@ -459,7 +447,7 @@ footer {
 footer p {
 	text-align: center;
 	font-size: 0.9rem;
-	padding-bottom: 0.25rem;
+	padding-bottom: calc(0.1rem + 1vh);
 }
 
 footer p a {
