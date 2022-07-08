@@ -18,14 +18,14 @@
 
 .join-discord {
 	background-color: rgba(var(--map-bg),0.8);
-	font-size: 0.9rem;
+	font-size: calc(0.65rem + 0.3vw);
 	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
 	margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 	border-radius: 0.25rem;
 }
 
 .join-discord .link-active {
-	font-size: 0.95rem;
+	font-size: calc(0.7rem + 0.3vw);
 }
 
 a {
@@ -91,7 +91,7 @@ a {
 .introduction .demo-button, .introduction .download-button {
 	padding: 0.5rem 2rem 0.5rem 2rem;
 	border-radius: 0.25rem;
-	font-size: 0.9rem;
+	font-size: calc(0.65rem + 0.3vw);
 	transition: transform 0.15s ease;
 }
 
