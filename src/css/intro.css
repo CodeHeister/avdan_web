@@ -5,16 +5,16 @@
 
 @keyframes outer-animate {
 	0% {
-		fill: var(--inner-first-color) !important;
+		fill: var(--inner-first-color);
 	}
 	25% {
-		fill: var(--inner-first-color) !important;
+		fill: var(--inner-first-color);
 	}
 	75% {
-		fill: var(--outer-first-color) !important;
+		fill: var(--outer-first-color);
 	}
 	100% {
-		fill: var(--inner-first-color) !important;
+		fill: var(--inner-first-color);
 	}
 }
 
@@ -46,11 +46,12 @@
 	background-color: var(--inner-first-color);
 }
 
-.intro-title path {
+.intro-title {
 	width: 50vw;
 }
 
 #a1, #v, #d, #a2, #n, #o, #s {
+	fill: var(--inner-first-color);
 	animation-name: outer-animate;
 	animation-duration: 2.6s;
 }
