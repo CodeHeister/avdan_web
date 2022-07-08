@@ -172,7 +172,7 @@ body {
 	gap: 0.5rem;
 	align-items: center;
 	justify-content: center;
-	font-size: 0.9rem;
+	font-size: calc(0.65rem + 0.3vw);
 	padding: .25rem 0rem .25rem 0rem;
 }
 
@@ -228,7 +228,7 @@ body {
 }
 
 .toggle-lang {
-	font-size: 1.25rem;
+	font-size: calc(1rem + 2wh);
 	padding: 0.9rem;
 	border-radius: 0.5rem;
 }
@@ -307,7 +307,7 @@ footer {
 
 .footer-title {
 	font-weight: 900;
-	font-size: 1.1rem;
+	font-size: calc(0.75rem + 0.3vw);
 }
 
 .footer-text span {
@@ -325,7 +325,7 @@ footer {
 
 footer p {
 	text-align: center;
-	font-size: 0.9rem;
+	font-size: calc(0.65rem + 0.3vw);
 	padding-bottom: calc(0.1rem + 1vh);
 }
 
@@ -360,7 +360,7 @@ footer p a {
 	}
 
 	.map-icon {
-		margin: 10% 1rem 10% 1rem;
+		margin: 1.25rem 10% 1.25rem 10%;
 		width: 80%;
 	}
 
@@ -373,6 +373,7 @@ footer p a {
 		top: 0;
 		left: 0;
 		flex-direction: column !important;
+		gap: 0.9rem;
 		border-radius: 0 0 2rem 0 !important;
 		margin: initial !important;
 		background-color: rgba(var(--map-bg),1) !important;
@@ -395,5 +396,22 @@ footer p a {
 	
 	.map .map-item:last-child {
 		display: none !important;
+	}
+
+	.join-discord {
+		text-align: center;
+	}
+
+	.join-discord a::before {
+		content: "";
+		display: block;
+	}
+
+	.footer-icon a {
+		display: none;
+	}
+	
+	.footer-links {
+		grid-template-columns: 1fr !important;
 	}
 }
