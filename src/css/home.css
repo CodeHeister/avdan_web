@@ -124,7 +124,7 @@ a {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 2vw;
+	gap: calc(1rem + 1vw);;
 	padding: 2rem;
 	background-color: var(--card-bg);
 	border-radius: 1rem;
@@ -133,7 +133,7 @@ a {
 .github-list .container {
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-	gap: 2vw;
+	gap: calc(1rem + 2vw);
 }
 
 
