@@ -9,6 +9,7 @@ const panelModify = e => {
 		document.querySelector(".map").style.background = "none";
 		document.querySelector(".map").style.margin = "auto";
 		document.querySelector(".map").style.margin = "initial";
+		document.querySelector(".mobile-menu").style.borderRadius = "0 0 2rem 0";
 	}
 	else {
 		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download").forEach(item => {item.style.display = null;});
@@ -18,7 +19,18 @@ const panelModify = e => {
 		document.querySelector(".menu").style.height = null;
 		document.querySelector(".map").style.background = null;
 		document.querySelector(".map").style.margin = null;
+		document.querySelector(".mobile-menu").style.borderRadius = null;
 	}
 }
 
 window.addEventListener("scroll", panelModify);
+
+document.querySelector(".mobile-menu").addEventListener("click", e => {
+	e.currentTarget.style.transform = "translateX(-100%)";
+	document.querySelector(".map").style.transform = "translateX(0%)";
+});
+
+document.querySelector(".map-icon").addEventListener("click", e => {
+	document.querySelector(".map").style.transform = null;
+	document.querySelector(".mobile-menu").style.transform = null;
+});
