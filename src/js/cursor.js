@@ -118,8 +118,8 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 		var coordinateX = 0;
 		var coordinateY = 0;
 		if (coordinationPercent != undefined) {
-			var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.offsetWidth-0.5)*coordinationPercent);
-			var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.offsetHeight-0.5)*coordinationPercent);
+			var coordinateX = parseInt((e.offsetX/e.currentTarget.offsetWidth-0.5)*coordinationPercent);
+			var coordinateY = parseInt((e.offsetY/e.currentTarget.offsetHeight-0.5)*coordinationPercent);
 		}
 
 		if (addScrollOffset) { 
@@ -144,8 +144,8 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 			if (targetMovementRate != undefined) {
 				if (coordinationPercent == undefined) {
 					var defaultCoordination = 20;
-					var coordinateX = parseInt(((e.clientX-e.currentTarget.offsetLeft)/e.currentTarget.clientWidth-0.5)*defaultCoordination);
-					var coordinateY = parseInt(((e.clientY-e.currentTarget.offsetTop)/e.currentTarget.clientHeight-0.5)*defaultCoordination);
+					var coordinateX = parseInt((e.offsetX/e.currentTarget.offsetWidth-0.5)*defaultCoordination);
+					var coordinateY = parseInt((e.offsetY/e.currentTarget.offsetHeight-0.5)*defaultCoordination);
 				}
 				
 				if (centrify) {

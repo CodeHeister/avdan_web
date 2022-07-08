@@ -8,6 +8,7 @@
 	--cursor-z: 9; /* cursor layer */
 	--cursor-icon-z: 10; /* cursor icon layer */
 	--cursor-speed: 0.135s; /* cursor transform speed */
+	--cursor-delay: 0s; /* cursor transform speed */
 }
 
 .cursor {
@@ -22,7 +23,8 @@
 	background-color: rgba(var(--cursor-color), 0.9);
 	border-radius: 2em;
 	transform-origin: 50% 50%;
-	transition:  background-color var(--cursor-speed) ease-in, width var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), height var(--cursor-speed) cubic-bezier(0.35, 0.35, 1, 1), border var(--cursor-speed) ease-out;
+	transition:  background-color ease-in, width cubic-bezier(0.35, 0.35, 1, 1), height cubic-bezier(0.35, 0.35, 1, 1), border ease-out;
+	transition-duration: var(--cursor-speed);
 	transform: translate(-50%, -50%);
 	z-index: var(--cursor-icon-z);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -47,12 +49,13 @@
 }
 
 .dragged { /* effects while focused */
+	transition-delay: var(--cursor-delay);
 }
 /*
 * { 
 	cursor: none; 
 }
-
+*/
 @media (pointer: none), (pointer: coarse) { 
     .cursor, .cursor-icon {
 		display: none !important; 
@@ -64,4 +67,3 @@
 		cursor: auto !important; 
 	}
 }
-*/
