@@ -102,7 +102,6 @@ a {
 	width: 100%;
 	gap: 5rem;
 	padding: 3rem 2rem 3rem 2rem;
-	margin: calc(2rem + 1vw) calc(1rem + 1vw) calc(2rem + 2vw) calc(1rem + 1vw);	
 	box-sizing: border-box;
 }
 
