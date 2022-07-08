@@ -58,7 +58,7 @@ iframes {
 }
 
 * { 
-	cursor: none !important; 
+	cursor: none; 
 }
 
 @media (pointer: none), (pointer: coarse) { 
