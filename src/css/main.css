@@ -126,7 +126,7 @@ body {
 	height: 4.5rem;
 	border-radius: 1rem;
 	transition: transform var(--mobile-panel-speed) ease-in-out;
-	background-color: rgba(var(--map-bg), 1);
+	background-color: rgba(var(--map-bg), 0.7);
 	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
@@ -413,6 +413,35 @@ footer p a {
 	}
 	
 	.footer-links {
+		padding: 0 7vw 0 7vw !important;
 		grid-template-columns: 1fr !important;
 	}
+
+	.footer-center {
+		justify-content: initial !important;
+	}
+}
+
+/* Discord */
+
+.join-discord {
+	background-color: rgba(var(--map-bg),0.8);
+	font-size: calc(0.65rem + 0.3vw);
+	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+	margin: 0.5rem 1.5rem 0.5rem 1.5rem;
+	border-radius: 0.25rem;
+}
+
+.join-discord .link-active {
+	font-size: calc(0.7rem + 0.3vw);
+}
+
+a {
+	text-decoration: none;
+}
+
+.join-discord a {
+	color: var(--link-color);
+	padding: 0 0.25rem 0.1rem 0.25rem;
+	transition: font-size 0.1s ease;
 }
