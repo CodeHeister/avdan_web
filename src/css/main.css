@@ -1,7 +1,6 @@
 :root {
 	--font-primary: #fff;
 	--font-secondary: #a0a0a0;
-	--cursor-color: 225,225,225;
 	--scrollbar-track-bg: #101010;
 	--scrollbar-thumb-bg: #333;
 	--icon-fill: white;
@@ -82,6 +81,7 @@ body {
 
 .button-dragged {
 	opacity: 0 !important;
+	display: none !important;
 }
 
 .noselect {
@@ -236,10 +236,6 @@ body {
 .toggle-theme svg {
 	fill: var(--toggle-theme-color);
 	stroke: var(--toggle-theme-color);
-}
-
-.toggle-theme svg, .menu-download svg, .toggle-lang {
-	cursor: pointer;
 }
 
 /* 
