@@ -8,6 +8,11 @@ window.addEventListener("resize", e => {
 });
 
 const enableCursor = e => {
+	document.querySelectorAll('iframe').forEach(item => {
+		item.addEventListener("mouseover", e => { cursor.style.opacity = "0"; });	
+		item.addEventListener("mouseout", e => { cursor.style.opacity = null; });
+	});
+
 	window.addEventListener('mousemove', moveCursor);
 	window.addEventListener('scroll', moveCursorScroll);
 	window.addEventListener('mousedown', cursorFocus);
@@ -51,20 +56,23 @@ const enableCursor = e => {
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["button-dragged"])});
 	});
 }
-/*
-var iframe = document.querySelector('iframe'),
-    iDoc = iframe.contentWindow     // sometimes glamorous naming of variable
-        || iframe.contentDocument;  // makes your code working :)
-if (iDoc.document) {
-    iDoc = iDoc.document;
-	console.log(iDoc);
-	iDoc.body.addEventListener('mouseover', e => {
-                        console.log('works');
-                });
-};
-*/
 
 enableCursor();
 /*
 document.querySelector(".toggle-cursor").addEventListener("click", enableCursor);
+*/
+
+/*
+var iDoc = iframe.contentWindow     // sometimes glamorous naming of variable
+        || iframe.contentDocument;  // makes your code working :)
+if (iDoc.document) {
+	iDoc = iDoc.document;
+	console.log(iDoc.querySelector("html"));
+	iDoc.querySelector("html").addEventListener('mousemove', e => {
+                        console.log('works');
+                });
+	iDoc.querySelector("body").addEventListener('mousemove', e => {
+                        console.log('works');
+                });
+};
 */

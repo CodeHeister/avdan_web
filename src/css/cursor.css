@@ -5,6 +5,7 @@
  */
 
 :root {
+	--cursor-color: 225,225,225;
 	--cursor-z: 9; /* cursor layer */
 	--cursor-icon-z: 10; /* cursor icon layer */
 	--cursor-speed: 0.135s; /* cursor transform speed */
@@ -19,11 +20,15 @@
 	opacity: 0; /* default visibility disabled */
 }
 
+iframes {
+	pointer-events: none;
+}
+
 .cursor-icon {
 	background-color: rgba(var(--cursor-color), 0.9);
 	border-radius: 2em;
 	transform-origin: 50% 50%;
-	transition:  background-color ease-in, width cubic-bezier(0.35, 0.35, 1, 1), height cubic-bezier(0.35, 0.35, 1, 1), border ease-out;
+	transition:  background-color ease-in, width cubic-bezier(0.35, 0.35, 1, 1), height cubic-bezier(0.35, 0.35, 1, 1), border ease-out, opacity ease-in;
 	transition-duration: var(--cursor-speed);
 	transform: translate(-50%, -50%);
 	z-index: var(--cursor-icon-z);

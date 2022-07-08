@@ -38,11 +38,11 @@ const moveCursor = e => { // follow real cursor
 
 	realMouseX = e.clientX; 
 	realMouseY = e.clientY;
-
+	
 	if(!cursorIcon.classList.contains('dragged')) {
 		mouseX = e.clientX; // refresh global cursor X
 		mouseY = e.clientY; // refresh global cursor Y
-   
+
 		cursor.style.transform = `translate3d(${window.scrollX+mouseX}px, ${window.scrollY+mouseY}px, 0)`; // set new position
 	}
 }
@@ -50,38 +50,46 @@ const moveCursor = e => { // follow real cursor
 const moveCursorScroll = e => { // scroll sync
 	showCursor(); // show custom cursor
 	
-	cursor.classList.forEach(item => {
-		if (item != "cursor" && item != "cursor-visible") {
-			cursor.classList.remove(item);
-		}
-	});
-	
-	cursorIcon.classList.forEach(item => {
-		if (item != "cursor-icon") {
-			cursorIcon.classList.remove(item);
-		}
-		cursorIcon.style.width = null;
-		cursorIcon.style.height = null;
-	});
+	if(!cursorIcon.classList.contains('scroll-dragged') && !cursorIcon.classList.contains("cursor-focus") && cursorIcon.classList.length > 1) {
+		cursor.classList.forEach(item => {
+			if (item != "cursor" && item != "cursor-visible") {
+				cursor.classList.remove(item);
+			}
+		});
+		
+		cursorIcon.classList.forEach(item => {
+			if (item != "cursor-icon") {
+				cursorIcon.classList.remove(item);
+			}
+			cursorIcon.style.width = null;
+			cursorIcon.style.height = null;
+		});
 
-	mouseX = window.scrollX+realMouseX;
-	mouseY = window.scrollY+realMouseY;
-
-	cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`; // set position (px)
+		mouseX = realMouseX;
+		mouseY = realMouseY;
+	}
+	if(!cursorIcon.classList.contains('scroll-dragged')) {
+		cursor.style.transform = `translate3d(${realMouseX+window.scrollX}px, ${realMouseY+window.scrollY}px, 0)`; // set position (px)
+	}
+	else {
+		cursor.style.transform = `translate3d(${mouseX+window.scrollX}px, ${mouseY+window.scrollY}px, 0)`; // set position (px)
+	}
 }
 
 const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses, addScrollOffset, f) => { // get target position
 	if(!cursorIcon.classList.contains('cursor-focus')) {
+
 		if (addScrollOffset == undefined) {
 			var addScrollOffset = false;
 		}
 
-		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // may be commented to optimize
-		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // may be commented to optimize
+		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2;
+		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2;
 
 		cursorIcon.classList.add("dragged"); // disables cursor following
 		if (addScrollOffset) { 
 			cursor.style.transform = `translate3d(${window.scrollX+mouseX}px, ${window.scrollY+mouseY}px, 0)`; // set target position (px)
+			cursorIcon.classList.add("scroll-dragged");
 		} 
 		else {
 			cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`; // set target position (px)
@@ -167,6 +175,9 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 
 const unsetCursor = (e, additionalCursorClasses, additionalTargetClasses, f) => {
 	cursorIcon.classList.remove("dragged"); // enable following
+	if(cursorIcon.classList.contains('scroll-dragged')) {
+		cursorIcon.classList.remove("scroll-dragged");
+	}
 
 	if(!cursorIcon.classList.contains('cursor-focus')) {
 		cursorIcon.style.width = null; // erase width
@@ -215,19 +226,22 @@ const cursorFocus = (e) => {
 const cursorUnfocus = (e) => {
 	cursorIcon.classList.remove('cursor-focus');
 	
-	cursor.classList.forEach(item => {
-		if (item != "cursor" && item != "cursor-visible") {
-			cursor.classList.remove(item);
-		}
-	});
-	
-	cursorIcon.classList.forEach(item => {
-		if (item != "cursor-icon") {
-			cursorIcon.classList.remove(item);
-		}
-		cursorIcon.style.width = null;
-		cursorIcon.style.height = null;
-	});
+	if(!cursorIcon.classList.contains('dragged') && cursorIcon.classList.length > 1) {
+    
+		cursor.classList.forEach(item => {
+			if (item != "cursor" && item != "cursor-visible") {
+				cursor.classList.remove(item);
+			}
+		});
+		
+		cursorIcon.classList.forEach(item => {
+			if (item != "cursor-icon") {
+				cursorIcon.classList.remove(item);
+			}
+			cursorIcon.style.width = null;
+			cursorIcon.style.height = null;
+		});
+	}
 }
 
 //- E N A B L E  C U R S O R -//
