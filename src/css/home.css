@@ -91,7 +91,6 @@
 .discord-list {
 	display: flex;
 	align-self: center;
-	cursor: default;
 	border-radius: 1rem;
 	overflow: hidden;
 }
