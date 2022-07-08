@@ -259,6 +259,7 @@ body {
  */
 
 footer {
+	width: 100%;
 	background-color: var(--footer-bg);
 }
 
@@ -279,8 +280,8 @@ footer {
 }
 
 .footer-left, .footer-right {
-	margin: calc(0.5rem + 1vw);
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	margin: 1.5vw 0.5vw 1.5vw 0.5vw;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .footer-center {
@@ -412,6 +413,6 @@ footer p a {
 	}
 	
 	.footer-links {
-		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) !important;
+		grid-template-columns: 1fr !important;
 	}
 }

@@ -100,12 +100,14 @@ a {
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 	width: 100%;
+	gap: 5rem;
 	padding: 3rem 2rem 3rem 2rem;
+	margin: calc(2rem + 1vw) calc(1rem + 1vw) calc(2rem + 2vw) calc(1rem + 1vw);	
 	box-sizing: border-box;
 }
 
 .discord-list, .github-list {
-	margin: 0 calc(2rem + 3vw) calc(2rem + 2vh) calc(2rem + 3vw);	
+	margin: 1.5vw 0.5vw 1.5vw 0.5vw;
 	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
@@ -122,7 +124,7 @@ a {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 0.5vw;
+	gap: 2vw;
 	padding: 2rem;
 	background-color: var(--card-bg);
 	border-radius: 1rem;
@@ -131,6 +133,7 @@ a {
 .github-list .container {
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	gap: 2vw;
 }
 
 
@@ -146,7 +149,6 @@ a {
 	align-items: center;
 	flex-direction: column;
 	gap: 1.1rem;
-	margin: calc(1rem + 1vh);
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
 	transition: transform 0.1s ease-in-out;
@@ -170,4 +172,10 @@ a {
 	background-color: var(--font-primary);
 }
 
+@media only screen and (max-width: 768px) {
+	.info {
+		grid-template-columns: 1fr !important;
+		margin: initial !important;
+	}
+}
 /* ----------------- */
