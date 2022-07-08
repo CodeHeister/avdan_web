@@ -2,3 +2,172 @@
 	--demo-color: black;
     --demo-bg: white;
 }
+
+/* 
+ * +----------------------------+
+ * | :: F I R S T  F R A M E :: |
+ * +----------------------------+
+ */
+
+.frame {
+	height: 100vh;
+	width: 100%;
+	padding: 0 2rem 0 2rem;
+	box-sizing: border-box;
+}
+
+.join-discord {
+	background-color: rgba(var(--map-bg),0.8);
+	font-size: 0.9rem;
+	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+	margin: 0.5rem 1.5rem 0.5rem 1.5rem;
+	border-radius: 0.25rem;
+}
+
+.join-discord .link-active {
+	font-size: 0.95rem;
+}
+
+a {
+	text-decoration: none;
+}
+
+.join-discord a {
+	color: var(--link-color);
+	padding: 0 0.25rem 0.1rem 0.25rem;
+	transition: font-size 0.1s ease;
+}
+
+.header-video {
+	z-index:-1;
+}
+
+.video-shadow, .header-video {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.video-shadow {
+	height: 100%;
+	background: linear-gradient( 0deg, var(--shadow-color) 0%, transparent 100% );
+}
+
+.video-shadow, .header-video video, .header-video {
+	width: 100%;
+}
+
+.introduction {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 6rem;
+}
+
+.introduction .title {
+	font-size: calc(2rem + 2vw);
+	font-weight: 900;
+	text-align: center;
+	text-shadow: 0 0 1rem var(--title-shadow-color);
+}
+
+.introduction .buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+}
+
+.introduction .demo-button {
+	color: var(--demo-color);
+	background-color: var(--demo-bg);
+}
+
+.introduction .download-button {
+	color: white;
+	background-color: #0070f3;
+}
+
+.introduction .demo-button, .introduction .download-button {
+	padding: 0.5rem 2rem 0.5rem 2rem;
+	border-radius: 0.25rem;
+	font-size: 0.9rem;
+	transition: transform 0.15s ease;
+}
+
+.info {
+	background: var(--shadow-color);
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	width: 100%;
+	padding: 3rem 2rem 3rem 2rem;
+	box-sizing: border-box;
+}
+
+.discord-list, .github-list {
+	margin: 0 calc(2rem + 3vw) calc(2rem + 2vh) calc(2rem + 3vw);	
+	box-shadow: var(--card-shadow) 0px 4px 12px;
+}
+
+.discord-list {
+	display: flex;
+	align-self: center;
+	cursor: default;
+	border-radius: 1rem;
+	overflow: hidden;
+}
+
+.github-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5vw;
+	padding: 2rem;
+	background-color: var(--card-bg);
+	border-radius: 1rem;
+}
+
+.github-list .container {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+
+.github-list .main-title {
+	font-size: calc(0.75rem + 2vw);
+	text-align: center;
+	font-weight: 900;
+}
+
+.repo-info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 1.1rem;
+	margin: calc(1rem + 1vh);
+	padding: calc(1rem + 1vh);
+	background-color: var(--card-bg);
+	transition: transform 0.1s ease-in-out;
+	border-radius: 1rem;
+	box-shadow: var(--card-shadow) 0px 4px 12px;
+}
+
+.repo-info .title {
+	font-size: 1.4rem;
+	font-weight: 700;
+	text-align: center;
+}
+
+.repo-info .content {
+	text-align: center;
+}
+
+.github-list hr {
+	width: 90%;
+	border-radius: 0.25rem;
+	background-color: var(--font-primary);
+}
+
+/* ----------------- */

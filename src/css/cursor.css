@@ -53,7 +53,7 @@
 }
 /*
 * { 
-	cursor: none; 
+	cursor: none !important; 
 }
 */
 @media (pointer: none), (pointer: coarse) { 

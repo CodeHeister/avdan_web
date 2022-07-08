@@ -63,5 +63,8 @@ if (iDoc.document) {
                 });
 };
 */
+
+/*
 enableCursor();
 document.querySelector(".toggle-cursor").addEventListener("click", enableCursor);
+*/
