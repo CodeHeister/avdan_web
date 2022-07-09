@@ -48,6 +48,7 @@
 	font-weight: 900;
 	text-align: center;
 	text-shadow: 0 0 1rem var(--title-shadow-color);
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 .introduction .buttons {
@@ -59,6 +60,7 @@
 .introduction .demo-button {
 	color: var(--demo-color);
 	background-color: var(--demo-bg);
+	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out;
 }
 
 .introduction .download-button {
@@ -70,6 +72,9 @@
 	padding: 0.5rem 2rem 0.5rem 2rem;
 	border-radius: 0.25rem;
 	font-size: calc(0.65rem + 0.3vw);
+}
+
+.introduction .download-button {
 	transition: transform 0.15s ease;
 }
 
@@ -104,6 +109,7 @@
 	padding: 2rem;
 	background-color: var(--card-bg);
 	border-radius: 1rem;
+	transition: background-color var(--swap-speed) ease-in-out;
 }
 
 .github-list .container {
@@ -117,6 +123,7 @@
 	font-size: calc(0.75rem + 2vw);
 	text-align: center;
 	font-weight: 900;
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 .repo-info {
@@ -130,22 +137,30 @@
 	transition: transform 0.1s ease-in-out;
 	border-radius: 1rem;
 	box-shadow: var(--card-shadow) 0px 4px 12px;
+	transition: background-color var(--swap-speed) ease-in-out;
 }
 
 .repo-info .title {
 	font-size: 1.4rem;
 	font-weight: 700;
 	text-align: center;
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 .repo-info .content {
 	text-align: center;
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 .github-list hr {
 	width: 90%;
 	border-radius: 0.25rem;
 	background-color: var(--font-primary);
+	transition: backdround-color var(--swap-speed) ease-in-out;
+}
+
+.view-more a {
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 @media only screen and (max-width: 768px) {
