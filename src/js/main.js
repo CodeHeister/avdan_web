@@ -32,6 +32,12 @@ const enableCursor = e => {
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
 	});
 
+	document.querySelectorAll(".lang-close").forEach(item => { 
+		item.addEventListener("mouseover", e => {setCursor(e, 1.5, ["default-dragged"], undefined, true)});
+		item.addEventListener("mousemove", e => {coordinateCursor(e, undefined, undefined, undefined, undefined, undefined. true)});
+		item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
+	});
+
 	document.querySelectorAll(".footer-icon a").forEach(item => { 
 		item.addEventListener("mouseover", e => {setCursor(e, 1.2, ["default-dragged"], undefined)});
 		item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined)});
