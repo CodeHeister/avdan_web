@@ -2,7 +2,7 @@ const toggle_theme = document.querySelector('.toggle-theme');
 let root = document.documentElement;
 var is_light = false;
 
-toggle_theme.addEventListener('click', e => {
+const toggleTheme = e => {
   if (!is_light) { // white
     root.style.setProperty('--cursor-color', '232,233,235');
     root.style.setProperty('--font-primary', '#000');
@@ -24,6 +24,9 @@ toggle_theme.addEventListener('click', e => {
     root.style.setProperty('--body-bg', 'white');
     root.style.setProperty('--footer-bg', 'rgba(225,225,225,1)');
     root.style.setProperty('--lines-color', '#a0a0a0');
+    root.style.setProperty('--footer-card-bg', '#bbbbbb');
+    root.style.setProperty('--start-color', '#656565');
+    root.style.setProperty('--finish-color', '#050505');
 
 	document.querySelector(".discord-list iframe").src = 'https://discord.com/widget?id=993464434855002163&theme=light';
 	document.querySelector(".toggle-theme").innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
@@ -49,9 +52,15 @@ toggle_theme.addEventListener('click', e => {
     root.style.setProperty('--body-bg', 'black');
     root.style.setProperty('--footer-bg', 'rgba(48,48,48,1)');
     root.style.setProperty('--lines-color', '#5E5E5E');
+    root.style.setProperty('--footer-card-bg', '#444444');
+    root.style.setProperty('--start-color', '#9a9a9a');
+    root.style.setProperty('--finish-color', '#fbfbfb');
 
 	document.querySelector(".discord-list iframe").src = 'https://discord.com/widget?id=993464434855002163&theme=dark';
 	document.querySelector(".toggle-theme").innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
 	is_light = false;
   }
-})
+}
+
+toggle_theme.addEventListener('click', e => toggleTheme);
+

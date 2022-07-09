@@ -18,6 +18,9 @@
 	--footer-bg: rgba(48,48,48,1); 
 	--lines-color: #5E5E5E;
 	--mobile-panel-speed: 0.3s;
+	--footer-card-bg: #444444;
+	--start-color: #9a9a9a;
+	--finish-color: #fbfbfb;
 }
 
 @font-face {
@@ -29,10 +32,6 @@
 * {
     font-family: Inter;
     color: var(--font-primary);
-}
-
-body * {
-	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, fill var(--swap-speed) ease-in-out, stroke var(--swap-speed) ease-in-out;
 }
 
 body, html {
@@ -114,7 +113,7 @@ body {
 	height: 6.25rem;
 	background-color: var(--menu-bg);
 	padding: .75rem 2rem .75rem 2rem;
-	transition: height 0.01s ease-in-out;
+	transition: height 0.01s ease-in-out, background-color var(--swap-speed) ease-in-out;
 }
 
 .menu .mobile-menu {
@@ -147,12 +146,27 @@ body {
 
 .menu .icon svg {
 	height: 100%;
-	transform: translate 0.135s ease;
+	transition: transform 0.135s ease;
 }
 
 .menu .icon svg path {
-	fill: var(--icon-fill);
 	transition: fill 0.05s ease-in-out !important;
+}
+
+.menu .icon linearGradient stop {
+	stop-opacity: 1;
+}
+
+.menu .icon linearGradient stop:nth-child(1) {
+	stop-color: var(--start-color);
+}
+
+.menu .icon linearGradient stop:nth-child(2) {
+	stop-color: var(--finish-color);;
+}
+
+.menu .icon svg path {
+	fill: url(#grad1);
 }
 
 .menu .icon, .menu .mobile-menu {
@@ -165,6 +179,7 @@ body {
 	padding: 0.25rem 0.3rem .25rem 0.3rem;
 	border-radius: 0.5rem;
 	background-color: rgba(var(--map-bg),0.7);
+	transition: background-color var(--swap-speed) ease-in-out;
 }
 
 .menu .map .map-item {
@@ -257,6 +272,7 @@ body {
 footer {
 	width: 100%;
 	background-color: var(--footer-bg);
+	transition: background-color var(--swap-speed) ease-in-out;
 }
 
 .footer-links, .footer-left, .footer-right {
@@ -269,10 +285,6 @@ footer {
 
 .footer-links {
 	grid-template-columns: minmax(100px, 1fr) minmax(50px, 0.1fr) minmax(100px, 1fr);
-}
-
-.footer-links svg {
-	fill: var(--icon-fill);
 }
 
 .footer-left, .footer-right {
@@ -298,6 +310,22 @@ footer {
 	align-items: center;
 }
 
+.footer-icon linearGradient stop {
+	stop-opacity: 1;
+}
+
+.footer-icon linearGradient stop:nth-child(1) {
+	stop-color: var(--start-color);
+}
+
+.footer-icon linearGradient stop:nth-child(2) {
+	stop-color: var(--finish-color);;
+}
+
+.footer-icon svg path {
+	fill: url(#grad2);
+}
+
 .footer-icon, .footer-icon a {
 	width: 100%;
 }
@@ -305,6 +333,11 @@ footer {
 .footer-title {
 	font-weight: 900;
 	font-size: calc(0.75rem + 0.3vw);
+	transition: color var(--swap-speed) ease-in-out;
+}
+
+.footer-text {
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 .footer-text span {
@@ -324,10 +357,26 @@ footer p {
 	text-align: center;
 	font-size: calc(0.65rem + 0.3vw);
 	padding-bottom: calc(0.1rem + 1vh);
+	transition: color var(--swap-speed) ease-in-out;
 }
 
 footer p a {
    font-weight: 900;
+}
+
+.footer-content {
+	gap: 0.5rem;
+}
+
+.footer-card {
+	background-color: var(--footer-card-bg);
+	box-shadow: var(--card-shadow) 0px 4px 12px;
+	padding: 0.5rem 1rem 0.5rem 1rem;
+	margin: 0.5rem;
+	border-radius: 1rem;
+	text-align: center;
+	box-sizing: border-box;
+	transition: background-color var(--swap-speed) ease-in-out, color var(--swap-speed) ease-in-out;
 }
 
 /* 
@@ -426,6 +475,7 @@ footer p a {
 	padding: 0.5rem 1.5rem 0.5rem 1.5rem;
 	margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 	border-radius: 0.25rem;
+	transition: background-color var(--swap-speed) ease-in-out, color var(--swap-speed) ease-in-out;
 }
 
 .join-discord .link-active {
@@ -439,5 +489,9 @@ a {
 .join-discord a {
 	color: var(--link-color);
 	padding: 0 0.25rem 0.1rem 0.25rem;
-	transition: font-size 0.1s ease;
+	transition: font-size 0.1s ease, color var(--swap-speed) ease-in-out;
+}
+
+p a, strong, .footer-card span {
+	transition: color var(--swap-speed) ease-in-out;
 }
