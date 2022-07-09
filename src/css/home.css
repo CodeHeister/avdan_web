@@ -60,7 +60,7 @@
 .introduction .demo-button {
 	color: var(--demo-color);
 	background-color: var(--demo-bg);
-	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out;
+	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, transform 0.15s ease;
 }
 
 .introduction .download-button {

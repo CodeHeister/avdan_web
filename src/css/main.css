@@ -529,6 +529,7 @@ p a, strong, .footer-card span {
 	overflow-y: overlay;
 	gap: 0.5rem;
 	border-radius: 1rem;
+	box-shadow: var(--card-shadow) 0px 4px 12px;
 }
 
 .lang-line {
@@ -555,4 +556,10 @@ p a, strong, .footer-card span {
 	fill: var(--icon-fill);
 	width: 1rem;
 	height: 1rem;
+}
+
+.lang-close {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
