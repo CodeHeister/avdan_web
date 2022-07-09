@@ -58,6 +58,15 @@ const enableCursor = e => {
 }
 
 enableCursor();
+
+document.querySelector(".toggle-lang").addEventListener("click", e => {
+	document.querySelector(".language-window").style.display = "flex";
+});
+
+document.querySelector(".lang-panel svg").addEventListener("click", e => {
+	document.querySelector(".language-window").style.display = null;
+});
+
 /*
 document.querySelector(".toggle-cursor").addEventListener("click", enableCursor);
 */
