@@ -62,5 +62,5 @@ const toggleTheme = e => {
   }
 }
 
-toggle_theme.addEventListener('click', e => toggleTheme);
+toggle_theme.addEventListener('click', e => toggleTheme());
 
