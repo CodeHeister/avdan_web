@@ -30,7 +30,7 @@
 }
 
 * {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     color: var(--font-primary);
 }
 
@@ -179,7 +179,7 @@ body {
 	padding: 0.25rem 0.3rem .25rem 0.3rem;
 	border-radius: 0.5rem;
 	background-color: rgba(var(--map-bg),0.7);
-	transition: background-color var(--swap-speed) ease-in-out;
+	transition: background-color var(--swap-speed) ease-in-out, transform var(--mobile-panel-speed) ease-in-out;
 }
 
 .menu .map .map-item {
@@ -425,7 +425,6 @@ footer p a {
 		background-color: rgba(var(--map-bg),1) !important;
 		box-shadow: var(--card-shadow) 0px 4px 12px;
 		transform: translateX(-100%);
-		transition: transform var(--mobile-panel-speed) ease-in-out;
 	}
 
 	.current::after {
