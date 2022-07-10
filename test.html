@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="src/css/cursor.css"/>
+		<script src="src/js/cursor.js" defer></script>
+		<script src="src/js/drag_and_leave.js" defer></script>
+		<script src="src/js/test.js" defer></script>
+		<style>
+		.window {
+			z-index:-1;
+			position: absolute;
+		}
+		</style>
+	</head>
+	<body>
+		<div style="z-index:-1">
+		<div class="cursor">
+			<div class="cursor-icon">
+			</div>
+		</div>
+		<div class="window1 window" style="border-radius:1rem;width:512px;background: black;height:500px">
+			<div class="panel1" style="border-radius:1rem;width:512px;height:200px;background:gray;">
+			</div>
+		</div>
+		<div class="window2 window" style="border-radius:1rem;width:512px;background: black;height:500px">
+			<div class="panel2" style="border-radius:1rem;width:512px;height:200px;background:gray;">
+			</div>
+		</div>
+		</div>
+	</body>
+</html>
