@@ -1,38 +1,51 @@
 var dragList = [];
 
 // mousedown event (control element)
-const dragAdd = (e, currentTarget, target, currentTarget_in_f, target_in_f, currentTarget_f, target_f, currentTarget_out_f, target_out_f, drop_f, modify_X, modify_Y) => {
+const dragAdd = (e, currentTarget, target, currentTarget_in_f, target_in_f, currentTarget_f, target_f, currentTarget_out_f, target_out_f, drop_f, modify_X, modify_Y, extraX, extraY) => {
+	if (e.target == e.currentTarget) {
 
-	if (modify_X == undefined) {
-		var modify_X = true;
-	}
+		if (modify_X == undefined) modify_X = true
+		if (modify_Y == undefined) modify_Y = true
+		var info = {
+			"currentTarget" : currentTarget,
+			"target" : target,
+			"currentTarget_in_f" : currentTarget_in_f,
+			"target_in_f" : target_in_f,
+			"currentTarget_f" : currentTarget_f,
+			"target_f" : target_f,
+			"currentTarget_out_f" : currentTarget_out_f,
+			"target_out_f" : target_out_f,
+			"drop_f" : drop_f,
+			"modify_X" : modify_X,
+			"modify_Y" : modify_Y,
+			"extraX" : extraX || 0,
+			"extraY" : extraY || 0
+		};
+		dragList.push(info);
 
-	if (modify_Y == undefined) {
-		var modify_Y = true;
-	}
+		var target = document.querySelector(target);
 
-	dragList.push({
-		"currentTarget" : currentTarget,
-		"target" : target,
-		"currentTarget_in_f" : currentTarget_in_f,
-		"target_in_f" : target_in_f,
-		"currentTarget_f" : currentTarget_f,
-		"target_f" : target_f,
-		"currentTarget_out_f" : currentTarget_out_f,
-		"target_out_f" : target_out_f,
-		"drop_f" : drop_f,
-		"modify_X" : modify_X,
-		"modify_Y" : modify_Y
-	});
+		if (currentTarget_in_f != undefined) {
+			currentTarget_in_f(e, e.currentTarget, info);
+		}
 
-	var target = document.querySelector(target);
+		if (target_in_f != undefined) {
+			target_in_f(e, target, info);
+		}
 
-	if (currentTarget_in_f != undefined) {
-		currentTarget_in_f(e, e.currentTarget);
-	}
+		var targetTransformX = 0;
+		var targetTransformY = 0;
 
-	if (target_in_f != undefined) {
-		target_in_f(e, target);
+		if (target.style.transform != '') {
+		
+			var nums = target.style.transform.split("translate3d")[1];
+			nums = nums.slice(1, nums.length-1).split("px,");
+			
+			targetTransformX = parseInt(nums[0]);
+			targetTransformY = parseInt(nums[1]);
+		}
+
+		target.style.transform = `translate3d(${targetTransformX+(extraX || 0)}px,${targetTransformY+(extraY || 0)}px,0)`;
 	}
 }
 
@@ -53,13 +66,8 @@ const click = (e, target, currentTarget_f, target_f) => {
 const drag = e => {
 	dragList.forEach(item => {
 		var target = document.querySelector(item.target);
-		
-		var targetX = e.clientX+window.scrollX-target.offsetLeft;
-		var targetY = e.clientY+window.scrollY-target.offsetTop;
-
 		var targetTransformX = 0;
 		var targetTransformY = 0;
-		
 		if (target.style.transform != '') {
 		
 			var nums = target.style.transform.split("translate3d")[1];
@@ -68,31 +76,18 @@ const drag = e => {
 			targetTransformX = parseInt(nums[0]);
 			targetTransformY = parseInt(nums[1]);
 		}
-		
-		var targetCursorX = targetX-targetTransformX;
-		var targetCursorY = targetY-targetTransformY;
 
 		if (item.currentTarget_f != undefined) {
-			item.currentTarget_f(e, document.querySelector(item.currentTarget));
+			item.currentTarget_f(e, document.querySelector(item.currentTarget), item);
 		}
 
 		if (item.target_f != undefined) {
-			item.target_f(e, target);
-		}
-		
-		if (item.modify_X && item.modify_Y) {
-			target.style.transform = `translate3d(${targetX-targetCursorX+e.movementX}px,${targetY-targetCursorY+e.movementY}px,0)`;
-		}
-		else if (item.modify_X && !item.modify_Y) {
-			target.style.transform = `translate3d(${targetX-targetCursorX+e.movementX}px,${targetY-targetCursorY}px,0)`;
-		}
-		else if (!item.modify_X && item.modify_Y) {
-			target.style.transform = `translate3d(${targetX-targetCursorX}px,${targetY-targetCursorY+e.movementY}px,0)`;
-		}
-		else {
-			target.style.transform = `translate3d(${targetX-targetCursorX}px,${targetY-targetCursorY}px,0)`;
+			item.target_f(e, target, item);
 		}
 
+		var movementX = item.modify_X && e.movementX || 0;
+		var movementY = item.modify_Y && e.movementY || 0;
+		target.style.transform = `translate3d(${targetTransformX+movementX}px,${targetTransformY+movementY}px,0)`;
 	});
 }
 
@@ -115,12 +110,23 @@ const leave = (e, target) => { // event, move target, fuction for control, funct
 		var currentTarget = document.querySelector(info.currentTarget);
 
 		if (info.currentTarget_out_f != undefined) {
-			info.currentTarget_out_f(e, currentTarget);
+			info.currentTarget_out_f(e, currentTarget, info);
 		}
 
 		if (info.target_out_f != undefined) {
-			info.target_out_f(e, target);
+			info.target_out_f(e, target, info);
 		}
+
+		if (target.style.transform != '') {
+		
+			var nums = target.style.transform.split("translate3d")[1];
+			nums = nums.slice(1, nums.length-1).split("px,");
+			
+			var targetTransformX = parseInt(nums[0]);
+			var targetTransformY = parseInt(nums[1]);
+		}
+
+		target.style.transform = `translate3d(${targetTransformX-info.extraX}px,${targetTransformY-info.extraY}px,0)`;
 	}
 }
 
@@ -132,17 +138,28 @@ const leaveAll = e => {
 		var currentTarget = document.querySelector(info.currentTarget);
 
 		if (info.currentTarget_out_f != undefined) {
-			info.currentTarget_out_f(e, e.currentTarget);
+			info.currentTarget_out_f(e, e.currentTarget, info);
 		}
 
 		if (info.drop_f != undefined) {
-			info.drop_f(e, target);
+			info.drop_f(e, target, info);
 		}
 		else {
 			if (info.target_out_f != undefined) {
-				info.target_out_f(e, target);
+				info.target_out_f(e, target, info);
 			}
 		}
+
+		if (target.style.transform != '') {
+		
+			var nums = target.style.transform.split("translate3d")[1];
+			nums = nums.slice(1, nums.length-1).split("px,");
+			
+			var targetTransformX = parseInt(nums[0]);
+			var targetTransformY = parseInt(nums[1]);
+		}
+
+		target.style.transform = `translate3d(${targetTransformX-info.extraX}px,${targetTransformY-info.extraY}px,0)`;
 	});
 
 

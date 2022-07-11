@@ -90,10 +90,7 @@ const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses
 
 	if(!cursorIcon.classList.contains('cursor-focus')) { // if not mousedown
 
-		if (addScrollOffset == undefined) { // check if fixed target behavior needed
-
-			var addScrollOffset = false;
-		}
+		var addScrollOffset = addScrollOffset || false;
 
 		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // calc X
 		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // calc Y
@@ -132,21 +129,13 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 
 	if(!cursorIcon.classList.contains('cursor-focus')) {
 
-		if (addScrollOffset == undefined) {
-		
-			var addScrollOffset = false;
-		}
+		var addScrollOffset = addScrollOffset || false;
 
 		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // may be commented to optimize (only if no target resizing)
 		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // may be commented to optimize (only if no target resizing)
 
-		var coordinateX = 0;
-		var coordinateY = 0;
-
-		if (coordinationPercent != undefined) {
-			var coordinateX = parseInt((e.offsetX/e.currentTarget.offsetWidth-0.5)*coordinationPercent);
-			var coordinateY = parseInt((e.offsetY/e.currentTarget.offsetHeight-0.5)*coordinationPercent);
-		}
+		var coordinateX = coordinationPercent && parseInt((e.offsetX/e.currentTarget.offsetWidth-0.5)*coordinationPercent) || 0;
+		var coordinateY = coordinationPercent && parseInt((e.offsetY/e.currentTarget.offsetHeight-0.5)*coordinationPercent) || 0;
 
 		if (addScrollOffset) { 
 			cursor.style.transform = `translate(${coordinateX}%, ${coordinateY}%) translate3d(${window.scrollX+mouseX}px, ${window.scrollY+mouseY}px, 0)`; // set target position (px)
