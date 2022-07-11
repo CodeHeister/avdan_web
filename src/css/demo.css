@@ -1,0 +1,132 @@
+html, body {
+	overflow: hidden;
+}
+
+.window {
+	z-index:-1;
+	position: absolute;
+	display: flex;
+	background: rgba(48,48,48,0.3);
+	backdrop-filter: blur(0.5rem);
+	flex-direction: column;
+}
+
+.panel, .window {
+	transition:none;
+}
+
+.panel, .win-panel {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	padding:0 1rem 0 1rem;
+	border-radius:0.25rem;
+	width:100%;
+	box-sizing: border-box;
+}
+
+.window {
+	border-radius:1rem;
+	width:500px;
+	top:50%;
+	left:50%;
+	height:500px;
+	will-change: transform,width,height;
+}
+
+.tab-holder {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 0 1rem 0;
+	margin-right: auto;
+}
+
+.tab-add {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	font-size: 1rem;
+	height: 1.5rem;
+	width: 1.5rem;
+	border-radius:0.25rem;
+	background: rgba(48,48,48,0.8);
+}
+
+.resize {
+	width: 1rem;
+	height: 1rem;
+	background: blue;
+}
+
+.container {
+	height: 100%;
+	width: 100%;
+}
+
+.wl, .wr {
+	top: 5%;
+	position: absolute;
+	height: 90%;
+	width: 10px;
+}
+
+.wl {
+	left: -5px;
+}
+
+.wr {
+	right: -5px;
+}
+
+.ht, .hb {
+	position:absolute;
+	left: 5%;
+	width: 90%;
+	height: 10px;
+}
+
+.ht {
+	top: -5px;
+}
+
+.hb {
+	bottom: -5px;
+}
+
+.whlt, .whrt, .whlb, .whrb {
+	position: absolute;
+	width: 5%;
+	height: 5%;
+}
+
+.whlt {
+	top: -5px;
+	left: -5px;
+}
+
+.whrt {
+	top: -5px;
+	right: -5px;
+}
+
+.whrb {
+	bottom: -5px;
+	right: -5px;
+}
+
+.whlb {
+	bottom: -5px;
+	left: -5px;
+}
+
+.noselect {
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Safari */
+-khtml-user-select: none; /* Konqueror HTML */
+-moz-user-select: none; /* Old versions of Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+						  supported by Chrome, Edge, Opera and Firefox */
+}
