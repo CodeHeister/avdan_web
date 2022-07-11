@@ -56,10 +56,32 @@ const enableCursor = e => {
 	item.addEventListener("mouseout", e => {unsetCursor(e, ["link-dragged"], ["link-active"])});
 	});
 
-	document.querySelectorAll(".demo-button, .download-button, .repo-info").forEach(item => { 
+	document.querySelectorAll(".demo-button, .download-button").forEach(item => { 
 		item.addEventListener("mouseover", e => {setCursor(e, 0.2, ["button-dragged"])});
 		item.addEventListener("mousemove", e => {coordinateCursor(e, undefined, undefined, undefined, undefined, ["scale(1.15)"])});
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["button-dragged"])});
+	});
+
+	document.querySelectorAll(".repo-info").forEach(item => {
+		item.addEventListener("mouseover", e => {
+			cursorIcon.style.display = "flex";
+			cursorIcon.style.alignItems = "center";
+			cursorIcon.style.borderRadius = "50%";
+			cursorIcon.style.width = "4.5rem";
+			cursorIcon.style.height = "4.5rem";
+			cursorIcon.style.overflow = "hidden";
+			var text = document.createElement("div");
+			text.innerHTML = "View Project";
+			text.style.fontSize = "1rem";
+			text.style.textAlign = "center";
+			text.style.color = "black";
+			cursorIcon.appendChild(text);
+		});
+		item.addEventListener("mouseout", e => {
+			cursorIcon.style.width = null;
+			cursorIcon.style.height = null;
+			cursorIcon.innerHTML = "";
+		});
 	});
 }
 
