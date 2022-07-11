@@ -111,5 +111,7 @@ document.body.addEventListener("mouseup", e => {leave(e, ".window1")});
 
 test2.addEventListener("mousedown", e => {dragAdd(e, str2, ".window2", recolorp, recolor, undefined, undefined, recolorBackp, resizeBack, attach)});
 document.body.addEventListener("mouseup", e => {leave(e, ".window2")});
-
+document.querySelector("html").addEventListener("mouseleave", leaveAll);
+/*
 document.body.addEventListener("mouseleave", leaveAll);
+*/
