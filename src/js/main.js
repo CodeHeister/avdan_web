@@ -75,6 +75,7 @@ const enableCursor = e => {
 			text.style.fontSize = "1rem";
 			text.style.textAlign = "center";
 			text.style.color = "black";
+			e.currentTarget.style.transform = "scale(1.2)";
 			cursorIcon.appendChild(text);
 		});
 		item.addEventListener("mouseout", e => {
@@ -84,6 +85,7 @@ const enableCursor = e => {
 			cursorIcon.style.borderRadius = null;
 			cursorIcon.style.overflow = null;
 			cursorIcon.style.alignItems = null;
+			e.currentTarget.style.transform = null;
 			cursorIcon.innerHTML = "";
 		});
 	});
