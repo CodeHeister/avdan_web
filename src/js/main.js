@@ -80,6 +80,10 @@ const enableCursor = e => {
 		item.addEventListener("mouseout", e => {
 			cursorIcon.style.width = null;
 			cursorIcon.style.height = null;
+			cursorIcon.style.display = null;
+			cursorIcon.style.borderRadius = null;
+			cursorIcon.style.overflow = null;
+			cursorIcon.style.alignItems = null;
 			cursorIcon.innerHTML = "";
 		});
 	});
