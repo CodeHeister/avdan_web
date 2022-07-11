@@ -1,31 +1,144 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="src/css/cursor.css"/>
-		<script src="src/js/cursor.js" defer></script>
 		<script src="src/js/drag_and_leave.js" defer></script>
 		<script src="src/js/test.js" defer></script>
 		<style>
+
+		html, body {
+			overflow: hidden;
+		}
+
 		.window {
 			z-index:-1;
 			position: absolute;
 		}
+
+		.panel, .window {
+			transition:none;
+		}
+
+		.panel {
+			display:flex;
+			justify-content:flex-end;
+			align-items:center;
+			padding:0 7.5% 0 7.5%;
+			border-radius:1rem;
+			width:100%;
+			height:4rem;
+			background:gray;
+			box-sizing: border-box;
+		}
+
+		.window {
+			border-radius:1rem;
+			width:512px;
+			top:30%;
+			left:65%;
+			background: black;
+			height:500px;
+			will-change: transform,width,height;
+		}
+
+		.resize {
+			width: 1rem;
+			height: 1rem;
+			background: blue;
+		}
+
+		.wl, .wr {
+			top: 5%;
+			position: absolute;
+			height: 90%;
+			width: 10px;
+		}
+
+		.wl {
+			left: -5px;
+		}
+
+		.wr {
+			right: -5px;
+		}
+
+		.ht, .hb {
+			position:absolute;
+			left: 5%;
+			width: 90%;
+			height: 10px;
+		}
+
+		.ht {
+			top: -5px;
+		}
+
+		.hb {
+			bottom: -5px;
+		}
+
+		.whlt, .whrt, .whlb, .whrb {
+			position: absolute;
+			width: 5%;
+			height: 5%;
+		}
+
+		.whlt {
+			top: -5px;
+			left: -5px;
+		}
+
+		.whrt {
+			top: -5px;
+			right: -5px;
+		}
+
+		.whrb {
+			bottom: -5px;
+			right: -5px;
+		}
+
+		.whlb {
+			bottom: -5px;
+			left: -5px;
+		}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 		</style>
 	</head>
 	<body>
-		<div style="z-index:-1">
-		<div class="cursor">
-			<div class="cursor-icon">
+		<div class="window1 window noselect">
+			<div class="panel panel1">
+				<div class="resize1 resize">
+				</div>
+			</div>
+			<div class="wl wl1">
+			</div>
+			<div class="wr wr1">
+			</div>
+			<div class="hb hb1">
+			</div>
+			<div class="ht ht1">
+			</div>
+			<div class="whlt whlt1">
+			</div>
+			<div class="whrt whrt1">
+			</div>
+			<div class="whlb whlb1">
+			</div>
+			<div class="whrb whrb1">
 			</div>
 		</div>
-		<div class="window1 window" style="border-radius:1rem;width:512px;background: black;height:500px">
-			<div class="panel1" style="border-radius:1rem;width:512px;height:200px;background:gray;">
+		<div class="window2 window noselect">
+			<div class="panel panel2 noselect">
 			</div>
-		</div>
-		<div class="window2 window" style="border-radius:1rem;width:512px;background: black;height:500px">
-			<div class="panel2" style="border-radius:1rem;width:512px;height:200px;background:gray;">
-			</div>
-		</div>
 		</div>
 	</body>
 </html>
