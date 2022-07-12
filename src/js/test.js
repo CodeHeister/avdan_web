@@ -3,6 +3,7 @@ var z_index_g = 1;
 const resize = (e, target, info) => {
 	target.style.width = target.offsetWidth/2+"px";
 	target.style.height = target.offsetHeight/2+"px";
+	target.querySelector(".win-panel").style.display = "none";
 	target.style.zIndex = z_index_g;
 	z_index_g += 1;
 }
@@ -10,6 +11,7 @@ const resize = (e, target, info) => {
 const resizeBack = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
+	target.querySelector(".win-panel").style.display = null;
 }
 
 const recolorp = (e, target, info) => {
@@ -45,6 +47,45 @@ const attach = (e, target, info) => {
 		target.style.zIndex = z_index_g;
 		z_index_g += 1;
 	}
+}
+
+
+const leftAttach = (e, target) => {
+	target.style.top = 0;
+	target.style.left = 0;
+	target.style.width = "50%";
+	target.style.height = "100%";
+	target.style.transform = null;
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
+const rightAttach = (e, target) => {
+	target.style.top = 0;
+	target.style.left = "50%";
+	target.style.width = "50%";
+	target.style.height = "100%";
+	target.style.transform = null;
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
+const fullsize = (e, target) => {
+	target.style.top = 0;
+	target.style.left = 0;
+	target.style.width = "100%";
+	target.style.height = "100%";
+	target.style.transform = null;
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
+const minimalize = (e, target) => {
+	target.style.display = "none";
+}
+
+const closeWindow = (e, target) => {
+	document.body.removeChild(target);
 }
 
 const dragResizeWL = (e, target, info) => {
@@ -84,6 +125,7 @@ const dragResizeWHRB = (e, target, info) => {
 }
 
 const winCheck = (e, target, info) => {
+	var highestWin = "";
 	document.querySelectorAll(".window").forEach(item => {
 		if (document.querySelector(info.target) != item) {
 			var targetTransformX = 0;
@@ -101,37 +143,18 @@ const winCheck = (e, target, info) => {
 			var x2 = x1+item.offsetWidth;
 			var y1 = item.offsetTop+targetTransformY;
 			var y2 = y1+item.offsetHeight;
-			console.log(x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2);
+			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+				if (highestWin == "") { 
+					highestWin = item;
+				}
+				else {
+					highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item;
+				}
+			}
 		}
 	});
+	console.log(highestWin);
 }
-
-var str1 = ".resize1";
-var test1 = document.querySelector(str1);
-var str2 = ".panel2";
-var test2 = document.querySelector(str2);
-
-
-document.body.addEventListener("mouseup", e => {leave(e, ".window1")});
-
-test1.addEventListener("mousedown", e => {dragAdd(e, str1, ".window1", undefined, resize, undefined, undefined, winCheck, resizeBack, undefined, true, true, document.querySelector(".window1").offsetWidth/2)});
-document.querySelector(".panel1").addEventListener("mousedown", e => {dragAdd(e, ".panel1", ".window1", undefined, moveUp, undefined, undefined, undefined, undefined, attach)});
-document.querySelector(".wl1").addEventListener("mousedown", e => {dragAdd(e, ".wl1", ".window1", undefined, undefined, undefined, dragResizeWL, undefined, undefined, undefined, true, false)});
-document.querySelector(".wr1").addEventListener("mousedown", e => {dragAdd(e, ".wr1", ".window1", undefined, undefined, undefined, dragResizeWR, undefined, undefined, undefined, false, false)});
-document.querySelector(".ht1").addEventListener("mousedown", e => {dragAdd(e, ".ht1", ".window1", undefined, undefined, undefined, dragResizeHT, undefined, undefined, undefined, false, true)});
-document.querySelector(".hb1").addEventListener("mousedown", e => {dragAdd(e, ".hb1", ".window1", undefined, undefined, undefined, dragResizeHB, undefined, undefined, undefined, false, false)});
-document.querySelector(".whlt1").addEventListener("mousedown", e => {dragAdd(e, ".wl1", ".window1", undefined, undefined, undefined, dragResizeWHLT, undefined, undefined, undefined, true, true)});
-document.querySelector(".whrt1").addEventListener("mousedown", e => {dragAdd(e, ".wr1", ".window1", undefined, undefined, undefined, dragResizeWHRT, undefined, undefined, undefined, false, true)});
-document.querySelector(".whlb1").addEventListener("mousedown", e => {dragAdd(e, ".ht1", ".window1", undefined, undefined, undefined, dragResizeWHLB, undefined, undefined, undefined, true, false)});
-document.querySelector(".whrb1").addEventListener("mousedown", e => {dragAdd(e, ".hb1", ".window1", undefined, undefined, undefined, dragResizeWHRB, undefined, undefined, undefined, false, false)});
-
-window.addEventListener("mouseup", e => {leave(e, ".window1")});
-
-test2.addEventListener("mousedown", e => {dragAdd(e, str2, ".window2", undefined, moveUp, undefined, undefined, undefined, undefined, attach)});
-document.body.addEventListener("mouseup", e => {leave(e, ".window2")});
-/*
-document.body.addEventListener("mouseleave", leaveAll);
-*/
 
 
 var win_num_g = 1;
@@ -139,6 +162,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	var win = document.createElement("div");
 	win.classList.add("window");
 	win.id = "window"+win_num_g;
+	win.setAttribute('draggable', false);
 
 	var panel = document.createElement("div");
 	panel.classList.add("win-panel");
@@ -160,9 +184,47 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	tab_add.id = "tab-add"+win_num_g;
 	tab_add.innerHTML = "+";
 
+	var win_panel_buttons = document.createElement("div");
+	win_panel_buttons.classList.add("win-panel-buttons");
+	win_panel_buttons.id = "win-panel-buttons"+win_num_g;
+
+	var win_resizers = document.createElement("div");
+	win_resizers.classList.add("win-resizers");
+	win_resizers.id = "win-resizers"+win_num_g;
+
+	var left_attach = document.createElement("div");
+	left_attach.classList.add("left-attach");
+	left_attach.id = "left-attach"+win_num_g;
+	left_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
+
+	var win_insert = document.createElement("div");
+	win_insert.classList.add("win-insert");
+	win_insert.id = "win-insert"+win_num_g;
+	win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, resize, undefined, undefined, winCheck, resizeBack, undefined, true, true, win.offsetWidth/2)});
+
+	var right_attach = document.createElement("div");
+	right_attach.classList.add("right-attach");
+	right_attach.id = "right-attach"+win_num_g;
+	right_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
+
 	var win_control = document.createElement("div");
 	win_control.classList.add("win-control");
 	win_control.id = "win-control"+win_num_g;
+
+	var win_fullsize = document.createElement("div");
+	win_fullsize.classList.add("win-fullsize");
+	win_fullsize.id = "win-fullsize"+win_num_g;
+	win_fullsize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, fullsize)});
+
+	var win_minimalize = document.createElement("div");
+	win_minimalize.classList.add("win-minimalize");
+	win_minimalize.id = "win-minimalize"+win_num_g;
+	win_minimalize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, minimalize)});
+
+	var win_close = document.createElement("div");
+	win_close.classList.add("win-close");
+	win_close.id = "win-close"+win_num_g;
+	win_close.addEventListener("click", e => {click(e, `#${win.id}`, undefined, closeWindow)});
 
 	var container = document.createElement("div");
 	container.classList.add("container");
@@ -214,13 +276,23 @@ const makeWindow = (content, icon_src, title, x, y) => {
 
 	window.addEventListener("mouseup", e => {leave(e, `#${win.id}`)});
 
-	/*test1.addEventListener("mousedown", e => {dragAdd(e, str1, ".window1", undefined, resize, undefined, undefined, winCheck, resizeBack, undefined, true, true, document.querySelector(".window1").offsetWidth/2)});*/
 
 	tab_holder.appendChild(win_tab);
 	tab_holder.appendChild(tab_add);
+
+	win_resizers.appendChild(left_attach);
+	win_resizers.appendChild(win_insert);
+	win_resizers.appendChild(right_attach);
+
+	win_control.appendChild(win_fullsize);
+	win_control.appendChild(win_minimalize);
+	win_control.appendChild(win_close);
+
+	win_panel_buttons.appendChild(win_resizers);
+	win_panel_buttons.appendChild(win_control);
 	
 	panel.appendChild(tab_holder);
-	panel.appendChild(win_control);
+	panel.appendChild(win_panel_buttons);
 	
 	content_holder.appendChild(content);
 	container.appendChild(content_holder);
@@ -236,6 +308,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	win.appendChild(whlb);
 	win.appendChild(whrb);
 
+	win_num_g += 1;
 	return win;
 }
 

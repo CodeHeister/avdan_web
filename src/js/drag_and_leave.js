@@ -25,11 +25,11 @@ const dragAdd = (e, currentTarget, target, currentTarget_in_f, target_in_f, curr
 
 		var target = document.querySelector(target);
 
-		if (currentTarget_in_f != undefined) {
+		if (typeof currentTarget_in_f == "function") {
 			currentTarget_in_f(e, e.currentTarget, info);
 		}
 
-		if (target_in_f != undefined) {
+		if (typeof target_in_f == "function") {
 			target_in_f(e, target, info);
 		}
 
@@ -53,11 +53,11 @@ const click = (e, target, currentTarget_f, target_f) => {
 	
 	var target = document.querySelector(target);
 
-	if (currentTarget_f != undefined) {
+	if (typeof currentTarget_f == "function") {
 		currentTarget_f(e, e.currentTarget);
 	}
 
-	if (target_f != undefined) {
+	if (typeof target_f == "function") {
 		target_f(e, target);
 	}
 }
@@ -77,11 +77,11 @@ const drag = e => {
 			targetTransformY = parseInt(nums[1]);
 		}
 
-		if (item.currentTarget_f != undefined) {
+		if (typeof item.currentTarget_f == "function") {
 			item.currentTarget_f(e, document.querySelector(item.currentTarget), item);
 		}
 
-		if (item.target_f != undefined) {
+		if (typeof item.target_f == "function") {
 			item.target_f(e, target, item);
 		}
 
@@ -109,11 +109,11 @@ const leave = (e, target) => { // event, move target, fuction for control, funct
 		var target = document.querySelector(target);
 		var currentTarget = document.querySelector(info.currentTarget);
 
-		if (info.currentTarget_out_f != undefined) {
+		if (typeof info.currentTarget_out_f == "function") {
 			info.currentTarget_out_f(e, currentTarget, info);
 		}
 
-		if (info.target_out_f != undefined) {
+		if (typeof info.target_out_f == "function") {
 			info.target_out_f(e, target, info);
 		}
 
