@@ -153,7 +153,13 @@ const winCheck = (e, target, info) => {
 			}
 		}
 	});
-	console.log(highestWin);
+	if (highestWin != "") { 
+		var win = document.querySelector(info.target);
+		win.querySelectorAll(".win-tab").forEach(item => {
+			highestWin.querySelector(".tab-holder").insertBefore(item, highestWin.querySelector(".tab-add"));
+		});
+		closeWindow(e, win);
+	}
 }
 
 
