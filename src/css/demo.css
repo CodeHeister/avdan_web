@@ -1,32 +1,103 @@
+:root {
+	--font-primary: #fff;
+	--font-secondary: #a0a0a0;
+	--scrollbar-track-bg: #101010;
+	--scrollbar-thumb-bg: #333;
+	--icon-fill: white;
+	--swap-speed: 0.2s;
+	--toggle-theme-color: #ffc107;
+	--map-bg: 48,48,48;
+	--menu-bg: rgba(48,48,48,0);
+	--menu-bg-scrolled: rgba(48,48,48,0.8);
+	--link-color: #3291ff;
+	--shadow-color: black;
+	--title-shadow-color: black;
+	--card-bg: rgba(48,48,48,0.5);
+	--card-black: black;
+	--card-shadow: rgba(0,0,0,0.1);
+	--footer-bg: rgba(48,48,48,1); 
+	--lines-color: #5E5E5E;
+	--mobile-panel-speed: 0.3s;
+	--footer-card-bg: #444444;
+	--start-color: #9a9a9a;
+	--finish-color: #fbfbfb;
+	--light-bg: rgba(255,255,255,0.125);
+	--dark-bg: rgba(0,0,0,0.575);
+}
+
+html {
+	background: url("../images/demo/backgrounds/AvdanOSWallpaper.jpg");
+}
+
 html, body {
 	overflow: hidden;
+}
+
+@font-face {
+	font-family: "Inter";
+	src 		: url(../fonts/inter.ttf);
+	font-display: swap;
+}
+
+* {
+    font-family: Inter, sans-serif;
+    color: var(--font-primary);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+    background: var(--scrollbar-track-bg);
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 0.25rem;
+	background-color: var(--scrollbar-thumb-bg);
 }
 
 .window {
 	z-index:-1;
 	position: absolute;
 	display: flex;
-	background: rgba(48,48,48,0.3);
+	background: var(--dark-bg);
 	backdrop-filter: blur(0.5rem);
 	flex-direction: column;
 }
 
-.panel, .window {
-	transition:none;
+.container {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+	padding: 0.35rem;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-.panel, .win-panel {
+.main-panel {
+	display: flex;
+	flex-direction: row;
+}
+
+.appbar {
+	display: flex;
+	padding: 0.5rem;
+	gap: 0.5rem;
+	flex-direction: row;
+	background-color: rgba(66,5,54,0.7);
+}
+
+.win-panel {
 	display:flex;
 	justify-content:center;
 	align-items:center;
-	padding: 1rem;
+	padding: 0.35rem;
 	border-radius:0.25rem;
 	width:100%;
+	gap: 1rem;
 	box-sizing: border-box;
 }
 
 .window {
-	border-radius:1rem;
+	border-radius:0.25rem;
 	width:500px;
 	top:50%;
 	left:50%;
@@ -34,7 +105,7 @@ html, body {
 	will-change: transform,width,height;
 }
 
-.tab-holder, .win-panel-button {
+.win-panel-button {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -42,66 +113,70 @@ html, body {
 }
 
 .tab-holder {
+	display: flex;
+	flex-direction: row;
 	margin-right: auto;
+	gap: 0.5rem;
+	overflow-x: hidden;
 }
 
 .win-resizers, .win-control {
 	display: flex;
 	flex-direction: row;
+	border-radius: 0.25rem;
+}
+
+.win-resizers div:first-child, .win-control div:first-child {
+	padding-left: 7px !important;
+}
+
+.win-resizers div:last-child, .win-control div:last-child {
+	padding-right: 7px !important;
 }
 
 .win-panel-buttons {
 	display: flex;
 	flex-direction: row;
-	gap: 0.5rem;
+	gap: 0.4rem;
 }
 
 .tab-add {
-	display: flex;
-	justify-content: center;
 	text-align: center;
-	height: 1.5rem;
-	width: 1.5rem;
-	border-radius:0.25rem;
+	color: rgba(192,192,192,0.9);
+	border-radius: 0.25rem;
 }
 
-.win-minimalize, .win-close, .win-fullsize, .right-attach, .left-attach, .win-insert {
-	width: 1rem;
-	height: 1rem;
+.win-minimalize, .win-close, .win-fullsize, .split-right, .split-left, .win-insert {
+	background-color: var(--light-bg);
+	padding: 0 0.475rem 1px 0.475rem;
 }
 
-.win-minimalize {
-	background-color: green;
-}
-
-.win-close {
-	background-color: red;
-}
-
-.win-fullsize {
-	background-color: yellow;
-}
-
-.right-attach {
-	background-color: orange;
-}
-
-.left-attach {
-	background-color: pink;
-}
-
-.win-insert {
-	background-color: blue;
+.win-minimalize img, .win-close img, .win-fullsize img, .split-right img, .split-left img, .win-insert img {
+	width: 10px;
+	height: 10px;
+	pointer-events: none;
 }
 
 .win-tab {
 	display: flex;
 	justify-content: center;
 	text-align: center;
-	height: 1.5rem;
+	font-size: 0.75rem;
 	border-radius:0.25rem;
-	padding: 0 1rem 0 1rem;
-	background: rgba(48,48,48,0.8);
+	padding: 3px 2rem 3px 2rem;
+	background: var(--light-bg);
+	max-width: 80px;
+	white-space: nowrap; 
+	overflow: hidden;
+	text-overflow: ellipsis; 
+}
+
+.icon-block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
 }
 
 .resize {
@@ -110,15 +185,10 @@ html, body {
 	background: blue;
 }
 
-.container {
-	height: 100%;
-	width: 100%;
-}
-
 .wl, .wr {
-	top: 5%;
+	top: calc(0% + 20px);
 	position: absolute;
-	height: 90%;
+	height: calc(100% - 20px);
 	width: 10px;
 }
 
@@ -132,8 +202,8 @@ html, body {
 
 .ht, .hb {
 	position:absolute;
-	left: 5%;
-	width: 90%;
+	left: calc(0% + 20px);
+	width: calc(100% - 20px);
 	height: 10px;
 }
 
@@ -147,8 +217,8 @@ html, body {
 
 .whlt, .whrt, .whlb, .whrb {
 	position: absolute;
-	width: 5%;
-	height: 5%;
+	width: 20px;
+	height: 20px;
 }
 
 .whlt {

@@ -4,6 +4,8 @@ const resize = (e, target, info) => {
 	target.style.width = target.offsetWidth/2+"px";
 	target.style.height = target.offsetHeight/2+"px";
 	target.querySelector(".win-panel").style.display = "none";
+	target.querySelector(".container").style.display = "none";
+	target.querySelector(".icon-block").style.display = null;
 	target.style.zIndex = z_index_g;
 	z_index_g += 1;
 }
@@ -12,6 +14,8 @@ const resizeBack = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
 	target.querySelector(".win-panel").style.display = null;
+	target.querySelector(".container").style.display = null;
+	target.querySelector(".icon-block").style.display = "none";
 }
 
 const recolorp = (e, target, info) => {
@@ -71,11 +75,27 @@ const rightAttach = (e, target) => {
 }
 
 const fullsize = (e, target) => {
-	target.style.top = 0;
-	target.style.left = 0;
-	target.style.width = "100%";
-	target.style.height = "100%";
-	target.style.transform = null;
+	console.log(target.lastWidth);
+	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.width == "100%" && target.style.height == "100%" && target.style.transform == "") {
+		target.style.top = null;
+		target.style.left = null;
+		target.style.width = target.lastWidth+"px";
+		target.style.height = target.lastHeight+"px";
+		target.style.transform = target.lastTransform;
+		target.lastTransform = undefined;
+		target.lastWidth = undefined;
+		target.lastHeight = undefined;
+	}
+	else {
+		target.lastTransform = target.style.transform;
+		target.lastWidth = target.offsetWidth;
+		target.lastHeight = target.offsetHeight;
+		target.style.top = 0;
+		target.style.left = 0;
+		target.style.width = "100%";
+		target.style.height = "100%";
+		target.style.transform = null;
+	}
 	target.style.zIndex = z_index_g;
 	z_index_g += 1;
 }
@@ -86,6 +106,20 @@ const minimalize = (e, target) => {
 
 const closeWindow = (e, target) => {
 	document.body.removeChild(target);
+}
+
+const hideAllContent = (e, target) => {
+	var win = target;
+	while (!win.classList.contains("window")) {
+		win = win.parentElement;
+	}
+	win.querySelectorAll(".content-holder").forEach(item => {
+		item.style.display = "none";
+	});
+}
+
+const showContent = (e, target) => {
+	target.style.display = null;
 }
 
 const dragResizeWL = (e, target, info) => {
@@ -154,9 +188,34 @@ const winCheck = (e, target, info) => {
 		}
 	});
 	if (highestWin != "") { 
+		if (highestWin.style.transform != '') {
+		
+			var nums = highestWin.style.transform.split("translate3d")[1];
+			nums = nums.slice(1, nums.length-1).split("px,");
+			
+			targetTransformX = parseInt(nums[0]);
+			targetTransformY = parseInt(nums[1]);
+		}
+
+		var x1 = highestWin.offsetLeft+targetTransformX;
+		var x2 = x1+highestWin.offsetWidth;
+		var y1 = highestWin.offsetTop+targetTransformY;
+		var y2 = y1+highestWin.offsetHeight;
+		var winPanel = highestWin.querySelector(".win-panel");
+		var panelx1 = x1 + winPanel.offsetLeft;
+		var panelx2 = panelx1 + winPanel.offsetWidth;
+		var panely1 = y1 + winPanel.offsetTop;
+		var panely2 = panely1 + winPanel.offsetHeight;
+		console.log(panelx1, panelx2, panely1, panely2, panelx1 <= e.clientX && e.clientX <= panelx2 && panely1 <= e.clientY && e.clientY <= panely2);
 		var win = document.querySelector(info.target);
 		win.querySelectorAll(".win-tab").forEach(item => {
 			highestWin.querySelector(".tab-holder").insertBefore(item, highestWin.querySelector(".tab-add"));
+		});
+		win.querySelectorAll(".content-holder").forEach(item => {
+			if (panelx1 <= e.clientX && e.clientX <= panelx2 && panely1 <= e.clientY && e.clientY <= panely2 || false) {
+				item.style.display = "none";
+			}
+			highestWin.querySelector(".container").appendChild(item);
 		});
 		closeWindow(e, win);
 	}
@@ -184,6 +243,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	win_tab.classList.add("win-tab");
 	win_tab.id = "win-tab"+win_num_g;
 	win_tab.innerHTML = title;
+	win_tab.addEventListener("click", e => {click(e, `#${content_holder.id}`, hideAllContent, showContent)});
 
 	var tab_add = document.createElement("div");
 	tab_add.classList.add("tab-add");
@@ -198,20 +258,32 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	win_resizers.classList.add("win-resizers");
 	win_resizers.id = "win-resizers"+win_num_g;
 
-	var left_attach = document.createElement("div");
-	left_attach.classList.add("left-attach");
-	left_attach.id = "left-attach"+win_num_g;
-	left_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
+	var split_left = document.createElement("div");
+	split_left.classList.add("split-left");
+	split_left.id = "split-left"+win_num_g;
+	//left_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
+	var split_left_img = document.createElement("img");
+	split_left_img.src = "src/images/demo/icons/Frame/SplitLeft.png";
+	split_left_img.setAttribute('draggable', false);
+	split_left.appendChild(split_left_img);
 
 	var win_insert = document.createElement("div");
 	win_insert.classList.add("win-insert");
 	win_insert.id = "win-insert"+win_num_g;
 	win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, resize, undefined, undefined, winCheck, resizeBack, undefined, true, true, win.offsetWidth/2)});
+	var win_insert_img = document.createElement("img");
+	win_insert_img.src = "src/images/demo/icons/Frame/Multitask.png";
+	win_insert_img.setAttribute('draggable', false);
+	win_insert.appendChild(win_insert_img);
 
-	var right_attach = document.createElement("div");
-	right_attach.classList.add("right-attach");
-	right_attach.id = "right-attach"+win_num_g;
-	right_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
+	var split_right = document.createElement("div");
+	split_right.classList.add("split-right");
+	split_right.id = "split-right"+win_num_g;
+	//right_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
+	var split_right_img = document.createElement("img");
+	split_right_img.src = "src/images/demo/icons/Frame/SplitRight.png";
+	split_right_img.setAttribute('draggable', false);
+	split_right.appendChild(split_right_img);
 
 	var win_control = document.createElement("div");
 	win_control.classList.add("win-control");
@@ -221,16 +293,28 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	win_fullsize.classList.add("win-fullsize");
 	win_fullsize.id = "win-fullsize"+win_num_g;
 	win_fullsize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, fullsize)});
+	var win_fullsize_img = document.createElement("img");
+	win_fullsize_img.src = "src/images/demo/icons/Frame/Maximize.png";
+	win_fullsize_img.setAttribute('draggable', false);
+	win_fullsize.appendChild(win_fullsize_img);
 
 	var win_minimalize = document.createElement("div");
 	win_minimalize.classList.add("win-minimalize");
 	win_minimalize.id = "win-minimalize"+win_num_g;
 	win_minimalize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, minimalize)});
+	var win_minimalize_img = document.createElement("img");
+	win_minimalize_img.src = "src/images/demo/icons/Frame/Minimize.png";
+	win_minimalize_img.setAttribute('draggable', false);
+	win_minimalize.appendChild(win_minimalize_img);
 
 	var win_close = document.createElement("div");
 	win_close.classList.add("win-close");
 	win_close.id = "win-close"+win_num_g;
 	win_close.addEventListener("click", e => {click(e, `#${win.id}`, undefined, closeWindow)});
+	var win_close_img = document.createElement("img");
+	win_close_img.src = "src/images/demo/icons/Frame/Close.png";
+	win_close_img.setAttribute('draggable', false);
+	win_close.appendChild(win_close_img);
 
 	var container = document.createElement("div");
 	container.classList.add("container");
@@ -239,6 +323,15 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	var content_holder = document.createElement("div");
 	content_holder.classList.add("content-holder");
 	content_holder.id = "content-holder"+win_num_g;
+
+	var icon_block = document.createElement("div");
+	icon_block.classList.add("icon-block");
+	icon_block.style.display = "none";
+	icon_block.id = "icon-block"+win_num_g;
+	var icon = document.createElement("img");
+	icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
+	icon.id = "icon"+win_num_g;
+	icon_block.appendChild(icon);
 
 	var wl = document.createElement("div");
 	wl.classList.add("wl");
@@ -286,9 +379,9 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	tab_holder.appendChild(win_tab);
 	tab_holder.appendChild(tab_add);
 
-	win_resizers.appendChild(left_attach);
+	win_resizers.appendChild(split_left);
 	win_resizers.appendChild(win_insert);
-	win_resizers.appendChild(right_attach);
+	win_resizers.appendChild(split_right);
 
 	win_control.appendChild(win_fullsize);
 	win_control.appendChild(win_minimalize);
@@ -305,6 +398,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 
 	win.appendChild(panel);
 	win.appendChild(container);
+	win.appendChild(icon_block);
 	win.appendChild(wl);
 	win.appendChild(wr);
 	win.appendChild(hb);
@@ -321,4 +415,14 @@ const makeWindow = (content, icon_src, title, x, y) => {
 window.addEventListener("mousemove", drag);
 document.querySelector("html").addEventListener("mouseleave", leaveAll);
 
-document.body.appendChild(makeWindow(document.createElement("div"), undefined, "My Win"));
+
+// W I N D O W S
+
+var content1 = document.createElement("div");
+content1.innerHTML = "Hi";
+
+var content2 = document.createElement("div");
+content2.innerHTML = "Hello";
+
+document.body.appendChild(makeWindow(content1, "src/images/demo/icons/Apps/Calculator.png", "My Win1"));
+document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/Calendar.png", "My Win2"));
