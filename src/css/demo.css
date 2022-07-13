@@ -95,6 +95,7 @@ html, body {
 	display: flex;
 	padding: 0.5rem;
 	gap: 0.5rem;
+	backdrop-filter: blur(40px);
 	flex-direction: row;
 	background-color: var(--dark-bg);
 	border-radius: 0.25rem;
