@@ -141,14 +141,14 @@ const leaveAll = e => {
 			info.currentTarget_out_f(e, e.currentTarget, info);
 		}
 
+		if (info.target_out_f != undefined) {
+				info.target_out_f(e, target, info);
+		}
+
 		if (info.drop_f != undefined) {
 			info.drop_f(e, target, info);
 		}
-		else {
-			if (info.target_out_f != undefined) {
-				info.target_out_f(e, target, info);
-			}
-		}
+		
 
 		if (target.style.transform != '') {
 		
