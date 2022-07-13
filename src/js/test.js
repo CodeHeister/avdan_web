@@ -1,5 +1,7 @@
 var z_index_g = 1;
 
+// W I N D O W  C O N T R O L
+
 const iconify = (e, target, info) => {
 	target.lastMinWidth = target.style.minWidth || "350px";
 	target.style.minWidth = "initial";
@@ -140,6 +142,8 @@ const closeWindow = (e, target) => {
 	underline.parentElement.removeChild(underline);
 }
 
+// E X T R A  F O R  T A B S  C L I C K
+
 const hideAllContent = (e, target) => {
 	var win = target;
 	while (!win.classList.contains("window")) {
@@ -149,6 +153,8 @@ const hideAllContent = (e, target) => {
 		item.style.display = "none";
 	});
 }
+
+// R E S I Z E R S
 
 const showContent = (e, target) => {
 	target.style.display = null;
@@ -199,6 +205,8 @@ const dropTransition = (e, target, info) => {
 	win.style.zIndex = z_index_g;
 	z_index_g += 1;
 }
+
+// R E C R E A T I O N  C H E C K  O N  T A B  O U T
 
 const remakeWindow = (e, target, info) => {
 	var win = target;
@@ -277,7 +285,7 @@ const remakeWindow = (e, target, info) => {
 
 			for (var i = 0; i < apps_list.length; i++) {
 				if (icon_src.includes(apps_list[i]["src"])) {
-					var underlines = document.querySelector(`.app-bar:nth-child(${i+1}) .underlines`);
+					var underlines = document.querySelector(".app-bar").children[i].querySelector(".underlines");
 					console.log(underlines);
 					var underline = document.createElement("div");
 					underline.classList.add("underline");
@@ -345,6 +353,8 @@ const remakeWindow = (e, target, info) => {
 		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+200+"px";
 	}
 }
+
+// W I N D O W  C O N T R O L  F U N C  F O R  W I N D O W  S T A C K I N G
 
 const insertCheck = (e, target, info) => {
 	var highestWin = "";
@@ -641,6 +651,8 @@ const makeWindow = (content, icon_src, title, extraClass, x, y) => {
 	return win;
 }
 
+// A P P  B A R  F I L L E R
+
 var apps_list;
 const appBarGenerate = apps_list_l => {
 	var app_bar = document.querySelector(".app-bar");	
@@ -651,6 +663,7 @@ const appBarGenerate = apps_list_l => {
 		img_container.classList.add("img-container");
 		
 		var img = document.createElement("img");
+		img.classList.add("noselect");
 		img.src = item["src"];
 		
 		var underlines = document.createElement("div");
@@ -689,7 +702,7 @@ const appBarGenerate = apps_list_l => {
 window.addEventListener("mousemove", drag);
 document.querySelector("html").addEventListener("mouseleave", leaveAll);
 
-// W I N D O W S
+// M A I N
 
 var content1 = document.createElement("div");
 content1.innerHTML = "Hi";
