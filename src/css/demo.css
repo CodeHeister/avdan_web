@@ -63,7 +63,7 @@ html, body {
 	position: absolute;
 	display: flex;
 	background: var(--dark-bg);
-	backdrop-filter: blur(0.5rem);
+	backdrop-filter: blur(40px);
 	flex-direction: column;
 	min-width: 350px;
 	min-height: 280px;
