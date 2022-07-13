@@ -22,11 +22,15 @@
 	--start-color: #9a9a9a;
 	--finish-color: #fbfbfb;
 	--light-bg: rgba(255,255,255,0.125);
+	--light-bg-hl: rgba(255,255,255,0.2);
 	--dark-bg: rgba(0,0,0,0.575);
 }
 
 html {
 	background: url("../images/demo/backgrounds/AvdanOSWallpaper.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
 }
 
 html, body {
@@ -144,6 +148,7 @@ html, body {
 	text-align: center;
 	color: rgba(192,192,192,0.9);
 	border-radius: 0.25rem;
+	padding: 0 0.5rem 0 0.5rem;
 }
 
 .win-minimalize, .win-close, .win-fullsize, .split-right, .split-left, .win-insert {
@@ -179,10 +184,23 @@ html, body {
 	height: 100%;
 }
 
+.icon-block img {
+	max-width: 75%;
+}
+
 .resize {
 	width: 1rem;
 	height: 1rem;
 	background: blue;
+}
+
+.tab-add, .win-tab, .win-minimalize, .win-close, .win-fullsize, .split-right, .split-left, .win-insert  {
+	transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.tab-add:hover, .win-tab:hover, .win-minimalize:hover, .win-close:hover, .win-fullsize:hover, .split-right:hover, .split-left:hover, .win-insert:hover  {
+	color: var(--font-primary) !important;
+	background-color: var(--light-bg-hl) !important;
 }
 
 .wl, .wr {
