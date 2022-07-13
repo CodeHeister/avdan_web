@@ -129,6 +129,8 @@ const fullsize = (e, target) => {
 }
 
 const minimalize = (e, target) => {
+	var underline = document.querySelector("#underline"+target.id.match("[0-9]+")[0]);
+	underline.style.backgroundColor = "var(--light-bg)";
 	target.style.display = "none";
 }
 
