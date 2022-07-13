@@ -134,6 +134,8 @@ const minimalize = (e, target) => {
 
 const closeWindow = (e, target) => {
 	document.body.removeChild(target);
+	var underline = document.querySelector("#underline"+target.id.match("[0-9]+"));
+	underline.parentElement.removeChild(underline);
 }
 
 const hideAllContent = (e, target) => {
@@ -270,6 +272,29 @@ const remakeWindow = (e, target, info) => {
 		});
 
 		if (!highestWin) {
+
+			for (var i = 0; i < apps_list.length; i++) {
+				if (icon_src.includes(apps_list[i]["src"])) {
+					var underlines = document.querySelector(`.app-bar:nth-child(${i+1}) .underlines`);
+					console.log(underlines);
+					var underline = document.createElement("div");
+					underline.classList.add("underline");
+					underline.id = "underline"+win_num_g;
+					underline.addEventListener("click", e => {
+						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+						if (win.style.display) {
+							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+							win.style.display = null;
+						}
+						else {
+							e.currentTarget.style.backgroundColor = "var(--light-bg)";
+							win.style.display = "none";
+						}
+					});
+
+					underlines.appendChild(underline);
+				}
+			}
 
 			document.body.appendChild(makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML));
 
@@ -614,12 +639,53 @@ const makeWindow = (content, icon_src, title, extraClass, x, y) => {
 	return win;
 }
 
+var apps_list;
+const appBarGenerate = apps_list_l => {
+	var app_bar = document.querySelector(".app-bar");	
+
+	apps_list = apps_list_l;
+	apps_list_l.forEach(item => {
+		var img_container = document.createElement("div");
+		img_container.classList.add("img-container");
+		
+		var img = document.createElement("img");
+		img.src = item["src"];
+		
+		var underlines = document.createElement("div");
+		underlines.classList.add("underlines");
+
+		img_container.appendChild(img);
+		img_container.appendChild(underlines);
+
+		img_container.addEventListener("click", e => {
+			if (e.target == e.currentTarget) {
+			
+				var underline = document.createElement("div");
+				underline.classList.add("underline");
+				underline.id = "underline"+win_num_g;
+				underline.addEventListener("click", e => {
+					var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+					if (win.style.display) {
+						e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+						win.style.display = null;
+					}
+					else {
+						e.currentTarget.style.backgroundColor = "var(--light-bg)";
+						win.style.display = "none";
+					}
+				});
+
+				underlines.appendChild(underline);
+				document.body.appendChild(makeWindow(item["content"], item["src"], item["title"]));
+			}
+		});
+
+		app_bar.appendChild(img_container);
+	});
+}
+
 window.addEventListener("mousemove", drag);
 document.querySelector("html").addEventListener("mouseleave", leaveAll);
-
-const appBarGeneration = icon_list => {
-	
-}
 
 // W I N D O W S
 
@@ -636,6 +702,22 @@ content1.classList.add("noselect");
 content2.classList.add("noselect");
 content3.classList.add("noselect");
 
-document.body.appendChild(makeWindow(content1, "src/images/demo/icons/Apps/Calculator.png", "AvdanWeb"));
-document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/Calendar.png", "AvdanWeb2"));
-document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/AfterEffects.png", "Test3"));
+var apps_list_g = [
+	{
+		"title" : "Calculator",
+		"src" : "src/images/demo/icons/Apps/Calculator.png",
+		"content" : content1
+	},
+	{
+		"title" : "Calendar",
+		"src" : "src/images/demo/icons/Apps/Calendar.png",
+		"content" : content2
+	},
+	{
+		"title" : "AfterEffects",
+		"src" : "src/images/demo/icons/Apps/AfterEffects.png",
+		"content" : content3
+	},
+]
+
+appBarGenerate(apps_list_g);
