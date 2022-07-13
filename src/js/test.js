@@ -1,6 +1,8 @@
 var z_index_g = 1;
 
-const resize = (e, target, info) => {
+const iconify = (e, target, info) => {
+	target.lastMinWidth = target.style.minWidth || "350px";
+	target.style.minWidth = "initial";
 	target.style.width = target.offsetWidth/2+"px";
 	target.style.height = target.offsetHeight/2+"px";
 	target.style.flexDirection = "row";
@@ -13,9 +15,11 @@ const resize = (e, target, info) => {
 	z_index_g += 1;
 }
 
-const resizeBack = (e, target, info) => {
+const deiconify = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
+	target.style.minWidth = target.lastMinWidth;
+	target.lastMinWidth = undefined;
 	target.style.flexDirection = null;
 	target.querySelector(".win-panel").style.display = null;
 	target.querySelector(".container").style.display = null;
@@ -25,6 +29,9 @@ const resizeBack = (e, target, info) => {
 }
 
 const attach = (e, target, info) => {
+	target.lastTransform = target.style.transform;
+	target.lastWidth = target.offsetWidth;
+	target.lastHeight = target.offsetHeight;
 	if (e.screenX > window.innerWidth/2) {
 		target.style.top = 0;
 		target.style.left = "50%";
@@ -271,8 +278,7 @@ const remakeWindow = (e, target, info) => {
 			target_content_holder.parentElement.removeChild(target_content_holder);
 		}
 		else {
-
-
+			win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+180+"px";
 
 			var winPanel = highestWin.querySelector(".win-panel");
 			
@@ -305,13 +311,15 @@ const remakeWindow = (e, target, info) => {
 			icon_block.style.display = "none";
 			highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
 		
+			highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+180+"px";
 			highestWin.style.zIndex = z_index_g;
 			z_index_g += 1;
 		}
+		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+200+"px";
 	}
 }
 
-const winCheck = (e, target, info) => {
+const insertCheck = (e, target, info) => {
 	var highestWin = "";
 	document.querySelectorAll(".window").forEach(item => {
 		if (document.querySelector(info.target) != item) {
@@ -392,6 +400,10 @@ const winCheck = (e, target, info) => {
 		});
 		
 		closeWindow(e, win);
+
+		highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+180+"px";
+		highestWin.style.zIndex = z_index_g;
+		z_index_g += 1;
 	}
 }
 
@@ -404,13 +416,18 @@ const moveUp = (e, target, info) => {
 // W I N D O W  G E N E R A T O R
 
 var win_num_g = 1;
-const makeWindow = (content, icon_src, title, x, y) => {
+const makeWindow = (content, icon_src, title, extraClass, x, y) => {
 	var win = document.createElement("div");
 	win.classList.add("window");
 	win.id = "window"+win_num_g;
 	win.style.zIndex = z_index_g;
 	z_index_g += 1;
 	win.setAttribute('draggable', false);
+	if (extraClass) {
+		extraClass.forEach(item => {
+			win.classList.add(item);
+		});
+	}
 
 	var panel = document.createElement("div");
 	panel.classList.add("win-panel");
@@ -453,7 +470,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	var win_insert = document.createElement("div");
 	win_insert.classList.add("win-insert");
 	win_insert.id = "win-insert"+win_num_g;
-	win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, resize, undefined, undefined, winCheck, resizeBack, undefined, true, true, win.offsetWidth/2)});
+	win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, iconify, undefined, undefined, insertCheck, deiconify, attach, true, true, win.offsetWidth/2)});
 	var win_insert_img = document.createElement("img");
 	win_insert_img.src = "src/images/demo/icons/Frame/Multitask.png";
 	win_insert_img.setAttribute('draggable', false);
@@ -600,7 +617,9 @@ const makeWindow = (content, icon_src, title, x, y) => {
 window.addEventListener("mousemove", drag);
 document.querySelector("html").addEventListener("mouseleave", leaveAll);
 
-const appBarGeneration = icon_list => {} 
+const appBarGeneration = icon_list => {
+	
+}
 
 // W I N D O W S
 
