@@ -3,9 +3,12 @@ var z_index_g = 1;
 const resize = (e, target, info) => {
 	target.style.width = target.offsetWidth/2+"px";
 	target.style.height = target.offsetHeight/2+"px";
+	target.style.flexDirection = "row";
 	target.querySelector(".win-panel").style.display = "none";
 	target.querySelector(".container").style.display = "none";
-	target.querySelector(".icon-block").style.display = null;
+	target.querySelectorAll(".icon-block").forEach(item => {
+		item.style.display = null;
+	});
 	target.style.zIndex = z_index_g;
 	z_index_g += 1;
 }
@@ -13,9 +16,12 @@ const resize = (e, target, info) => {
 const resizeBack = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
+	target.style.flexDirection = null;
 	target.querySelector(".win-panel").style.display = null;
 	target.querySelector(".container").style.display = null;
-	target.querySelector(".icon-block").style.display = "none";
+	target.querySelectorAll(".icon-block").forEach(item => {
+		item.style.display = "none";
+	});
 }
 
 const recolorp = (e, target, info) => {
@@ -55,28 +61,57 @@ const attach = (e, target, info) => {
 
 
 const leftAttach = (e, target) => {
-	target.style.top = 0;
-	target.style.left = 0;
-	target.style.width = "50%";
-	target.style.height = "100%";
-	target.style.transform = null;
-	target.style.zIndex = z_index_g;
-	z_index_g += 1;
+	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == 0 && target.style.width == "50%" && target.style.height == "100%") {
+		target.style.top = null;
+		target.style.left = null;
+		target.style.width = target.lastWidth+"px";
+		target.style.height = target.lastHeight+"px";
+		target.style.transform = target.lastTransform;
+		target.lastTransform = undefined;
+		target.lastWidth = undefined;
+		target.lastHeight = undefined;
+	}
+	else {
+		target.lastTransform = target.style.transform;
+		target.lastWidth = target.offsetWidth;
+		target.lastHeight = target.offsetHeight;
+		target.style.top = 0;
+		target.style.left = 0;
+		target.style.width = "50%";
+		target.style.height = "100%";
+		target.style.transform = null;
+		target.style.zIndex = z_index_g;
+		z_index_g += 1;
+	}
 }
 
 const rightAttach = (e, target) => {
-	target.style.top = 0;
-	target.style.left = "50%";
-	target.style.width = "50%";
-	target.style.height = "100%";
-	target.style.transform = null;
-	target.style.zIndex = z_index_g;
-	z_index_g += 1;
+	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == "50%" && target.style.width == "50%" && target.style.height == "100%") {
+		target.style.top = null;
+		target.style.left = null;
+		target.style.width = target.lastWidth+"px";
+		target.style.height = target.lastHeight+"px";
+		target.style.transform = target.lastTransform;
+		target.lastTransform = undefined;
+		target.lastWidth = undefined;
+		target.lastHeight = undefined;
+	}
+	else {
+		target.lastTransform = target.style.transform;
+		target.lastWidth = target.offsetWidth;
+		target.lastHeight = target.offsetHeight;
+		target.style.top = 0;
+		target.style.left = "50%";
+		target.style.width = "50%";
+		target.style.height = "100%";
+		target.style.transform = null;
+		target.style.zIndex = z_index_g;
+		z_index_g += 1;
+	}
 }
 
 const fullsize = (e, target) => {
-	console.log(target.lastWidth);
-	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.width == "100%" && target.style.height == "100%" && target.style.transform == "") {
+	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.width == "100%" && target.style.height == "100%") {
 		target.style.top = null;
 		target.style.left = null;
 		target.style.width = target.lastWidth+"px";
@@ -188,6 +223,8 @@ const winCheck = (e, target, info) => {
 		}
 	});
 	if (highestWin != "") { 
+			var targetTransformX = 0;
+			var targetTransformY = 0;
 		if (highestWin.style.transform != '') {
 		
 			var nums = highestWin.style.transform.split("translate3d")[1];
@@ -216,6 +253,10 @@ const winCheck = (e, target, info) => {
 				item.style.display = "none";
 			}
 			highestWin.querySelector(".container").appendChild(item);
+		});
+		win.querySelectorAll(".icon-block").forEach(item => {
+			item.style.display = "none";
+			highestWin.insertBefore(item, highestWin.querySelector(".wl"));
 		});
 		closeWindow(e, win);
 	}
@@ -261,7 +302,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	var split_left = document.createElement("div");
 	split_left.classList.add("split-left");
 	split_left.id = "split-left"+win_num_g;
-	//left_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
+	split_left.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
 	var split_left_img = document.createElement("img");
 	split_left_img.src = "src/images/demo/icons/Frame/SplitLeft.png";
 	split_left_img.setAttribute('draggable', false);
@@ -279,7 +320,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	var split_right = document.createElement("div");
 	split_right.classList.add("split-right");
 	split_right.id = "split-right"+win_num_g;
-	//right_attach.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
+	split_right.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
 	var split_right_img = document.createElement("img");
 	split_right_img.src = "src/images/demo/icons/Frame/SplitRight.png";
 	split_right_img.setAttribute('draggable', false);
@@ -330,6 +371,8 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	icon_block.id = "icon-block"+win_num_g;
 	var icon = document.createElement("img");
 	icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
+	icon.setAttribute('draggable', false);
+	icon.classList.add("noselect");
 	icon.id = "icon"+win_num_g;
 	icon_block.appendChild(icon);
 
