@@ -73,10 +73,15 @@ html, body {
 	padding: 0.35rem;
 	height: 100%;
 	width: 100%;
+	gap: 0.5rem;
 	box-sizing: border-box;
 }
 
-.main-panel {
+.dock {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
 	display: flex;
 	flex-direction: row;
 }
@@ -103,8 +108,8 @@ html, body {
 .window {
 	border-radius:0.25rem;
 	width:500px;
-	top:50%;
-	left:50%;
+	top:25%;
+	left:25%;
 	height:500px;
 	will-change: transform,width,height;
 }
@@ -121,7 +126,7 @@ html, body {
 	flex-direction: row;
 	margin-right: auto;
 	gap: 0.5rem;
-	overflow-x: hidden;
+	/*overflow-x: hidden;*/
 }
 
 .win-resizers, .win-control {

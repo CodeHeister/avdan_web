@@ -24,20 +24,6 @@ const resizeBack = (e, target, info) => {
 	});
 }
 
-const recolorp = (e, target, info) => {
-}
-
-const recolorBackp = (e, target, info) => {
-}
-
-const moveUp = (e, target, info) => {
-	target.style.zIndex = z_index_g;
-	z_index_g += 1;
-}
-
-const recolorBack = (e, target, info) => {
-}
-
 const attach = (e, target, info) => {
 	if (e.screenX > window.innerWidth/2) {
 		target.style.top = 0;
@@ -193,6 +179,138 @@ const dragResizeWHRB = (e, target, info) => {
 	target.style.height = `${target.clientHeight+e.movementY}px`;
 }
 
+const dropTransition = (e, target, info) => {
+	target.style.transition = null;
+	var win = target;
+	while (!win.classList.contains("window")) {
+		win = win.parentElement;
+	}
+	win.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
+const remakeWindow = (e, target, info) => {
+	var win = target;
+	while (!win.classList.contains("window")) {
+		win = win.parentElement;
+	}
+
+	var targetTransformX = 0;
+	var targetTransformY = 0;
+	if (win.style.transform != '') {
+	
+		var nums = win.style.transform.split("translate3d")[1];
+		nums = nums.slice(1, nums.length-1).split("px,");
+		
+		targetTransformX = parseInt(nums[0]);
+		targetTransformY = parseInt(nums[1]);
+	}
+
+	var x1 = win.offsetLeft+targetTransformX;
+	var x2 = x1+win.offsetWidth;
+	var y1 = win.offsetTop+targetTransformY;
+	var y2 = y1+win.offsetHeight;
+
+	var id_num = target.id.match("[0-9]+");
+	var target_content_holder = win.querySelector("#content-holder"+id_num);
+	var icon_block = win.querySelector("#icon-block"+id_num);
+	var icon_src = icon_block.querySelector("img").src;
+
+
+	if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+		var container = win.querySelector(".container");
+
+		var container_x1 = x1 + container.offsetLeft;
+		var container_x2 = container_x1 + container.offsetWidth;
+		var container_y1 = y1 + container.offsetTop;
+		var container_y2 = container_y1 + container.offsetHeight;
+		
+		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) {
+			win.querySelector("#content-holder"+id_num).style.display = null;
+		}
+		target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
+		target.style.transform = null;
+	}
+	else {
+		
+		var highestWin = "";
+		document.querySelectorAll(".window").forEach(item => {
+			if (win != item) {
+				var targetTransformX = 0;
+				var targetTransformY = 0;
+				if (item.style.transform != '') {
+				
+					var nums = item.style.transform.split("translate3d")[1];
+					nums = nums.slice(1, nums.length-1).split("px,");
+					
+					targetTransformX = parseInt(nums[0]);
+					targetTransformY = parseInt(nums[1]);
+				}
+
+				x1 = item.offsetLeft+targetTransformX;
+				x2 = x1+item.offsetWidth;
+				y1 = item.offsetTop+targetTransformY;
+				y2 = y1+item.offsetHeight;
+				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+					if (highestWin == "") { 
+						highestWin = item;
+					}
+					else {
+						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item;
+					}
+				}
+			}
+		});
+
+		if (!highestWin) {
+
+			document.body.appendChild(makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML));
+
+			target.parentElement.removeChild(target);
+			icon_block.parentElement.removeChild(icon_block);
+			target_content_holder.parentElement.removeChild(target_content_holder);
+		}
+		else {
+
+
+
+			var winPanel = highestWin.querySelector(".win-panel");
+			
+			var panel_x1 = x1 + winPanel.offsetLeft;
+			var panel_x2 = panel_x1 + winPanel.offsetWidth;
+			var panel_y1 = y1 + winPanel.offsetTop;
+			var panel_y2 = panel_y1 + winPanel.offsetHeight;
+			
+			target.style.transform = null;
+			highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
+
+			if (!target.hasDrag) {
+				target.hasDrag = true;
+				target.addEventListener("mousedown", e => {
+					dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow);
+				});
+				window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)});
+			}
+
+			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) {
+				target_content_holder.style.display = "none";
+			}
+			else {
+				target_content_holder.style.display = null;
+			}
+
+			highestWin.querySelector(".container").appendChild(target_content_holder);
+
+		
+			icon_block.style.display = "none";
+			highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
+		
+			highestWin.style.zIndex = z_index_g;
+			z_index_g += 1;
+		}
+	}
+}
+
 const winCheck = (e, target, info) => {
 	var highestWin = "";
 	document.querySelectorAll(".window").forEach(item => {
@@ -238,36 +356,60 @@ const winCheck = (e, target, info) => {
 		var x2 = x1+highestWin.offsetWidth;
 		var y1 = highestWin.offsetTop+targetTransformY;
 		var y2 = y1+highestWin.offsetHeight;
+
 		var winPanel = highestWin.querySelector(".win-panel");
-		var panelx1 = x1 + winPanel.offsetLeft;
-		var panelx2 = panelx1 + winPanel.offsetWidth;
-		var panely1 = y1 + winPanel.offsetTop;
-		var panely2 = panely1 + winPanel.offsetHeight;
-		console.log(panelx1, panelx2, panely1, panely2, panelx1 <= e.clientX && e.clientX <= panelx2 && panely1 <= e.clientY && e.clientY <= panely2);
+		
+		var panel_x1 = x1 + winPanel.offsetLeft;
+		var panel_x2 = panel_x1 + winPanel.offsetWidth;
+		var panel_y1 = y1 + winPanel.offsetTop;
+		var panel_y2 = panel_y1 + winPanel.offsetHeight;
+		
 		var win = document.querySelector(info.target);
+		
 		win.querySelectorAll(".win-tab").forEach(item => {
 			highestWin.querySelector(".tab-holder").insertBefore(item, highestWin.querySelector(".tab-add"));
+
+			if (!item.hasDrag) {
+				item.hasDrag = true;
+				item.addEventListener("mousedown", e => {
+					dragAdd(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow);
+				});
+				window.addEventListener("mouseup", e => {leave(e, `#${item.id}`)});
+			}
+
 		});
+
 		win.querySelectorAll(".content-holder").forEach(item => {
-			if (panelx1 <= e.clientX && e.clientX <= panelx2 && panely1 <= e.clientY && e.clientY <= panely2 || false) {
+			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2 || false) {
 				item.style.display = "none";
 			}
 			highestWin.querySelector(".container").appendChild(item);
 		});
+		
 		win.querySelectorAll(".icon-block").forEach(item => {
 			item.style.display = "none";
 			highestWin.insertBefore(item, highestWin.querySelector(".wl"));
 		});
+		
 		closeWindow(e, win);
 	}
 }
 
+const moveUp = (e, target, info) => {
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
+
+// W I N D O W  G E N E R A T O R
 
 var win_num_g = 1;
 const makeWindow = (content, icon_src, title, x, y) => {
 	var win = document.createElement("div");
 	win.classList.add("window");
 	win.id = "window"+win_num_g;
+	win.style.zIndex = z_index_g;
+	z_index_g += 1;
 	win.setAttribute('draggable', false);
 
 	var panel = document.createElement("div");
@@ -435,7 +577,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 	
 	panel.appendChild(tab_holder);
 	panel.appendChild(win_panel_buttons);
-	
+
 	content_holder.appendChild(content);
 	container.appendChild(content_holder);
 
@@ -458,6 +600,7 @@ const makeWindow = (content, icon_src, title, x, y) => {
 window.addEventListener("mousemove", drag);
 document.querySelector("html").addEventListener("mouseleave", leaveAll);
 
+const appBarGeneration = icon_list => {} 
 
 // W I N D O W S
 
@@ -467,5 +610,13 @@ content1.innerHTML = "Hi";
 var content2 = document.createElement("div");
 content2.innerHTML = "Hello";
 
-document.body.appendChild(makeWindow(content1, "src/images/demo/icons/Apps/Calculator.png", "My Win1"));
-document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/Calendar.png", "My Win2"));
+var content3 = document.createElement("div");
+content3.innerHTML = "Test3";
+
+content1.classList.add("noselect");
+content2.classList.add("noselect");
+content3.classList.add("noselect");
+
+document.body.appendChild(makeWindow(content1, "src/images/demo/icons/Apps/Calculator.png", "AvdanWeb"));
+document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/Calendar.png", "AvdanWeb2"));
+document.body.appendChild(makeWindow(content2, "src/images/demo/icons/Apps/AfterEffects.png", "Test3"));
