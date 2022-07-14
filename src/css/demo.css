@@ -102,8 +102,13 @@ html, body {
 }
 
 .img-container img {
-	pointer-events: none;
 	height: 2.5vw;
+	transform: scale(1);
+	z-index: 1;
+}
+
+.img-wrapper:hover {
+	transform: scale(1.1);
 }
 
 .underlines {
