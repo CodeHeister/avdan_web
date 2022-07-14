@@ -231,11 +231,15 @@ body {
 	border-radius: 100%;
 }
 
-.toggle-theme svg, .menu-download svg {
+.toggle-theme svg, .menu-download svg, .github-shortcut svg {
 	width: 1.25rem;
 	height: 1.25rem;
 	padding: 0.9rem;
 	border-radius: 0.5rem;
+}
+
+.github-shortcut svg {
+	fill: var(--font-primary);
 }
 
 .menu-download svg path, .menu-download svg polyline {

@@ -1,7 +1,7 @@
 
 const panelModify = e => {
 	if (window.scrollY > 30) {
-		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download").forEach(item => {item.style.display = "none";});
+		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download, .github-shortcut").forEach(item => {item.style.display = "none";});
 		document.querySelector(".icon").style.display = "none";
 		document.querySelector(".menu").style.backgroundColor = "var(--menu-bg-scrolled)";
 		document.querySelector(".menu").style.padding = "0";
@@ -12,7 +12,7 @@ const panelModify = e => {
 		document.querySelector(".mobile-menu").style.borderRadius = "0 0 2rem 0";
 	}
 	else {
-		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download").forEach(item => {item.style.display = null;});
+		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download, .github-shortcut").forEach(item => {item.style.display = null;});
 		document.querySelector(".icon").style.display = null;
 		document.querySelector(".menu").style.backgroundColor = null;
 		document.querySelector(".menu").style.padding = null;

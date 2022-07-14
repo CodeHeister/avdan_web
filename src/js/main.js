@@ -44,7 +44,7 @@ const enableCursor = e => {
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
 	});
 
-	document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download").forEach(item => { 
+	document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download, .github-shortcut").forEach(item => { 
 		item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["toggle-dragged"], undefined, true)});
 		item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.2)"], true)});
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});

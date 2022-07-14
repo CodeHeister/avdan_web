@@ -3,8 +3,9 @@ var z_index_g = 1;
 // W I N D O W  C O N T R O L
 
 const iconify = (e, target, info) => {
-	target.lastMinWidth = target.style.minWidth || "350px";
+	target.lastMinWidth = target.style.minWidth || "450px";
 	target.style.minWidth = "initial";
+	target.style.minHeight = "initial";
 	target.style.width = target.offsetWidth/2+"px";
 	target.style.height = target.offsetHeight/2+"px";
 	target.style.flexDirection = "row";
@@ -21,6 +22,7 @@ const deiconify = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
 	target.style.minWidth = target.lastMinWidth;
+	target.style.minHeight = null;
 	target.lastMinWidth = undefined;
 	target.style.flexDirection = null;
 	target.querySelector(".win-panel").style.display = null;
@@ -197,7 +199,7 @@ const dragResizeWHRB = (e, target, info) => {
 }
 
 const dropTransition = (e, target, info) => {
-	target.style.transition = null;
+	target.style.transition = "none";
 	var win = target;
 	while (!win.classList.contains("window")) {
 		win = win.parentElement;
@@ -312,7 +314,7 @@ const remakeWindow = (e, target, info) => {
 			target_content_holder.parentElement.removeChild(target_content_holder);
 		}
 		else {
-			win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+180+"px";
+			win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
 
 			var winPanel = highestWin.querySelector(".win-panel");
 			
@@ -345,11 +347,11 @@ const remakeWindow = (e, target, info) => {
 			icon_block.style.display = "none";
 			highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
 		
-			highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+180+"px";
+			highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
 			highestWin.style.zIndex = z_index_g;
 			z_index_g += 1;
 		}
-		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+200+"px";
+		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
 	}
 }
 
@@ -437,7 +439,7 @@ const insertCheck = (e, target, info) => {
 		
 		closeWindow(e, win);
 
-		highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+180+"px";
+		highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
 		highestWin.style.zIndex = z_index_g;
 		z_index_g += 1;
 	}
@@ -489,7 +491,7 @@ const moveIcon = (e, target, info) => {
 // W I N D O W  G E N E R A T O R
 
 var win_num_g = 1;
-const makeWindow = (content, icon_src, title, extraClass, x, y) => {
+const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	var win = document.createElement("div");
 	win.classList.add("window");
 	win.id = "window"+win_num_g;
@@ -668,7 +670,7 @@ const makeWindow = (content, icon_src, title, extraClass, x, y) => {
 	panel.appendChild(tab_holder);
 	panel.appendChild(win_panel_buttons);
 
-	content_holder.appendChild(content);
+	content_holder.appendChild(makeClone && content.cloneNode(true) || content);
 	container.appendChild(content_holder);
 
 	win.appendChild(panel);
@@ -736,7 +738,7 @@ const appBarGenerate = apps_list_l => {
 			});
 
 			underlines.appendChild(underline);
-			document.body.appendChild(makeWindow(item["content"], item["src"], item["title"]));
+			document.body.appendChild(makeWindow(item["content"], item["src"], item["title"], [], undefined, undefined, true));
 		});
 
 		app_bar.appendChild(img_container);
