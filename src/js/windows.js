@@ -283,10 +283,9 @@ const remakeWindow = (e, target, info) => {
 
 		if (!highestWin) {
 
-			for (var i = 0; i < apps_list.length; i++) {
-				if (icon_src.includes(apps_list[i]["src"])) {
-					var underlines = document.querySelector(".app-bar").children[i].querySelector(".underlines");
-					console.log(underlines);
+			document.querySelectorAll(".img-container").forEach(item => {
+				if (icon_src == item.querySelector("img").src) {
+					var underlines = item.querySelector(".underlines");
 					var underline = document.createElement("div");
 					underline.classList.add("underline");
 					underline.id = "underline"+win_num_g;
@@ -304,7 +303,7 @@ const remakeWindow = (e, target, info) => {
 
 					underlines.appendChild(underline);
 				}
-			}
+			});
 
 			document.body.appendChild(makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML));
 
