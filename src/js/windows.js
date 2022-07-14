@@ -503,6 +503,7 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 			win.classList.add(item);
 		});
 	}
+	win.addEventListener("click", e => {moveUp(e, win, undefined)});
 
 	var panel = document.createElement("div");
 	panel.classList.add("win-panel");

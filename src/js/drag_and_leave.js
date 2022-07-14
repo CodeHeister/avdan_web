@@ -137,15 +137,15 @@ const leaveAll = e => {
 		var target = document.querySelector(info.target);
 		var currentTarget = document.querySelector(info.currentTarget);
 
-		if (info.currentTarget_out_f != undefined) {
+		if (typeof info.currentTarget_out_f == "function") {
 			info.currentTarget_out_f(e, e.currentTarget, info);
 		}
 
-		if (info.target_out_f != undefined) {
+		if (typeof info.target_out_f == "fuction") {
 				info.target_out_f(e, target, info);
 		}
 
-		if (info.drop_f != undefined) {
+		if (typeof info.drop_f != "function") {
 			info.drop_f(e, target, info);
 		}
 		
