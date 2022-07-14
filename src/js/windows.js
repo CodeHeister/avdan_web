@@ -449,6 +449,43 @@ const moveUp = (e, target, info) => {
 	z_index_g += 1;
 }
 
+// A P P  B A R
+
+const iconDropTransition = (e, target, info) => {
+	target.style.transition = null;
+	target.style.zIndex = 2;
+}
+
+const moveIcon = (e, target, info) => {
+	var dock = document.querySelector(".dock");
+	var icon_holder = document.querySelector(".app-bar");
+	var insertAfter = false;
+	document.querySelectorAll(".img-container").forEach(item => {
+		if (target != item) {
+			var x1 = dock.offsetLeft + icon_holder.offsetLeft + item.offsetLeft;
+			var x2 = x1 + item.offsetWidth;
+			var y1 = dock.offsetTop + icon_holder.offsetTop + item.offsetTop;
+			var y2 = y1 + item.offsetHeight;
+			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+				if (insertAfter) {
+					item.parentElement.insertBefore(target, item.nextSibling);
+				}
+				else {
+					item.parentElement.insertBefore(target, item);
+				}
+				target.style.transform = null;
+				target.style.zIndex = null;
+				return
+			}
+		}
+		else {
+			insertAfter = true;
+		}
+	});
+	target.style.transition = "transform 0.1s ease-in-out";
+	target.style.transform = null;
+	target.style.zIndex = null;
+}
 
 // W I N D O W  G E N E R A T O R
 
@@ -658,41 +695,49 @@ const appBarGenerate = apps_list_l => {
 	var app_bar = document.querySelector(".app-bar");	
 
 	apps_list = apps_list_l;
+	var i = 0;
 	apps_list_l.forEach(item => {
 		var img_container = document.createElement("div");
 		img_container.classList.add("img-container");
+		img_container.id = `img-container${i}`;
 		
 		var img = document.createElement("img");
 		img.classList.add("noselect");
 		img.src = item["src"];
+		img.id = "app-icon"+i;
+		i+=1;
+
+		var img_wrap = document.createElement("div");
+		img_wrap.classList.add("img-wrapper");
+		img_wrap.appendChild(img);
 		
 		var underlines = document.createElement("div");
 		underlines.classList.add("underlines");
 
-		img_container.appendChild(img);
+		img_container.appendChild(img_wrap);
 		img_container.appendChild(underlines);
 
-		img_container.addEventListener("click", e => {
-			if (e.target == e.currentTarget) {
-			
-				var underline = document.createElement("div");
-				underline.classList.add("underline");
-				underline.id = "underline"+win_num_g;
-				underline.addEventListener("click", e => {
-					var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
-					if (win.style.display) {
-						e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-						win.style.display = null;
-					}
-					else {
-						e.currentTarget.style.backgroundColor = "var(--light-bg)";
-						win.style.display = "none";
-					}
-				});
+		img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
+		window.addEventListener("mouseup", e => {leave(e, `#${img_container.id}`)});
+		img_wrap.addEventListener("click", e => {
+		
+			var underline = document.createElement("div");
+			underline.classList.add("underline");
+			underline.id = "underline"+win_num_g;
+			underline.addEventListener("click", e => {
+				var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+				if (win.style.display) {
+					e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+					win.style.display = null;
+				}
+				else {
+					e.currentTarget.style.backgroundColor = "var(--light-bg)";
+					win.style.display = "none";
+				}
+			});
 
-				underlines.appendChild(underline);
-				document.body.appendChild(makeWindow(item["content"], item["src"], item["title"]));
-			}
+			underlines.appendChild(underline);
+			document.body.appendChild(makeWindow(item["content"], item["src"], item["title"]));
 		});
 
 		app_bar.appendChild(img_container);
