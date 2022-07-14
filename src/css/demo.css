@@ -1,3 +1,9 @@
+/*
+ * +---------------------+
+ * | :: G E N E R A L :: |
+ * +---------------------+
+ */
+
 :root {
 	--font-primary: #fff;
 	--font-secondary: #a0a0a0;
@@ -58,6 +64,22 @@ html, body {
 	border-radius: 0.25rem;
 	background-color: var(--light-bg);
 }
+
+.noselect {
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Safari */
+-khtml-user-select: none; /* Konqueror HTML */
+-moz-user-select: none; /* Old versions of Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+						  supported by Chrome, Edge, Opera and Firefox */
+}
+
+/*
+ * +-------------------+
+ * | :: W I N D O W :: |
+ * +-------------------+
+ */
 
 .window {
 	z-index:-1;
@@ -148,6 +170,7 @@ html, body {
 .win-minimalize, .win-close, .win-fullsize, .split-right, .split-left, .win-insert {
 	background-color: var(--light-bg);
 	padding: 0 0.475rem 1px 0.475rem;
+	cursor: pointer;
 }
 
 .win-minimalize img, .win-close img, .win-fullsize img, .split-right img, .split-left img, .win-insert img {
@@ -165,6 +188,7 @@ html, body {
 	padding: 3px 2rem 3px 2rem;
 	background: var(--light-bg);
 	max-width: 80px;
+	cursor: pointer;
 	white-space: nowrap; 
 	overflow: hidden;
 	text-overflow: ellipsis; 
@@ -254,15 +278,11 @@ html, body {
 	left: -5px;
 }
 
-.noselect {
--webkit-touch-callout: none; /* iOS Safari */
--webkit-user-select: none; /* Safari */
--khtml-user-select: none; /* Konqueror HTML */
--moz-user-select: none; /* Old versions of Firefox */
--ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Non-prefixed version, currently
-						  supported by Chrome, Edge, Opera and Firefox */
-}
+/*
+ * +---------------+
+ * | :: D O C K :: |
+ * +---------------+
+ */
 
 .dock {
 	position: fixed;
@@ -283,11 +303,12 @@ html, body {
 	backdrop-filter: blur(40px);
 	flex-direction: row;
 	background-color: var(--dark-bg);
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 }
 
 .img-container img {
 	height: calc(2rem + 1vw);
+	cursor: pointer;
 	z-index: 1;
 }
 
@@ -312,7 +333,14 @@ html, body {
 	width: 100%;
 	border-radius: 0.25rem; 
 	transition: background-color 0.1s ease-in-out;
+	cursor: pointer;
 }
+
+/*
+ * +------------------------------+
+ * | :: F I L E  M A N A G E R :: |
+ * +------------------------------+
+ */
 
 .files-content {
 	padding: 1rem;
@@ -355,6 +383,7 @@ html, body {
 
 .files-searchbar img {
 	height: 100%;
+	cursor: pointer;
 }
 
 .files-folder-list {
@@ -399,13 +428,34 @@ html, body {
 	flex-direction: column;
 	align-items: center;
 	gap: 1rem;
+	cursor: pointer;
+	transform: scale(1);
+	transition: transform 0.05s ease-in-out;
 }
 
-.files-open-list-item-folder img {
+.files-open-list-item-folder:hover {
+	transform: scale(1.1);
+}
+
+.files-open-list-item-folder img, .files-open-list-item-folder svg {
 	height: 2.5rem;
 }
 
+.files-open-list-item-folder svg {
+	width: 2.5rem;
+}
+
+.files-open-list-item-folder svg:first-child, .files-closed-folder svg:first-child {
+	stroke: black;
+	stroke-width: 0.5px;
+}
+
 .right-folders-icon {
+	height: 2rem;
+}
+
+.files-closed-folder svg {
+	width: 2rem;
 	height: 2rem;
 }
 
@@ -426,6 +476,7 @@ html, body {
 	flex-direction: row;
 	align-items: center;
 	gap: 0.5rem;
+	cursor: pointer;
 	background-color: var(--light-bg);
 	transition: background-color .1s ease-in-out;
 	border-radius: 0.25rem;
@@ -441,3 +492,5 @@ html, body {
 	flex-direction: column;
 	gap: 0.5rem;
 }
+
+/* ------------------ */
