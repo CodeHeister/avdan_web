@@ -236,6 +236,7 @@ body {
 	height: 1.25rem;
 	padding: 0.9rem;
 	border-radius: 0.5rem;
+	transition: stroke var(--swap-speed) ease-in-out, fill var(--swap-speed) ease-in-out;
 }
 
 .github-shortcut svg {
@@ -339,7 +340,7 @@ footer {
 	transition: color var(--swap-speed) ease-in-out;
 }
 
-.footer-text {
+.footer-text span {
 	transition: color var(--swap-speed) ease-in-out;
 }
 
