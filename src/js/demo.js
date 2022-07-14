@@ -62,24 +62,29 @@ var files_open_list_items = [
 		"title" : "Pinned",
 		"items" : [
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
-				"label" : "Notes"
+				"src" : "folder",
+				"label" : "Notes",
+				"color" : "#d06b6e"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
-				"label" : "Voice Memos"
+				"src" : "folder",
+				"label" : "Voice Memos",
+				"color" : "#d54686"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
-				"label" : "Work"
+				"src" : "folder",
+				"label" : "Work",
+				"color" : "#835cc0"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
-				"label" : "Wallpapers"
+				"src" : "folder",
+				"label" : "Wallpapers",
+				"color" : "#379ea4"
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
-				"label" : "Project M"
+				"src" : "folder",
+				"label" : "Project M",
+				"color" : "#519fc4"
 			},
 		]
 	},
@@ -139,7 +144,13 @@ files_open_list_items.forEach(item => {
 		if (folder.src == "rounded") {
 			files_open_list_item_folder_src = document.createElement("div");
 			files_open_list_item_folder_src.classList.add("rounded-icon");
-			files_open_list_item_folder_src.style.backgroundColor = folder.color;
+			files_open_list_item_folder_src.style.backgroundColor = folder.color || "#519fc4";
+		}
+		else if (folder.src == "folder") {
+			files_open_list_item_folder_src = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			files_open_list_item_folder_src.setAttributeNS(null, "viewBox", "0 0 96 96");
+			files_open_list_item_folder_src.innerHTML = '<path d="M 12 8.5 L 30 8.5 C 30 8.5 35 8.5 38 12 L 41 14.5 C 41 14.5 44 17 46 16.5 L 82 16.5 C 82 16.5 88 18 91 26 L 91.5 79 C 91.5 79 91.75 88.75 83 88.5 L 13 88.5 C 13 88.5 5 88 4 79 L 4 20 C 4 20 4 11 12 8.5 Z"></path><path d="M 4 44 L 4 79 C 4 79 5 88 13 88.5 L 83 88.5 C 83 88.5 91.75 88.75 91.5 79 L 91.5 44 C 91.5 44 89 38 83 38 L 13 38 C 13 38 6 37 4 44 Z"></path>';
+			files_open_list_item_folder_src.style.fill = folder.color || "#519fc4";
 		}
 		else {
 			files_open_list_item_folder_src = document.createElement("img");
@@ -182,7 +193,7 @@ files_closed_items = [
 		],
 	},
 	{
-		"title" : "Recently Opened",
+		"title" : "Recommended",
 		"items" : [
 			{
 				"src" : "src/images/demo/icons/Files/Documents.png",
@@ -193,7 +204,7 @@ files_closed_items = [
 				"label" : "Brand Guidelines.psd",
 			},
 			{
-				"src" : "src/images/demo/icons/Files/Folder.png",
+				"src" : "folder",
 				"label" : "Project X",
 			}
 		],
@@ -218,9 +229,17 @@ files_closed_items.forEach(item => {
 		var files_closed_folder = document.createElement("div");
 		files_closed_folder.classList.add("files-closed-folder");
 
-		var files_closed_folder_icon = document.createElement("img");
-		files_closed_folder_icon.classList.add("right-folders-icon");
-		files_closed_folder_icon.src = folder.src;
+		if (folder.src == "folder") {
+			var files_closed_folder_icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			files_closed_folder_icon.setAttributeNS(null, "viewBox", "0 0 96 96");
+			files_closed_folder_icon.innerHTML = '<path d="M 12 8.5 L 30 8.5 C 30 8.5 35 8.5 38 12 L 41 14.5 C 41 14.5 44 17 46 16.5 L 82 16.5 C 82 16.5 88 18 91 26 L 91.5 79 C 91.5 79 91.75 88.75 83 88.5 L 13 88.5 C 13 88.5 5 88 4 79 L 4 20 C 4 20 4 11 12 8.5 Z"></path><path d="M 4 44 L 4 79 C 4 79 5 88 13 88.5 L 83 88.5 C 83 88.5 91.75 88.75 91.5 79 L 91.5 44 C 91.5 44 89 38 83 38 L 13 38 C 13 38 6 37 4 44 Z"></path>';
+			files_closed_folder_icon.style.fill = folder.color || "#519fc4";
+		}
+		else {
+			var files_closed_folder_icon = document.createElement("img");
+			files_closed_folder_icon.classList.add("right-folders-icon");
+			files_closed_folder_icon.src = folder.src;
+		}
 		files_closed_folder.appendChild(files_closed_folder_icon);
 
 		var files_closed_folder_label = document.createElement("div");
