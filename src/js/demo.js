@@ -350,7 +350,8 @@ var apps_list_g = [
 	{
 		"title" : "Files", // window title
 		"src" : "src/images/demo/icons/Apps/Files.png", // appbar/window icon
-		"content" : files_content // content for the window
+		"content" : files_content, // content for the window
+		"extraClass" : ["file-manager"] // extra classes for window (optional)
 	},
 	{
 		"title" : "Mail",
