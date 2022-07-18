@@ -1,7 +1,8 @@
-var z_index_g = 1;
+var z_index_g = 1; // global z-index counter
 
-// W I N D O W  C O N T R O L
+// -- W I N D O W  C O N T R O L
 
+// on insert window drag
 const iconify = (e, target, info) => {
 	target.lastMinWidth = target.style.minWidth || "450px";
 	target.style.minWidth = "initial";
@@ -18,6 +19,7 @@ const iconify = (e, target, info) => {
 	z_index_g += 1;
 }
 
+// on insert window drop
 const deiconify = (e, target, info) => {
 	target.style.width = target.offsetWidth*2+"px";
 	target.style.height = target.offsetHeight*2+"px";
@@ -32,6 +34,7 @@ const deiconify = (e, target, info) => {
 	});
 }
 
+// on going out of bounds 
 const attach = (e, target, info) => {
 	target.lastTransform = target.style.transform;
 	target.lastWidth = target.offsetWidth;
@@ -42,8 +45,6 @@ const attach = (e, target, info) => {
 		target.style.width = "50%";
 		target.style.height = "100%";
 		target.style.transform = null;
-		target.style.zIndex = z_index_g;
-		z_index_g += 1;
 	}
 	else {
 		target.style.top = 0;
@@ -51,12 +52,12 @@ const attach = (e, target, info) => {
 		target.style.width = "50%";
 		target.style.height = "100%";
 		target.style.transform = null;
-		target.style.zIndex = z_index_g;
-		z_index_g += 1;
 	}
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
 }
 
-
+// left attach button on click
 const leftAttach = (e, target) => {
 	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == 0 && target.style.width == "50%" && target.style.height == "100%") {
 		target.style.top = null;
@@ -77,11 +78,12 @@ const leftAttach = (e, target) => {
 		target.style.width = "50%";
 		target.style.height = "100%";
 		target.style.transform = null;
-		target.style.zIndex = z_index_g;
-		z_index_g += 1;
 	}
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
 }
 
+// left attach button on click
 const rightAttach = (e, target) => {
 	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == "50%" && target.style.width == "50%" && target.style.height == "100%") {
 		target.style.top = null;
@@ -102,11 +104,12 @@ const rightAttach = (e, target) => {
 		target.style.width = "50%";
 		target.style.height = "100%";
 		target.style.transform = null;
-		target.style.zIndex = z_index_g;
-		z_index_g += 1;
 	}
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
 }
 
+// fullsize button on click
 const fullsize = (e, target) => {
 	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.width == "100%" && target.style.height == "100%") {
 		target.style.top = null;
@@ -132,12 +135,14 @@ const fullsize = (e, target) => {
 	z_index_g += 1;
 }
 
+// minimalize button on click 
 const minimalize = (e, target) => {
 	var underline = document.querySelector("#underline"+target.id.match("[0-9]+")[0]);
 	underline.style.backgroundColor = "var(--light-bg)";
 	target.style.display = "none";
 }
 
+// close button on click
 const closeWindow = (e, target) => {
 	document.body.removeChild(target);
 	var underline = document.querySelector("#underline"+target.id.match("[0-9]+"));
@@ -146,6 +151,7 @@ const closeWindow = (e, target) => {
 
 // E X T R A  F O R  T A B S  C L I C K
 
+// on win tab click
 const hideAllContent = (e, target) => {
 	var win = target;
 	while (!win.classList.contains("window")) {
@@ -156,48 +162,58 @@ const hideAllContent = (e, target) => {
 	});
 }
 
-// R E S I Z E R S
-
+// on win tab click (show win tab binded content)
 const showContent = (e, target) => {
 	target.style.display = null;
 }
 
+// R E S I Z E R S
+
+// width left side
 const dragResizeWL = (e, target, info) => {
 	target.style.width = `${target.clientWidth-e.movementX}px`;
 }
 
+// width right side
 const dragResizeWR = (e, target, info) => {
 	target.style.width = `${target.clientWidth+e.movementX}px`;
 }
 
+// height top
 const dragResizeHT = (e, target, info) => {
 	target.style.height = `${target.clientHeight-e.movementY}px`;
 }
 
+// height bottom
 const dragResizeHB = (e, target, info) => {
 	target.style.height = `${target.clientHeight+e.movementY}px`;
 }
 
+// width height left top
 const dragResizeWHLT = (e, target, info) => {
 	target.style.width = `${target.clientWidth-e.movementX}px`;
 	target.style.height = `${target.clientHeight-e.movementY}px`;
 }
 
+// width height right top
 const dragResizeWHRT = (e, target, info) => {
 	target.style.width = `${target.clientWidth+e.movementX}px`;
 	target.style.height = `${target.clientHeight-e.movementY}px`;
 }
 
+// width height left bottom
 const dragResizeWHLB = (e, target, info) => {
 	target.style.width = `${target.clientWidth-e.movementX}px`;
 	target.style.height = `${target.clientHeight+e.movementY}px`;
 }
 
+// width height right bottom
 const dragResizeWHRB = (e, target, info) => {
 	target.style.width = `${target.clientWidth+e.movementX}px`;
 	target.style.height = `${target.clientHeight+e.movementY}px`;
 }
 
+// on drag start (tabs)
 const dropTransition = (e, target, info) => {
 	target.style.transition = "none";
 	var win = target;
@@ -210,12 +226,16 @@ const dropTransition = (e, target, info) => {
 
 // R E C R E A T I O N  C H E C K  O N  T A B  O U T
 
+// on tab in/out drop
 const remakeWindow = (e, target, info) => {
+
+	// get current window
 	var win = target;
 	while (!win.classList.contains("window")) {
 		win = win.parentElement;
 	}
 
+	// get current window translate
 	var targetTransformX = 0;
 	var targetTransformY = 0;
 	if (win.style.transform != '') {
@@ -227,36 +247,43 @@ const remakeWindow = (e, target, info) => {
 		targetTransformY = parseInt(nums[1]);
 	}
 
+	// get current window X Y
 	var x1 = win.offsetLeft+targetTransformX;
 	var x2 = x1+win.offsetWidth;
 	var y1 = win.offsetTop+targetTransformY;
 	var y2 = y1+win.offsetHeight;
 
-	var id_num = target.id.match("[0-9]+");
-	var target_content_holder = win.querySelector("#content-holder"+id_num);
-	var icon_block = win.querySelector("#icon-block"+id_num);
-	var icon_src = icon_block.querySelector("img").src;
+	// get  items to (move tab)/(recreate window)
+	var id_num = target.id.match("[0-9]+"); // get id to catch element from window
+	var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+	var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+	var icon_src = icon_block.querySelector("img").src; // get icon src
 
-
-	if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+	if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
 		var container = win.querySelector(".container");
 
+		// get current window container coords
 		var container_x1 = x1 + container.offsetLeft;
 		var container_x2 = container_x1 + container.offsetWidth;
 		var container_y1 = y1 + container.offsetTop;
 		var container_y2 = container_y1 + container.offsetHeight;
 		
-		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) {
-			win.querySelector("#content-holder"+id_num).style.display = null;
+		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
+			win.querySelector("#content-holder"+id_num).style.display = null; // make visible
 		}
+		
+		// set transition and smooth return to topbar
 		target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
 		target.style.transform = null;
 	}
-	else {
-		
+	else { // if out the current window
+		// get highest window by z-index
 		var highestWin = "";
+
+		// check all windows
 		document.querySelectorAll(".window").forEach(item => {
 			if (win != item) {
+				// get translate
 				var targetTransformX = 0;
 				var targetTransformY = 0;
 				if (item.style.transform != '') {
@@ -268,31 +295,39 @@ const remakeWindow = (e, target, info) => {
 					targetTransformY = parseInt(nums[1]);
 				}
 
+				// get coords (rewrite current window coords)
 				x1 = item.offsetLeft+targetTransformX;
 				x2 = x1+item.offsetWidth;
 				y1 = item.offsetTop+targetTransformY;
 				y2 = y1+item.offsetHeight;
-				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+
+				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
 					if (highestWin == "") { 
 						highestWin = item;
 					}
 					else {
-						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item;
+						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
 					}
 				}
 			}
 		});
 
-		if (!highestWin) {
+		if (!highestWin) { // if default left (no window under cursor)
 
+			// find icon match in appbar
 			document.querySelectorAll(".img-container").forEach(item => {
-				if (icon_src == item.querySelector("img").src) {
+				if (icon_src == item.querySelector("img").src) { // if matches
+					// get selected underlines
 					var underlines = item.querySelector(".underlines");
+
+					// create new underline
 					var underline = document.createElement("div");
 					underline.classList.add("underline");
-					underline.id = "underline"+win_num_g;
+					underline.id = "underline"+win_num_g; // set new id
+
+					// add minimalize function
 					underline.addEventListener("click", e => {
-						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
 						if (win.style.display) {
 							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
 							win.style.display = null;
@@ -303,54 +338,67 @@ const remakeWindow = (e, target, info) => {
 						}
 					});
 
-					underlines.appendChild(underline);
+					underlines.appendChild(underline); // add underline 
 				}
 			});
 
+			// recreate window
 			document.body.appendChild(makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML));
 
+			// erase elements from the current window 
 			target.parentElement.removeChild(target);
 			icon_block.parentElement.removeChild(icon_block);
 			target_content_holder.parentElement.removeChild(target_content_holder);
 		}
-		else {
-			win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
+		else { // if window under cursor
 
+			// get selected window topbar
 			var winPanel = highestWin.querySelector(".win-panel");
 			
+			// get topbar coords
 			var panel_x1 = x1 + winPanel.offsetLeft;
 			var panel_x2 = panel_x1 + winPanel.offsetWidth;
 			var panel_y1 = y1 + winPanel.offsetTop;
 			var panel_y2 = panel_y1 + winPanel.offsetHeight;
 			
+			// delete target's transform
 			target.style.transform = null;
+
+			// move tab to the new window
 			highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
 
+			// if already has drag function (was once moved)
 			if (!target.hasDrag) {
 				target.hasDrag = true;
 				target.addEventListener("mousedown", e => {
-					dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow);
+					dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow); // add this function to tab
 				});
-				window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)});
+				window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)}); // add global drop check for this tab
 			}
 
-			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) {
+			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
 				target_content_holder.style.display = "none";
 			}
-			else {
+			else { // else tile window
 				target_content_holder.style.display = null;
 			}
 
+			// move container to the selected window
 			highestWin.querySelector(".container").appendChild(target_content_holder);
 
-		
+			// hide icon block and move it to the selected window
 			icon_block.style.display = "none";
 			highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
 		
+			// recreate min-width for selected window
 			highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
+
+			// place selected window over other windows
 			highestWin.style.zIndex = z_index_g;
 			z_index_g += 1;
 		}
+
+		// recreate min-width for current window if tab out
 		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
 	}
 }
@@ -358,7 +406,10 @@ const remakeWindow = (e, target, info) => {
 // W I N D O W  C O N T R O L  F U N C  F O R  W I N D O W  S T A C K I N G
 
 const insertCheck = (e, target, info) => {
+	// default for window under cursor
 	var highestWin = "";
+
+	// get highest window under cursor
 	document.querySelectorAll(".window").forEach(item => {
 		if (document.querySelector(info.target) != item) {
 			var targetTransformX = 0;
@@ -372,10 +423,13 @@ const insertCheck = (e, target, info) => {
 				targetTransformY = parseInt(nums[1]);
 			}
 
+			// get coords
 			var x1 = item.offsetLeft+targetTransformX;
 			var x2 = x1+item.offsetWidth;
 			var y1 = item.offsetTop+targetTransformY;
 			var y2 = y1+item.offsetHeight;
+
+			// check position
 			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
 				if (highestWin == "") { 
 					highestWin = item;
@@ -386,9 +440,12 @@ const insertCheck = (e, target, info) => {
 			}
 		}
 	});
+
+	// if a window under cursor
 	if (highestWin != "") { 
-			var targetTransformX = 0;
-			var targetTransformY = 0;
+
+		var targetTransformX = 0;
+		var targetTransformY = 0;
 		if (highestWin.style.transform != '') {
 		
 			var nums = highestWin.style.transform.split("translate3d")[1];
@@ -398,23 +455,29 @@ const insertCheck = (e, target, info) => {
 			targetTransformY = parseInt(nums[1]);
 		}
 
+		// get coords again
 		var x1 = highestWin.offsetLeft+targetTransformX;
 		var x2 = x1+highestWin.offsetWidth;
 		var y1 = highestWin.offsetTop+targetTransformY;
 		var y2 = y1+highestWin.offsetHeight;
 
+		// get highest window panel
 		var winPanel = highestWin.querySelector(".win-panel");
 		
+		// get coords for panel
 		var panel_x1 = x1 + winPanel.offsetLeft;
 		var panel_x2 = panel_x1 + winPanel.offsetWidth;
 		var panel_y1 = y1 + winPanel.offsetTop;
 		var panel_y2 = panel_y1 + winPanel.offsetHeight;
 		
+		// get current window
 		var win = document.querySelector(info.target);
 		
+		// move all tabs to new window
 		win.querySelectorAll(".win-tab").forEach(item => {
 			highestWin.querySelector(".tab-holder").insertBefore(item, highestWin.querySelector(".tab-add"));
 
+			// if tab doesn't have a drag event
 			if (!item.hasDrag) {
 				item.hasDrag = true;
 				item.addEventListener("mousedown", e => {
@@ -425,6 +488,7 @@ const insertCheck = (e, target, info) => {
 
 		});
 
+		// move all content to new window
 		win.querySelectorAll(".content-holder").forEach(item => {
 			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2 || false) {
 				item.style.display = "none";
@@ -432,19 +496,25 @@ const insertCheck = (e, target, info) => {
 			highestWin.querySelector(".container").appendChild(item);
 		});
 		
+		// move all icons to new window
 		win.querySelectorAll(".icon-block").forEach(item => {
 			item.style.display = "none";
 			highestWin.insertBefore(item, highestWin.querySelector(".wl"));
 		});
 		
+		// close current window
 		closeWindow(e, win);
 
+		// change minimal sizes
 		highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
+
+		// change z-index
 		highestWin.style.zIndex = z_index_g;
 		z_index_g += 1;
 	}
 }
 
+// change z-index
 const moveUp = (e, target, info) => {
 	target.style.zIndex = z_index_g;
 	z_index_g += 1;
@@ -452,37 +522,56 @@ const moveUp = (e, target, info) => {
 
 // A P P  B A R
 
+// disable transition on move start and set higher layer
 const iconDropTransition = (e, target, info) => {
 	target.style.transition = null;
 	target.style.zIndex = 2;
 }
 
+// drag icon func
 const moveIcon = (e, target, info) => {
+
+	// get dock
 	var dock = document.querySelector(".dock");
+
+	// get app bar
 	var icon_holder = document.querySelector(".app-bar");
+
+	// flag for position before or after current icon 
 	var insertAfter = false;
+
+	// get all icons
 	document.querySelectorAll(".img-container").forEach(item => {
-		if (target != item) {
+		if (target != item) { // if not current icon
+
+			// get positions
 			var x1 = dock.offsetLeft + icon_holder.offsetLeft + item.offsetLeft;
 			var x2 = x1 + item.offsetWidth;
 			var y1 = dock.offsetTop + icon_holder.offsetTop + item.offsetTop;
 			var y2 = y1 + item.offsetHeight;
+
+			// check if over
 			if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) {
+				// check flag
 				if (insertAfter) {
 					item.parentElement.insertBefore(target, item.nextSibling);
 				}
 				else {
 					item.parentElement.insertBefore(target, item);
 				}
+
+				// if moved
 				target.style.transform = null;
 				target.style.zIndex = null;
 				return
 			}
 		}
-		else {
+		else { // toggle flag if current
 			insertAfter = true;
 		}
 	});
+
+	// set transition to move back
 	target.style.transition = "transform 0.1s ease-in-out";
 	target.style.transform = null;
 	target.style.zIndex = null;
@@ -692,41 +781,33 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 
 // A P P  B A R  F I L L E R
 
-var apps_list;
-const appBarGenerate = apps_list_l => {
+var apps_list; // global app list for window functions
+const appBarGenerate = apps_list_l => { // local app list
+	// get app bar
 	var app_bar = document.querySelector(".app-bar");	
 
+	// rewrite global app list
 	apps_list = apps_list_l;
-	var i = 0;
-	apps_list_l.forEach(item => {
+
+	var i = 0; // ids for icons and wrappers (required for drag function)
+	apps_list_l.forEach(item => { // iterate list
+
+		// create one item
 		var img_container = document.createElement("div");
 		img_container.classList.add("img-container");
 		img_container.id = `img-container${i}`;
 		
-		var img = document.createElement("img");
-		img.classList.add("noselect");
-		img.src = item["src"];
-		img.id = "app-icon"+i;
-		i+=1;
-
+		// create icon wrap
 		var img_wrap = document.createElement("div");
 		img_wrap.classList.add("img-wrapper");
-		img_wrap.appendChild(img);
+		img_wrap.addEventListener("click", e => { // add window creation
 		
-		var underlines = document.createElement("div");
-		underlines.classList.add("underlines");
-
-		img_container.appendChild(img_wrap);
-		img_container.appendChild(underlines);
-
-		img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
-		window.addEventListener("mouseup", e => {leave(e, `#${img_container.id}`)});
-		img_wrap.addEventListener("click", e => {
-		
+			// create new underline on click
 			var underline = document.createElement("div");
 			underline.classList.add("underline");
-			underline.id = "underline"+win_num_g;
-			underline.addEventListener("click", e => {
+			underline.id = `underline${win_num_g}`;
+
+			underline.addEventListener("click", e => { // add minimalize func
 				var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
 				if (win.style.display) {
 					e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
@@ -738,13 +819,39 @@ const appBarGenerate = apps_list_l => {
 				}
 			});
 
+			// add underline on create
 			underlines.appendChild(underline);
+
+			// create window
 			document.body.appendChild(makeWindow(item["content"], item["src"], item["title"], [], undefined, undefined, true));
 		});
+		
+		// create icon
+		var img = document.createElement("img");
+		img.classList.add("noselect");
+		img.src = item["src"];
+		img.id = `app-icon${i}`;
+		i+=1; // increment id
+		img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
 
+		// create underlines container
+		var underlines = document.createElement("div");
+		underlines.classList.add("underlines");
+
+		// add icon to wrap
+		img_wrap.appendChild(img);
+
+		// add all to the item
+		img_container.appendChild(img_wrap);
+		img_container.appendChild(underlines);
+
+		// add drop event
+		window.addEventListener("mouseup", e => {leave(e, `#${img_container.id}`)});
+
+		// add icon and underlines section to bar
 		app_bar.appendChild(img_container);
 	});
 }
 
-window.addEventListener("mousemove", drag);
-document.querySelector("html").addEventListener("mouseleave", leaveAll);
+window.addEventListener("mousemove", drag); // add main drag check
+document.querySelector("html").addEventListener("mouseleave", leaveAll); // add out of bounds check
