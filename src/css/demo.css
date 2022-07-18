@@ -85,8 +85,8 @@ html, body {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	width: 700px;
-	height: 680px;
+	width: 1000px;
+    height: 620px;
 	min-width: 350px;
 	min-height: 280px;
 	border-radius:0.25rem;
@@ -94,6 +94,11 @@ html, body {
 	background: var(--dark-bg);
 	backdrop-filter: blur(40px);
 	z-index:-1;
+}
+
+.file-manager {
+	width: 1200px !important;
+    height: 550px !important;
 }
 
 /*

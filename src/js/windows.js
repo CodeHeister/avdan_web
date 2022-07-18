@@ -823,7 +823,11 @@ const appBarGenerate = apps_list_l => { // local app list
 			underlines.appendChild(underline);
 
 			// create window
-			document.body.appendChild(makeWindow(item["content"], item["src"], item["title"], [], undefined, undefined, true));
+			var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], undefined, undefined, true);
+			document.body.appendChild(win);
+			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
+			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+
 		});
 		
 		// create icon
