@@ -579,7 +579,7 @@ const moveIcon = (e, target, info) => {
 
 // W I N D O W  G E N E R A T O R
 
-var win_num_g = 1;
+var win_num_g = 1; // global window id number 
 const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	var win = document.createElement("div");
 	win.classList.add("window");

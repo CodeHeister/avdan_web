@@ -1,0 +1,1 @@
+This documentation is created using [Obsidian](https://obsidian.md), so better read it using it.
