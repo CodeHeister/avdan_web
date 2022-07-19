@@ -320,16 +320,91 @@ files_content.classList.add("noselect");
 files_content.appendChild(files_folder_list);
 // -- //
 
+// -- P H O T O S -- //
+
+var photos_content = document.createElement("div");
+photos_content.classList.add("photos-content");
+
+// -- M A I N  T I T L E
+var photos_title = document.createElement("div");
+photos_title.classList.add("photos-title");
+photos_title.innerHTML = "Photos";
+photos_content.appendChild(photos_title);
+
+var photos_main = document.createElement("div");
+photos_main.classList.add("photos-main");
+
+var photos_placeholder = document.createElement("div");
+photos_placeholder.classList.add("photos-placeholder");
+photos_placeholder.innerHTML = "There is no content here for now...";
+photos_main.appendChild(photos_placeholder);
+
+photos_content.appendChild(photos_main);
+// -- //
+
+// -- L A L E -- //
+
+var lale_content = document.createElement("div");
+lale_content.classList.add("lale-content");
+
+// -- M A I N  B U T T O N S
+var lale_buttons = document.createElement("div");
+lale_buttons.classList.add("lale-buttons");
+
+lale_top_buttons = [
+	{
+	}
+]
+
+
+lale_content.appendChild(lale_buttons);
+
+// -- M A I N  I C O N
+var lale_icon = document.createElement("div");
+lale_icon.classList.add("lale-icon");
+
+var lale_icon_img = document.createElement("img");
+lale_icon_img.src = "src/images/demo/icons/Apps/Lale.png";
+
+// -- M A I N  T I T L E
+var lale_title = document.createElement("div");
+lale_title.classList.add("lale-title");
+lale_title.innerHTML = "Lale";
+
+lale_icon.appendChild(lale_icon_img);
+lale_icon.appendChild(lale_title);
+lale_content.appendChild(lale_icon);
+
+// -- S E A R C H B A R  W R A P
+var lale_searchbar_holder = document.createElement("div");
+lale_searchbar_holder.classList.add("lale-searchbar-holder");
+
+// S E A R C H B A R 
+var lale_searchbar = document.createElement("div");
+lale_searchbar.classList.add("lale-searchbar");
+
+// S E A R C H  I C O N
+var lale_searchbar_icon = document.createElement("img");
+lale_searchbar_icon.src = "src/images/demo/icons/Search.png";
+
+// I N P U T  E L E M E N T 
+var lale_searchbar_input = document.createElement("input");
+lale_searchbar_input.setAttribute("type", "text");
+lale_searchbar_input.setAttribute("placeholder", "Search...");
+
+// A D D I N G  S E A R C H B A R
+lale_searchbar.appendChild(lale_searchbar_icon);
+lale_searchbar.appendChild(lale_searchbar_input);
+
+lale_searchbar_holder.appendChild(lale_searchbar);
+
+lale_content.appendChild(lale_searchbar_holder);
+
+// -- //
 
 // -- T E S T S  ( P L A C E H O L D E R S )
 var mail_content = document.createElement("div");
 mail_content.innerHTML = "Hi";
-
-var lale_content = document.createElement("div");
-lale_content.innerHTML = "Hi";
-
-var gallery_content = document.createElement("div");
-gallery_content.innerHTML = "Hi";
 
 var calendar_content = document.createElement("div");
 calendar_content.innerHTML = "Hi";
@@ -337,11 +412,23 @@ calendar_content.innerHTML = "Hi";
 var notes_content = document.createElement("div");
 notes_content.innerHTML = "Hi";
 
+var settings_content = document.createElement("div");
+settings_content.innerHTML = "Hi";
+
+var music_content = document.createElement("div");
+music_content.innerHTML = "Hi";
+
+var messages_content = document.createElement("div");
+messages_content.innerHTML = "Hi";
+
 mail_content.classList.add("noselect");
 lale_content.classList.add("noselect");
-gallery_content.classList.add("noselect");
+photos_content.classList.add("noselect");
 calendar_content.classList.add("noselect");
 notes_content.classList.add("noselect");
+settings_content.classList.add("noselect");
+music_content.classList.add("noselect");
+messages_content.classList.add("noselect");
 // -- //
 
 
@@ -364,9 +451,9 @@ var apps_list_g = [
 		"content" : lale_content
 	},
 	{
-		"title" : "Gallery",
+		"title" : "Photos",
 		"src" : "src/images/demo/icons/Apps/Gallery.png",
-		"content" : gallery_content
+		"content" : photos_content
 	},
 	{
 		"title" : "Calendar",
@@ -377,6 +464,24 @@ var apps_list_g = [
 		"title" : "Notes",
 		"src" : "src/images/demo/icons/Apps/Notes.png",
 		"content" : notes_content
+	},
+	{
+		"content" : "hr"
+	},
+	{
+		"title" : "Settings",
+		"src" : "src/images/demo/icons/Apps/Settings.png",
+		"content" : settings_content
+	},
+	{
+		"title" : "Music",
+		"src" : "src/images/demo/icons/Apps/Music.png",
+		"content" : music_content
+	},
+	{
+		"title" : "Messages",
+		"src" : "src/images/demo/icons/Apps/Messages.png",
+		"content" : messages_content
 	},
 ]
 

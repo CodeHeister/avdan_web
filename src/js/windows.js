@@ -343,7 +343,10 @@ const remakeWindow = (e, target, info) => {
 			});
 
 			// recreate window
-			document.body.appendChild(makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML));
+			var win = makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
+			document.body.appendChild(win);
+			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
+			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
 
 			// erase elements from the current window 
 			target.parentElement.removeChild(target);
@@ -541,7 +544,7 @@ const moveIcon = (e, target, info) => {
 	var insertAfter = false;
 
 	// get all icons
-	document.querySelectorAll(".img-container").forEach(item => {
+	document.querySelectorAll(".img-container, .app-bar hr").forEach(item => {
 		if (target != item) { // if not current icon
 
 			// get positions
@@ -792,69 +795,103 @@ const appBarGenerate = apps_list_l => { // local app list
 	var i = 0; // ids for icons and wrappers (required for drag function)
 	apps_list_l.forEach(item => { // iterate list
 
-		// create one item
-		var img_container = document.createElement("div");
-		img_container.classList.add("img-container");
-		img_container.id = `img-container${i}`;
-		
-		// create icon wrap
-		var img_wrap = document.createElement("div");
-		img_wrap.classList.add("img-wrapper");
-		img_wrap.addEventListener("click", e => { // add window creation
-		
-			// create new underline on click
-			var underline = document.createElement("div");
-			underline.classList.add("underline");
-			underline.id = `underline${win_num_g}`;
+		if (item.content == "hr") {
+			app_bar.appendChild(document.createElement("hr"));
+		}
+		else {
+			// create one item
+			var img_container = document.createElement("div");
+			img_container.classList.add("img-container");
+			img_container.id = `img-container${i}`;
+			
+			// create icon wrap
+			var img_wrap = document.createElement("div");
+			img_wrap.classList.add("img-wrapper");
+			img_wrap.addEventListener("click", e => { // add window creation
+			
+				// create new underline on click
+				var underline = document.createElement("div");
+				underline.classList.add("underline");
+				underline.id = `underline${win_num_g}`;
 
-			underline.addEventListener("click", e => { // add minimalize func
-				var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
-				if (win.style.display) {
-					e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-					win.style.display = null;
-				}
-				else {
-					e.currentTarget.style.backgroundColor = "var(--light-bg)";
-					win.style.display = "none";
-				}
+				underline.addEventListener("click", e => { // add minimalize func
+					var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]);
+					if (win.style.display) {
+						e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+						win.style.display = null;
+					}
+					else {
+						e.currentTarget.style.backgroundColor = "var(--light-bg)";
+						win.style.display = "none";
+					}
+				});
+
+				// add underline on create
+				underlines.appendChild(underline);
+
+				// create window
+				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], undefined, undefined, true);
+				document.body.appendChild(win);
+				win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
+				win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+
 			});
+			
+			// create icon
+			var img = document.createElement("img");
+			img.classList.add("noselect");
+			img.src = item["src"];
+			img.id = `app-icon${i}`;
+			i+=1; // increment id
+			img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
 
-			// add underline on create
-			underlines.appendChild(underline);
+			// create underlines container
+			var underlines = document.createElement("div");
+			underlines.classList.add("underlines");
 
-			// create window
-			var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], undefined, undefined, true);
-			document.body.appendChild(win);
-			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
-			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+			// add icon to wrap
+			img_wrap.appendChild(img);
 
-		});
-		
-		// create icon
-		var img = document.createElement("img");
-		img.classList.add("noselect");
-		img.src = item["src"];
-		img.id = `app-icon${i}`;
-		i+=1; // increment id
-		img.addEventListener("mousedown", e => {dragAdd(e, `#${img.id}`, `#${img_container.id}`, undefined, iconDropTransition, undefined, undefined, undefined, moveIcon)});
+			// add all to the item
+			img_container.appendChild(img_wrap);
+			img_container.appendChild(underlines);
 
-		// create underlines container
-		var underlines = document.createElement("div");
-		underlines.classList.add("underlines");
+			// add drop event
+			window.addEventListener("mouseup", e => {leave(e, `#${img_container.id}`)});
 
-		// add icon to wrap
-		img_wrap.appendChild(img);
-
-		// add all to the item
-		img_container.appendChild(img_wrap);
-		img_container.appendChild(underlines);
-
-		// add drop event
-		window.addEventListener("mouseup", e => {leave(e, `#${img_container.id}`)});
-
-		// add icon and underlines section to bar
-		app_bar.appendChild(img_container);
+			// add icon and underlines section to bar
+			app_bar.appendChild(img_container);
+		}
 	});
+
+	var hider_holder = document.createElement("div");
+	hider_holder.classList.add("hider-holder");
+
+	var hider = document.createElement("img");
+	hider.src = "src/images/demo/icons/Back.png";
+
+	hider_holder.addEventListener("click", e => {
+		var get_app = document.querySelector(".app-bar hr");
+		var curr_icon = hider.src.split("/");
+		curr_icon = curr_icon[curr_icon.length-1];
+		if (curr_icon == "Back.png") {
+			while (!get_app.nextSibling.classList.contains("hider-holder")) {
+				get_app.nextSibling.style.display = "none";
+				get_app = get_app.nextSibling;
+			}
+			hider.src = "src/images/demo/icons/Forward.png";
+		}
+		else {
+			while (!get_app.nextSibling.classList.contains("hider-holder")) {
+				get_app.nextSibling.style.display = null;
+				get_app = get_app.nextSibling;
+			}
+			hider.src = "src/images/demo/icons/Back.png";
+		}
+	});
+
+	hider_holder.appendChild(hider);
+	app_bar.appendChild(hider_holder);
 }
 
 window.addEventListener("mousemove", drag); // add main drag check
