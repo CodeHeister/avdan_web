@@ -868,6 +868,7 @@ const appBarGenerate = apps_list_l => { // local app list
 	hider_holder.classList.add("hider-holder");
 
 	var hider = document.createElement("img");
+	hider.classList.add("noselect");
 	hider.src = "src/images/demo/icons/Back.png";
 
 	hider_holder.addEventListener("click", e => {
@@ -892,6 +893,26 @@ const appBarGenerate = apps_list_l => { // local app list
 
 	hider_holder.appendChild(hider);
 	app_bar.appendChild(hider_holder);
+}
+
+var scroll_list;
+const scrollBarGenerate = scroll_list_l => {
+	scroll_list = scroll_list_l;
+	var scroll_bar = document.querySelector(".scroll-bar");
+	scroll_bar.innerHTML = "";
+	scroll_bar.appendChild(scroll_list_l.items[scroll_list_l.pos]);
+	if (!scroll_bar.hasScroll) {
+		scroll_bar.addEventListener("wheel", e => {
+			if (e.deltaY > 0) {
+				scroll_list.pos += parseInt((scroll_list.pos >= scroll_list.items.length-1) && "0" || "1");
+			}
+			else {
+				scroll_list.pos -= parseInt((scroll_list.pos <= 0) && "0" || "1");
+			}
+			scrollBarGenerate(scroll_list);
+		});
+		scroll_bar.hasScroll = true;
+	}
 }
 
 window.addEventListener("mousemove", drag); // add main drag check
