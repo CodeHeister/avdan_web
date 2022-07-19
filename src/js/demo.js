@@ -488,3 +488,62 @@ var apps_list_g = [
 // add apps to the appbar
 appBarGenerate(apps_list_g);
 // -- //
+
+// -- W E A T H E R  &  T I M E
+
+var weather_time = document.createElement("div");
+weather_time.classList.add("weather-time");
+weather_time.classList.add("noselect");
+
+var date = new Date;
+
+var curr_time = document.createElement("div");
+curr_time.classList.add("curr-time");
+curr_time.innerHTML = `${date.getHours()}:${(date.getMinutes() < 10) && "0"+date.getMinutes() || date.getMinutes()}`;
+setInterval(() => {
+	var date = new Date;
+	curr_time.innerHTML = `${date.getHours()}:${(date.getMinutes() < 10) && "0"+date.getMinutes() || date.getMinutes()}`;
+}, 1000);
+
+
+var curr_date = document.createElement("div");
+curr_date.classList.add("curr-date");
+var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+curr_date.innerHTML = `${days[date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
+setInterval(() => {
+	var date = new Date;
+	curr_date.innerHTML = `${days[date.getDay()-1]}, ${date.toDateString().split(' ')[1]} ${date.getDate()}`;
+}, 1000*60*60);
+
+var time_panel = document.createElement("div");
+time_panel.classList.add("time-panel");
+time_panel.appendChild(curr_time);
+time_panel.appendChild(curr_date);
+
+var weather_icon = document.createElement("img");
+
+var weather_grad = document.createElement("div");
+weather_grad.classList.add("weather-grad");
+weather_grad.innerHTML = "24&#176;";
+
+var weather_panel = document.createElement("div");
+weather_panel.classList.add("weather-panel");
+weather_panel.appendChild(weather_icon);
+weather_panel.appendChild(weather_grad);
+
+weather_time.appendChild(time_panel);
+weather_time.appendChild(weather_panel);
+
+// -- //
+
+// -- S C R O L L  B A R  C O N F I G S
+
+var scroll_list_g = { 
+	"pos" : 0,
+	"items" : [
+		weather_time,
+	]
+}
+
+scrollBarGenerate(scroll_list_g);
+// -- //
