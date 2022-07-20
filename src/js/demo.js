@@ -608,18 +608,13 @@ const insertBar = (e, target, info) => {
 	var dock = document.querySelector(".dock");
 
 	if (target.classList.contains("dragged")) {
-		var x1 = dock.offsetLeft;
-		var y1 = dock.offsetTop;
-		
 		var parentElement = target;
 		while (!parentElement.parentElement.classList.contains("dock")) {
-			x1 += parentElement.offsetLeft;
-			y1 += parentElement.offsetTop;
 			parentElement = parentElement.parentElement;
 		}
-		x1 += parentElement.offsetLeft;
-		y1 += parentElement.offsetTop;
 
+		var x1 = dock.offsetLeft + parentElement.offsetLeft;
+		var y1 = dock.offsetTop + parentElement.offsetTop;
 		var y2 = y1 + parentElement.offsetHeight;
 
 		if (x1 <= e.clientX && e.clientX <= (x1 + parentElement.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
