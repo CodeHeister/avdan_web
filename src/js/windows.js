@@ -4,6 +4,7 @@ var z_index_g = 1; // global z-index counter
 
 // on insert window drag
 const iconify = (e, target, info) => {
+	target.style.transition = null;
 	target.lastMinWidth = target.style.minWidth || "450px";
 	target.style.minWidth = "initial";
 	target.style.minHeight = "initial";
@@ -36,9 +37,10 @@ const deiconify = (e, target, info) => {
 
 // on going out of bounds 
 const attach = (e, target, info) => {
-	target.lastTransform = target.style.transform;
-	target.lastWidth = target.offsetWidth;
-	target.lastHeight = target.offsetHeight;
+	target.style.transition = null;
+	target.lastTransform = target.lastTransform || target.style.transform;
+	target.lastWidth = target.lastWidth || target.offsetWidth;
+	target.lastHeight = target.lastHeight || target.offsetHeight;
 	if (e.screenX > window.innerWidth/2) {
 		target.style.top = 0;
 		target.style.left = "50%";
@@ -59,7 +61,8 @@ const attach = (e, target, info) => {
 
 // left attach button on click
 const leftAttach = (e, target) => {
-	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == 0 && target.style.width == "50%" && target.style.height == "100%") {
+	target.style.transition = "width 0.1s ease-in-out, transform 0.1s ease-in-out, height 0.1s ease-in-out, top 0.1s ease-in-out, left 0.1s ease-in-out";
+	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == "0px" && target.style.width == "50%" && target.style.height == "100%") {
 		target.style.top = null;
 		target.style.left = null;
 		target.style.width = target.lastWidth+"px";
@@ -70,9 +73,9 @@ const leftAttach = (e, target) => {
 		target.lastHeight = undefined;
 	}
 	else {
-		target.lastTransform = target.style.transform;
-		target.lastWidth = target.offsetWidth;
-		target.lastHeight = target.offsetHeight;
+		target.lastTransform = target.lastTransform || target.style.transform;
+		target.lastWidth = target.lastWidth || target.offsetWidth;
+		target.lastHeight = target.lastHeight || target.offsetHeight;
 		target.style.top = 0;
 		target.style.left = 0;
 		target.style.width = "50%";
@@ -85,6 +88,7 @@ const leftAttach = (e, target) => {
 
 // left attach button on click
 const rightAttach = (e, target) => {
+	target.style.transition = "width 0.1s ease-in-out, transform 0.1s ease-in-out, height 0.1s ease-in-out, top 0.1s ease-in-out, left 0.1s ease-in-out";
 	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.left == "50%" && target.style.width == "50%" && target.style.height == "100%") {
 		target.style.top = null;
 		target.style.left = null;
@@ -96,9 +100,9 @@ const rightAttach = (e, target) => {
 		target.lastHeight = undefined;
 	}
 	else {
-		target.lastTransform = target.style.transform;
-		target.lastWidth = target.offsetWidth;
-		target.lastHeight = target.offsetHeight;
+		target.lastTransform = target.lastTransform || target.style.transform;
+		target.lastWidth = target.lastWidth || target.offsetWidth;
+		target.lastHeight = target.lastHeight || target.offsetHeight;
 		target.style.top = 0;
 		target.style.left = "50%";
 		target.style.width = "50%";
@@ -111,6 +115,7 @@ const rightAttach = (e, target) => {
 
 // fullsize button on click
 const fullsize = (e, target) => {
+	target.style.transition = "width 0.1s ease-in-out, transform 0.1s ease-in-out, height 0.1s ease-in-out, top 0.1s ease-in-out, left 0.1s ease-in-out";
 	if (typeof target.lastWidth == "number" && typeof target.lastHeight == "number" && target.style.width == "100%" && target.style.height == "100%") {
 		target.style.top = null;
 		target.style.left = null;
@@ -122,9 +127,9 @@ const fullsize = (e, target) => {
 		target.lastHeight = undefined;
 	}
 	else {
-		target.lastTransform = target.style.transform;
-		target.lastWidth = target.offsetWidth;
-		target.lastHeight = target.offsetHeight;
+		target.lastTransform = target.lastTransform || target.style.transform;
+		target.lastWidth = target.lastWidth || target.offsetWidth;
+		target.lastHeight = target.lastHeight || target.offsetHeight;
 		target.style.top = 0;
 		target.style.left = 0;
 		target.style.width = "100%";
@@ -607,6 +612,12 @@ const moveUp = (e, target, info) => {
 	z_index_g += 1;
 }
 
+const moveUpAndClean = (e, target, info) => {
+	target.style.transition = null;
+	target.style.zIndex = z_index_g;
+	z_index_g += 1;
+}
+
 // A P P  B A R
 
 // disable transition on move start and set higher layer
@@ -685,7 +696,7 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	panel.classList.add("win-panel");
 	panel.classList.add("noselect");
 	panel.id = "win-panel"+win_num_g;
-	panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUp, undefined, undefined, undefined, undefined, attach)});
+	panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, undefined, undefined, undefined, attach)});
 
 	var tab_holder = document.createElement("div");
 	tab_holder.classList.add("tab-holder");
@@ -790,42 +801,42 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	var wl = document.createElement("div");
 	wl.classList.add("wl");
 	wl.id = "wl"+win_num_g;
-	wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWL, undefined, undefined, undefined, true, false)});
+	wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWL, undefined, undefined, undefined, true, false)});
 
 	var wr = document.createElement("div");
 	wr.classList.add("wr");
 	wr.id = "wr"+win_num_g;
-	wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWR, undefined, undefined, undefined, false, false)});
+	wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, undefined, moveUpAndClean,  undefined, dragResizeWR, undefined, undefined, undefined, false, false)});
 
 	var ht = document.createElement("div");
 	ht.classList.add("ht");
 	ht.id = "ht"+win_num_g;
-	ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeHT, undefined, undefined, undefined, false, true)});
+	ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeHT, undefined, undefined, undefined, false, true)});
 
 	var hb = document.createElement("div");
 	hb.classList.add("hb");
 	hb.id = "hb"+win_num_g;
-	hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeHB, undefined, undefined, undefined, false, false)});
+	hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, undefined, moveUpAndClean,  undefined, dragResizeHB, undefined, undefined, undefined, false, false)});
 
 	var whlt = document.createElement("div");
 	whlt.classList.add("whlt");
 	whlt.id = "whlt"+win_num_g;
-	whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWHLT, undefined, undefined, undefined, true, true)});
+	whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHLT, undefined, undefined, undefined, true, true)});
 
 	var whrt = document.createElement("div");
 	whrt.classList.add("whrt");
 	whrt.id = "whrt"+win_num_g;
-	whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWHRT, undefined, undefined, undefined, false, true)});
+	whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHRT, undefined, undefined, undefined, false, true)});
 
 	var whlb = document.createElement("div");
 	whlb.classList.add("whlb");
 	whlb.id = "whlb"+win_num_g;
-	whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWHLB, undefined, undefined, undefined, true, false)});
+	whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHLB, undefined, undefined, undefined, true, false)});
 
 	var whrb = document.createElement("div");
 	whrb.classList.add("whrb");
 	whrb.id = "whrb"+win_num_g;
-	whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, undefined, undefined, undefined, dragResizeWHRB, undefined, undefined, undefined, false, false)});
+	whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHRB, undefined, undefined, undefined, false, false)});
 
 	window.addEventListener("mouseup", e => {leave(e, `#${win.id}`)});
 
@@ -918,9 +929,7 @@ const appBarGenerate = apps_list_l => { // local app list
 				// create window
 				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], undefined, undefined, true);
 				document.body.appendChild(win);
-				win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
-				win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
-
+				win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
 			});
 			
 			// create icon
