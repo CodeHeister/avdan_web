@@ -697,6 +697,7 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	panel.classList.add("noselect");
 	panel.id = "win-panel"+win_num_g;
 	panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, undefined, undefined, undefined, attach)});
+	panel.addEventListener("dblclick", e => {fullsize(e, win)});
 
 	var tab_holder = document.createElement("div");
 	tab_holder.classList.add("tab-holder");
@@ -801,42 +802,42 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	var wl = document.createElement("div");
 	wl.classList.add("wl");
 	wl.id = "wl"+win_num_g;
-	wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWL, undefined, undefined, undefined, true, false)});
+	wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="e-resize"}, moveUpAndClean, undefined, dragResizeWL, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
 
 	var wr = document.createElement("div");
 	wr.classList.add("wr");
 	wr.id = "wr"+win_num_g;
-	wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, undefined, moveUpAndClean,  undefined, dragResizeWR, undefined, undefined, undefined, false, false)});
+	wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="w-resize"}, moveUpAndClean,  undefined, dragResizeWR, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
 
 	var ht = document.createElement("div");
 	ht.classList.add("ht");
 	ht.id = "ht"+win_num_g;
-	ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeHT, undefined, undefined, undefined, false, true)});
+	ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="s-resize"}, moveUpAndClean, undefined, dragResizeHT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
 
 	var hb = document.createElement("div");
 	hb.classList.add("hb");
 	hb.id = "hb"+win_num_g;
-	hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, undefined, moveUpAndClean,  undefined, dragResizeHB, undefined, undefined, undefined, false, false)});
+	hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="n-resize"}, moveUpAndClean,  undefined, dragResizeHB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
 
 	var whlt = document.createElement("div");
 	whlt.classList.add("whlt");
 	whlt.id = "whlt"+win_num_g;
-	whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHLT, undefined, undefined, undefined, true, true)});
+	whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="se-resize"}, moveUpAndClean, undefined, dragResizeWHLT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, true)});
 
 	var whrt = document.createElement("div");
 	whrt.classList.add("whrt");
 	whrt.id = "whrt"+win_num_g;
-	whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHRT, undefined, undefined, undefined, false, true)});
+	whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="sw-resize"}, moveUpAndClean, undefined, dragResizeWHRT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
 
 	var whlb = document.createElement("div");
 	whlb.classList.add("whlb");
 	whlb.id = "whlb"+win_num_g;
-	whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHLB, undefined, undefined, undefined, true, false)});
+	whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="nw-resize"}, moveUpAndClean, undefined, dragResizeWHLB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
 
 	var whrb = document.createElement("div");
 	whrb.classList.add("whrb");
 	whrb.id = "whrb"+win_num_g;
-	whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, dragResizeWHRB, undefined, undefined, undefined, false, false)});
+	whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="ne-resize"}, moveUpAndClean, undefined, dragResizeWHRB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
 
 	window.addEventListener("mouseup", e => {leave(e, `#${win.id}`)});
 
