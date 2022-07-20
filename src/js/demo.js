@@ -622,8 +622,6 @@ const insertBar = (e, target, info) => {
 
 		var y2 = y1 + parentElement.offsetHeight;
 
-		console.log(e.clientX, e.clientY, x1, x1 + parentElement.offsetWidth, y1, y2);
-
 		if (x1 <= e.clientX && e.clientX <= (x1 + parentElement.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
 			target.style.transition = "transform 0.1s ease-in-out";
 		}
@@ -696,3 +694,16 @@ window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
 var scroll_bar = document.querySelector(".scroll-bar");
 scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
+
+if (window.navigator.userAgent.match("Firefox")) {
+	var app_bar = document.querySelector(".app-bar");
+	app_bar.querySelectorAll(".img-wrapper img").forEach(item => {
+		item.style.width = item.clientHeight+"px";
+	});
+	window.addEventListener("resize", e => {
+		var app_bar = document.querySelector(".app-bar");
+		app_bar.querySelectorAll(".img-wrapper img").forEach(item => {
+			item.style.width = item.clientHeight+"px";
+		});
+	});
+}
