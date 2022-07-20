@@ -316,7 +316,7 @@ html, body {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	height: calc(3.5rem + 2%);
+	height: calc(2.5rem + 2%);
 }
 
 .scroll-bar, .menu-bar, .app-bar {
@@ -365,7 +365,7 @@ html, body {
 	cursor: pointer;
 }
 
-.app-bar hr {
+.app-bar hr, .bar-split {
 	border-style: solid;
     border-width: 2px;
     border-color: var(--light-bg-hl);
@@ -385,16 +385,32 @@ html, body {
 .menu-bar {
 	align-items: center;
 	gap: 1.75rem;
-	padding: 0.5rem 1rem 0.5rem 1rem !important;
+	padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
-.menu-bar img {
-	height: 37.5%;
+.bar-split {
+	height: 90%;
+	margin: 0 0.5rem 0 0.5rem;
+}
+
+.dock .dragged {
+	height: 100% !important;
+	padding: 0 !important;
+}
+
+.menu-icon {
+	height: 45%;
+	transition: transform 0.1s ease-in-out;
 	cursor: pointer;
+}
+
+.menu-icon:hover {
+	transform: scale(1.1);
 }
 
 .scroll-bar {
 	align-items: center;
+	gap: 0.5rem;
 }
 
 .weather-time {
@@ -403,6 +419,7 @@ html, body {
 	align-items: center;
 	gap: 2.5rem;
 	height: 100%;
+	pointer-events: none;
 }
 
 .time-panel {

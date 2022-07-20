@@ -575,7 +575,7 @@ player_prev.style.fill = "#ffffff";
 
 var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
-player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m -11 -23 h -2 c 0 0 -2 0 -2 2 v 18 c 0 0 0 2 2 2 c 0 0 2 0 2 -2 v -18 c 0 0 0 -2 -2 -2 z m 10 0 h -2 c 0 0 -2 0 -2 2 v 18 c 0 0 0 2 2 2 c 0 0 2 0 2 -2 v -18 c 0 0 0 -2 -2 -2 z"></path>';
+player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
 player_pause.style.fill = "#ffffff";
 
 var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -603,3 +603,96 @@ var scroll_list_g = {
 
 scrollBarGenerate(scroll_list_g);
 // -- //
+
+const insertBar = (e, target, info) => {
+	var dock = document.querySelector(".dock");
+
+	if (target.classList.contains("dragged")) {
+		var x1 = dock.offsetLeft;
+		var y1 = dock.offsetTop;
+		
+		var parentElement = target;
+		while (!parentElement.parentElement.classList.contains("dock")) {
+			x1 += parentElement.offsetLeft;
+			y1 += parentElement.offsetTop;
+			parentElement = parentElement.parentElement;
+		}
+		x1 += parentElement.offsetLeft;
+		y1 += parentElement.offsetTop;
+
+		var y2 = y1 + parentElement.offsetHeight;
+
+		console.log(e.clientX, e.clientY, x1, x1 + parentElement.offsetWidth, y1, y2);
+
+		if (x1 <= e.clientX && e.clientX <= (x1 + parentElement.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+			target.style.transition = "transform 0.1s ease-in-out";
+		}
+		else if (e.clientX <= (x1 + parentElement.offsetWidth/2)) {
+			if (target.nextSibling) {
+				if (target.nextSibling.classList.contains("bar-split")) {
+					target.parentElement.removeChild(target.nextSibling);
+				}
+			}
+			else if (target.previousSibling.classList.contains("bar-split")) {
+				target.parentElement.removeChild(target.previousSibling);
+			}
+			dock.insertBefore(target, parentElement);
+			target.classList.remove("dragged");
+		}
+		else {
+			if (target.nextSibling) {
+				if (target.nextSibling.classList.contains("bar-split")) {
+					target.parentElement.removeChild(target.nextSibling);
+				}
+			}
+			else if (target.previousSibling.classList.contains("bar-split")) {
+				target.parentElement.removeChild(target.previousSibling);
+			}
+			dock.insertBefore(target, parentElement.nextSibling);
+			target.classList.remove("dragged");
+		}
+		target.style.transform = null;
+	}
+	else {
+		for (var i = 0; i < dock.children.length; i++) {
+			var item = dock.children[i];
+			if (item != target) {
+				var x1 = dock.offsetLeft + item.offsetLeft;
+				var y1 = dock.offsetTop + item.offsetTop;
+				var y2 = y1 + item.offsetHeight;
+
+				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+					var spliter = document.createElement("hr");
+					spliter.classList.add("bar-split");
+					item.insertBefore(spliter, item.firstChild);
+					item.insertBefore(target, item.firstChild);
+					target.classList.add("dragged");
+				}
+				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+					var spliter = document.createElement("hr");
+					spliter.classList.add("bar-split");
+					item.appendChild(spliter);
+					item.appendChild(target);
+					target.classList.add("dragged");
+				}
+				else {
+					target.style.transition = "transform 0.1s ease-in-out";
+				}
+				target.style.transform = null;
+			}
+		}
+	}
+	target.style.zIndex = null;
+}
+
+var app_bar = document.querySelector(".app-bar");
+app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+window.addEventListener("mouseup", e => {leave(e, ".app-bar")});
+
+var menu_bar = document.querySelector(".menu-bar");
+menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
+
+var scroll_bar = document.querySelector(".scroll-bar");
+scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
