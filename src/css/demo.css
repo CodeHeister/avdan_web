@@ -319,7 +319,7 @@ html, body {
 	height: calc(3.5rem + 2%);
 }
 
-.scroll-bar, .app-bar {
+.scroll-bar, .menu-bar, .app-bar {
 	display: flex;
 	backdrop-filter: blur(40px);
 	background-color: var(--dark-bg);
@@ -382,6 +382,17 @@ html, body {
 	cursor: pointer;
 }
 
+.menu-bar {
+	align-items: center;
+	gap: 1.75rem;
+	padding: 0.5rem 1rem 0.5rem 1rem !important;
+}
+
+.menu-bar img {
+	height: 37.5%;
+	cursor: pointer;
+}
+
 .scroll-bar {
 	align-items: center;
 }
@@ -413,14 +424,81 @@ html, body {
 }
 
 .weather-panel {
+	height: 35%;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	align-items: center;
+	gap: 0.75rem;
+}
+
+.weather-panel svg {
+	stroke: #ffc107;
+	stroke-width: 2px;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	height: 100%;
+	fill: #ffc107;
 }
 
 .weather-grad {
 	font-size: 0.95rem;
+}
+
+.player {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+	height: 100%;
+}
+
+.player-icon, .player-control {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 100%;
+}
+
+.player-icon img {
+	height: 75%;
+	transition: transform 0.1s ease-in-out;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.player-icon img:hover {
+	transform: scale(1.05) !important;
+}
+
+.player-title {
+	font-size: 0.95rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.player-artist {
+	font-size: 0.8rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.player-control {
+	gap: 1rem;
+}
+
+.player-control svg {
+	height: 50%;
+	transition: transform 0.1s ease-in-out;
+	cursor: pointer;
+}
+
+.player-control svg:first-child:hover {
+	transform: rotate(180deg) scale(1.1) !important;
+}
+
+.player-control svg:nth-child(n+2):hover {
+	transform: scale(1.1) !important;
 }
 
 /*
