@@ -406,6 +406,90 @@ const remakeWindow = (e, target, info) => {
 	}
 }
 
+const barDropTransition = (e, target, info) => {
+	target.style.transition = null;
+	var parentElement = target;
+	while (!parentElement.classList.contains("dock")) {
+		parentElement.style.zIndex = 2;
+		parentElement = parentElement.parentElement;
+	}
+}
+
+const insertBar = (e, target, info) => {
+	var dock = document.querySelector(".dock");
+
+	if (target.classList.contains("dragged")) {
+		var parentElement = target;
+		while (!parentElement.parentElement.classList.contains("dock")) {
+			parentElement = parentElement.parentElement;
+			parentElement.style.zIndex = null;
+		}
+
+		var x1 = dock.offsetLeft + parentElement.offsetLeft;
+		var y1 = dock.offsetTop + parentElement.offsetTop;
+		var y2 = y1 + parentElement.offsetHeight;
+
+		if (x1 <= e.clientX && e.clientX <= (x1 + parentElement.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+			target.style.transition = "transform 0.1s ease-in-out";
+		}
+		else if (e.clientX <= (x1 + parentElement.offsetWidth/2)) {
+			if (target.nextSibling) {
+				if (target.nextSibling.classList.contains("bar-split")) {
+					target.parentElement.removeChild(target.nextSibling);
+				}
+			}
+			else if (target.previousSibling.classList.contains("bar-split")) {
+				target.parentElement.removeChild(target.previousSibling);
+			}
+			dock.insertBefore(target, parentElement);
+			target.classList.remove("dragged");
+		}
+		else {
+			if (target.nextSibling) {
+				if (target.nextSibling.classList.contains("bar-split")) {
+					target.parentElement.removeChild(target.nextSibling);
+				}
+			}
+			else if (target.previousSibling.classList.contains("bar-split")) {
+				target.parentElement.removeChild(target.previousSibling);
+			}
+			dock.insertBefore(target, parentElement.nextSibling);
+			target.classList.remove("dragged");
+		}
+		target.style.transform = null;
+	}
+	else {
+		for (var i = 0; i < dock.children.length; i++) {
+			var item = dock.children[i];
+			if (item != target) {
+				var x1 = dock.offsetLeft + item.offsetLeft;
+				var y1 = dock.offsetTop + item.offsetTop;
+				var y2 = y1 + item.offsetHeight;
+
+				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+					var spliter = document.createElement("hr");
+					spliter.classList.add("bar-split");
+					item.insertBefore(spliter, item.firstChild);
+					item.insertBefore(target, item.firstChild);
+					target.classList.add("dragged");
+				}
+				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+					var spliter = document.createElement("hr");
+					spliter.classList.add("bar-split");
+					item.appendChild(spliter);
+					item.appendChild(target);
+					target.classList.add("dragged");
+				}
+				else {
+					target.style.transition = "transform 0.1s ease-in-out";
+				}
+				target.style.transform = null;
+			}
+		}
+	}
+	target.style.zIndex = null;
+}
+
 // W I N D O W  C O N T R O L  F U N C  F O R  W I N D O W  S T A C K I N G
 
 const insertCheck = (e, target, info) => {
@@ -544,7 +628,7 @@ const moveIcon = (e, target, info) => {
 	var insertAfter = false;
 
 	// get all icons
-	document.querySelectorAll(".img-container, .app-bar hr").forEach(item => {
+	document.querySelectorAll(".img-container, .app-split").forEach(item => {
 		if (target != item) { // if not current icon
 
 			// get positions
@@ -796,7 +880,9 @@ const appBarGenerate = apps_list_l => { // local app list
 	apps_list_l.forEach(item => { // iterate list
 
 		if (item.content == "hr") {
-			app_bar.appendChild(document.createElement("hr"));
+			var app_split = document.createElement("hr");
+			app_split.classList.add("app-split");
+			app_bar.appendChild(app_split);
 		}
 		else {
 			// create one item
@@ -872,7 +958,7 @@ const appBarGenerate = apps_list_l => { // local app list
 	hider.src = "src/images/demo/icons/Back.png";
 
 	hider_holder.addEventListener("click", e => {
-		var get_app = document.querySelector(".app-bar hr");
+		var get_app = document.querySelector(".app-split");
 		var curr_icon = hider.src.split("/");
 		curr_icon = curr_icon[curr_icon.length-1];
 		if (curr_icon == "Back.png") {
@@ -908,10 +994,10 @@ const scrollBarGenerate = scroll_list_l => {
 	if (!scroll_bar.hasScroll) {
 		scroll_bar.addEventListener("wheel", e => {
 			if (e.deltaY > 0) {
-				scroll_list.pos += parseInt((scroll_list.pos >= scroll_list.items.length-1) && "0" || "1");
+				scroll_list.pos += parseInt((scroll_list.pos >= scroll_list.items.length-1) && `${-1*scroll_list.items.length+1}` || "1");
 			}
 			else {
-				scroll_list.pos -= parseInt((scroll_list.pos <= 0) && "0" || "1");
+				scroll_list.pos -= parseInt((scroll_list.pos <= 0) && `${-1*scroll_list.items.length+1}` || "1");
 			}
 			scrollBarGenerate(scroll_list);
 		});
