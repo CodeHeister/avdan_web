@@ -604,6 +604,15 @@ var scroll_list_g = {
 scrollBarGenerate(scroll_list_g);
 // -- //
 
+const barDropTransition = (e, target, info) => {
+	target.style.transition = null;
+	var parentElement = target;
+	while (!parentElement.classList.contains("dock")) {
+		parentElement.style.zIndex = 2;
+		parentElement = parentElement.parentElement;
+	}
+}
+
 const insertBar = (e, target, info) => {
 	var dock = document.querySelector(".dock");
 
@@ -611,6 +620,7 @@ const insertBar = (e, target, info) => {
 		var parentElement = target;
 		while (!parentElement.parentElement.classList.contains("dock")) {
 			parentElement = parentElement.parentElement;
+			parentElement.style.zIndex = null;
 		}
 
 		var x1 = dock.offsetLeft + parentElement.offsetLeft;
@@ -679,15 +689,15 @@ const insertBar = (e, target, info) => {
 }
 
 var app_bar = document.querySelector(".app-bar");
-app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".app-bar")});
 
 var menu_bar = document.querySelector(".menu-bar");
-menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
 
 var scroll_bar = document.querySelector(".scroll-bar");
-scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", iconDropTransition, undefined, undefined, undefined, insertBar)});
+scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
 
 if (window.navigator.userAgent.match("Firefox")) {
