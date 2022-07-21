@@ -1028,4 +1028,4 @@ const scrollBarGenerate = scroll_list_l => {
 }
 
 window.addEventListener("mousemove", drag); // add main drag check
-document.querySelector("html").addEventListener("mouseleave", leaveAll); // add out of bounds check
+document.body.addEventListener("mouseleave", leaveAll); // add out of bounds check

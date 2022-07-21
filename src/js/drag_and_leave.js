@@ -166,16 +166,16 @@ const leaveAll = e => {
 
 		// control element function on drop
 		if (typeof info.currentTarget_out_f == "function") {
-			info.currentTarget_out_f(e, e.currentTarget, info);
+			info.currentTarget_out_f(e, currentTarget, info);
 		}
 
 		// target function on drop
 		if (typeof info.target_out_f == "fuction") {
-				info.target_out_f(e, target, info);
+			info.target_out_f(e, target, info);
 		}
 
 		// target function on out_of_bounds
-		if (typeof info.drop_f != "function") {
+		if (typeof info.drop_f == "function") {
 			info.drop_f(e, target, info);
 		}
 		
