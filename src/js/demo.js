@@ -616,6 +616,10 @@ var scroll_bar = document.querySelector(".scroll-bar");
 scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
 
+var info_bar = document.querySelector(".info-bar");
+info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+window.addEventListener("mouseup", e => {leave(e, ".info-bar")});
+
 if (window.navigator.userAgent.match("Firefox")) {
 	var app_bar = document.querySelector(".app-bar");
 	app_bar.querySelectorAll(".img-wrapper img").forEach(item => {

@@ -413,6 +413,9 @@ const remakeWindow = (e, target, info) => {
 
 const barDropTransition = (e, target, info) => {
 	target.style.transition = null;
+	target.style.backgroundColor = "var(--dark-bg)";
+	target.style.backDrop = "blur(40px)";
+
 	var parentElement = target;
 	while (!parentElement.classList.contains("dock")) {
 		parentElement.style.zIndex = 2;
@@ -464,34 +467,43 @@ const insertBar = (e, target, info) => {
 		target.style.transform = null;
 	}
 	else {
-		for (var i = 0; i < dock.children.length; i++) {
-			var item = dock.children[i];
-			if (item != target) {
-				var x1 = dock.offsetLeft + item.offsetLeft;
-				var y1 = dock.offsetTop + item.offsetTop;
-				var y2 = y1 + item.offsetHeight;
+		if (dock.children.length <= 1) {
+			target.style.transition = "transform 0.1s ease-in-out, background-color 0.1s ease-in-out";
+			target.style.transform = null;
+		}
+		else {
+			for (var i = 0; i < dock.children.length; i++) {
+				var item = dock.children[i];
+				if (item != target) {
+					var x1 = dock.offsetLeft + item.offsetLeft;
+					var y1 = dock.offsetTop + item.offsetTop;
+					var y2 = y1 + item.offsetHeight;
 
-				if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
-					var spliter = document.createElement("hr");
-					spliter.classList.add("bar-split");
-					item.insertBefore(spliter, item.firstChild);
-					item.insertBefore(target, item.firstChild);
-					target.classList.add("dragged");
+					if (x1 <= e.clientX && e.clientX <= (x1 + item.offsetWidth/2) && y1 <= e.clientY && e.clientY <= y2) {
+						var spliter = document.createElement("hr");
+						spliter.classList.add("bar-split");
+						item.insertBefore(spliter, item.firstChild);
+						item.insertBefore(target, item.firstChild);
+						target.classList.add("dragged");
+					}
+					else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
+						var spliter = document.createElement("hr");
+						spliter.classList.add("bar-split");
+						item.appendChild(spliter);
+						item.appendChild(target);
+						target.classList.add("dragged");
+					}
+					else {
+						target.style.transition = "transform 0.1s ease-in-out, background-color 0.1s ease-in-out";
+					}
+					target.style.transform = null;
 				}
-				else if ((x1 + item.offsetWidth/2) <= e.clientX && e.clientX <= (x1 + item.offsetWidth) && y1 <= e.clientY && e.clientY <= y2) {
-					var spliter = document.createElement("hr");
-					spliter.classList.add("bar-split");
-					item.appendChild(spliter);
-					item.appendChild(target);
-					target.classList.add("dragged");
-				}
-				else {
-					target.style.transition = "transform 0.1s ease-in-out";
-				}
-				target.style.transform = null;
 			}
 		}
 	}
+	target.style.backgroundColor = null;
+	target.style.backDrop = null;
+
 	target.style.zIndex = null;
 }
 
