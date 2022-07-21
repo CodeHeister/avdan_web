@@ -149,9 +149,11 @@ const minimalize = (e, target) => {
 
 // close button on click
 const closeWindow = (e, target) => {
-	document.body.removeChild(target);
+	target.parentElement.removeChild(target);
 	var underline = document.querySelector("#underline"+target.id.match("[0-9]+"));
-	underline.parentElement.removeChild(underline);
+	if (underline) {
+		underline.parentElement.removeChild(underline);
+	}
 }
 
 // E X T R A  F O R  T A B S  C L I C K
@@ -690,9 +692,14 @@ const moveIcon = (e, target, info) => {
 // W I N D O W  G E N E R A T O R
 
 var win_num_g = 1; // global window id number 
-const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
+const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true) => {
 	var win = document.createElement("div");
-	win.classList.add("window");
+	if (addPanel) {
+		win.classList.add("window");
+	}
+	else {
+		win.classList.add("static-window");
+	}
 	win.id = "window"+win_num_g;
 	win.style.zIndex = z_index_g;
 	z_index_g += 1;
@@ -704,93 +711,102 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	}
 	win.addEventListener("click", e => {moveUp(e, win, undefined)});
 
-	var panel = document.createElement("div");
-	panel.classList.add("win-panel");
-	panel.classList.add("noselect");
-	panel.id = "win-panel"+win_num_g;
-	panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, undefined, undefined, undefined, attach)});
-	panel.addEventListener("dblclick", e => {fullsize(e, win)});
+	if (addPanel) {
+		var panel = document.createElement("div");
+		panel.classList.add("win-panel");
+		panel.classList.add("noselect");
+		panel.id = "win-panel"+win_num_g;
+		panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, undefined, undefined, undefined, attach)});
+		panel.addEventListener("dblclick", e => {fullsize(e, win)});
 
-	var tab_holder = document.createElement("div");
-	tab_holder.classList.add("tab-holder");
-	tab_holder.id = "tab-holder"+win_num_g;
+		var tab_holder = document.createElement("div");
+		tab_holder.classList.add("tab-holder");
+		tab_holder.id = "tab-holder"+win_num_g;
 
-	var win_tab = document.createElement("div");
-	win_tab.classList.add("win-tab");
-	win_tab.id = "win-tab"+win_num_g;
-	win_tab.innerHTML = title;
-	win_tab.addEventListener("click", e => {click(e, `#${content_holder.id}`, hideAllContent, showContent)});
+		var win_tab = document.createElement("div");
+		win_tab.classList.add("win-tab");
+		win_tab.id = "win-tab"+win_num_g;
+		win_tab.innerHTML = title;
+		win_tab.addEventListener("click", e => {
+			if (keys.includes(17)) {
+				click(e, `#${content_holder.id}`, undefined, showContent)
+			}
+			else {
+				click(e, `#${content_holder.id}`, hideAllContent, showContent)
+			}
+		});
 
-	var tab_add = document.createElement("div");
-	tab_add.classList.add("tab-add");
-	tab_add.id = "tab-add"+win_num_g;
-	tab_add.innerHTML = "+";
+		var tab_add = document.createElement("div");
+		tab_add.classList.add("tab-add");
+		tab_add.id = "tab-add"+win_num_g;
+		tab_add.innerHTML = "+";
 
-	var win_panel_buttons = document.createElement("div");
-	win_panel_buttons.classList.add("win-panel-buttons");
-	win_panel_buttons.id = "win-panel-buttons"+win_num_g;
+		var win_panel_buttons = document.createElement("div");
+		win_panel_buttons.classList.add("win-panel-buttons");
+		win_panel_buttons.id = "win-panel-buttons"+win_num_g;
 
-	var win_resizers = document.createElement("div");
-	win_resizers.classList.add("win-resizers");
-	win_resizers.id = "win-resizers"+win_num_g;
+		var win_resizers = document.createElement("div");
+		win_resizers.classList.add("win-resizers");
+		win_resizers.id = "win-resizers"+win_num_g;
 
-	var split_left = document.createElement("div");
-	split_left.classList.add("split-left");
-	split_left.id = "split-left"+win_num_g;
-	split_left.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
-	var split_left_img = document.createElement("img");
-	split_left_img.src = "src/images/demo/icons/Frame/SplitLeft.png";
-	split_left_img.setAttribute('draggable', false);
-	split_left.appendChild(split_left_img);
+		var split_left = document.createElement("div");
+		split_left.classList.add("split-left");
+		split_left.id = "split-left"+win_num_g;
+		split_left.addEventListener("click", e => {click(e, `#${win.id}`, undefined, leftAttach)});
+		var split_left_img = document.createElement("img");
+		split_left_img.src = "src/images/demo/icons/Frame/SplitLeft.png";
+		split_left_img.setAttribute('draggable', false);
+		split_left.appendChild(split_left_img);
 
-	var win_insert = document.createElement("div");
-	win_insert.classList.add("win-insert");
-	win_insert.id = "win-insert"+win_num_g;
-	win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, iconify, undefined, undefined, insertCheck, deiconify, attach, true, true, win.offsetWidth/2)});
-	var win_insert_img = document.createElement("img");
-	win_insert_img.src = "src/images/demo/icons/Frame/Multitask.png";
-	win_insert_img.setAttribute('draggable', false);
-	win_insert.appendChild(win_insert_img);
+		var win_insert = document.createElement("div");
+		win_insert.classList.add("win-insert");
+		win_insert.id = "win-insert"+win_num_g;
+		win_insert.addEventListener("mousedown", e => {dragAdd(e, `#${win_insert.id}`, `#${win.id}`, undefined, iconify, undefined, undefined, insertCheck, deiconify, attach, true, true, win.offsetWidth/2)});
+		var win_insert_img = document.createElement("img");
+		win_insert_img.src = "src/images/demo/icons/Frame/Multitask.png";
+		win_insert_img.setAttribute('draggable', false);
+		win_insert.appendChild(win_insert_img);
 
-	var split_right = document.createElement("div");
-	split_right.classList.add("split-right");
-	split_right.id = "split-right"+win_num_g;
-	split_right.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
-	var split_right_img = document.createElement("img");
-	split_right_img.src = "src/images/demo/icons/Frame/SplitRight.png";
-	split_right_img.setAttribute('draggable', false);
-	split_right.appendChild(split_right_img);
+		var split_right = document.createElement("div");
+		split_right.classList.add("split-right");
+		split_right.id = "split-right"+win_num_g;
+		split_right.addEventListener("click", e => {click(e, `#${win.id}`, undefined, rightAttach)});
+		var split_right_img = document.createElement("img");
+		split_right_img.src = "src/images/demo/icons/Frame/SplitRight.png";
+		split_right_img.setAttribute('draggable', false);
+		split_right.appendChild(split_right_img);
 
-	var win_control = document.createElement("div");
-	win_control.classList.add("win-control");
-	win_control.id = "win-control"+win_num_g;
+		var win_control = document.createElement("div");
+		win_control.classList.add("win-control");
+		win_control.id = "win-control"+win_num_g;
 
-	var win_fullsize = document.createElement("div");
-	win_fullsize.classList.add("win-fullsize");
-	win_fullsize.id = "win-fullsize"+win_num_g;
-	win_fullsize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, fullsize)});
-	var win_fullsize_img = document.createElement("img");
-	win_fullsize_img.src = "src/images/demo/icons/Frame/Maximize.png";
-	win_fullsize_img.setAttribute('draggable', false);
-	win_fullsize.appendChild(win_fullsize_img);
+		var win_fullsize = document.createElement("div");
+		win_fullsize.classList.add("win-fullsize");
+		win_fullsize.id = "win-fullsize"+win_num_g;
+		win_fullsize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, fullsize)});
+		var win_fullsize_img = document.createElement("img");
+		win_fullsize_img.src = "src/images/demo/icons/Frame/Maximize.png";
+		win_fullsize_img.setAttribute('draggable', false);
+		win_fullsize.appendChild(win_fullsize_img);
 
-	var win_minimalize = document.createElement("div");
-	win_minimalize.classList.add("win-minimalize");
-	win_minimalize.id = "win-minimalize"+win_num_g;
-	win_minimalize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, minimalize)});
-	var win_minimalize_img = document.createElement("img");
-	win_minimalize_img.src = "src/images/demo/icons/Frame/Minimize.png";
-	win_minimalize_img.setAttribute('draggable', false);
-	win_minimalize.appendChild(win_minimalize_img);
+		var win_minimalize = document.createElement("div");
+		win_minimalize.classList.add("win-minimalize");
+		win_minimalize.id = "win-minimalize"+win_num_g;
+		win_minimalize.addEventListener("click", e => {click(e, `#${win.id}`, undefined, minimalize)});
+		var win_minimalize_img = document.createElement("img");
+		win_minimalize_img.src = "src/images/demo/icons/Frame/Minimize.png";
+		win_minimalize_img.setAttribute('draggable', false);
+		win_minimalize.appendChild(win_minimalize_img);
 
-	var win_close = document.createElement("div");
-	win_close.classList.add("win-close");
-	win_close.id = "win-close"+win_num_g;
-	win_close.addEventListener("click", e => {click(e, `#${win.id}`, undefined, closeWindow)});
-	var win_close_img = document.createElement("img");
-	win_close_img.src = "src/images/demo/icons/Frame/Close.png";
-	win_close_img.setAttribute('draggable', false);
-	win_close.appendChild(win_close_img);
+		var win_close = document.createElement("div");
+		win_close.classList.add("win-close");
+		win_close.id = "win-close"+win_num_g;
+		win_close.addEventListener("click", e => {click(e, `#${win.id}`, undefined, closeWindow)});
+		var win_close_img = document.createElement("img");
+		win_close_img.src = "src/images/demo/icons/Frame/Close.png";
+		win_close_img.setAttribute('draggable', false);
+		win_close.appendChild(win_close_img);
+	}
 
 	var container = document.createElement("div");
 	container.classList.add("container");
@@ -800,91 +816,103 @@ const makeWindow = (content, icon_src, title, extraClass, x, y, makeClone) => {
 	content_holder.classList.add("content-holder");
 	content_holder.id = "content-holder"+win_num_g;
 
-	var icon_block = document.createElement("div");
-	icon_block.classList.add("icon-block");
-	icon_block.style.display = "none";
-	icon_block.id = "icon-block"+win_num_g;
-	var icon = document.createElement("img");
-	icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
-	icon.setAttribute('draggable', false);
-	icon.classList.add("noselect");
-	icon.id = "icon"+win_num_g;
-	icon_block.appendChild(icon);
+	if (icon_src) {
+		var icon_block = document.createElement("div");
+		icon_block.classList.add("icon-block");
+		icon_block.style.display = "none";
+		icon_block.id = "icon-block"+win_num_g;
+		var icon = document.createElement("img");
+		icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
+		icon.setAttribute('draggable', false);
+		icon.classList.add("noselect");
+		icon.id = "icon"+win_num_g;
+		icon_block.appendChild(icon);
+	}
 
-	var wl = document.createElement("div");
-	wl.classList.add("wl");
-	wl.id = "wl"+win_num_g;
-	wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="e-resize"}, moveUpAndClean, undefined, dragResizeWL, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
+	if (addResize) {
+		var wl = document.createElement("div");
+		wl.classList.add("wl");
+		wl.id = "wl"+win_num_g;
+		wl.addEventListener("mousedown", e => {dragAdd(e, `#${wl.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="e-resize"}, moveUpAndClean, undefined, dragResizeWL, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
 
-	var wr = document.createElement("div");
-	wr.classList.add("wr");
-	wr.id = "wr"+win_num_g;
-	wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="w-resize"}, moveUpAndClean,  undefined, dragResizeWR, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
+		var wr = document.createElement("div");
+		wr.classList.add("wr");
+		wr.id = "wr"+win_num_g;
+		wr.addEventListener("mousedown", e => {dragAdd(e, `#${wr.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="w-resize"}, moveUpAndClean,  undefined, dragResizeWR, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
 
-	var ht = document.createElement("div");
-	ht.classList.add("ht");
-	ht.id = "ht"+win_num_g;
-	ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="s-resize"}, moveUpAndClean, undefined, dragResizeHT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
+		var ht = document.createElement("div");
+		ht.classList.add("ht");
+		ht.id = "ht"+win_num_g;
+		ht.addEventListener("mousedown", e => {dragAdd(e, `#${ht.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="s-resize"}, moveUpAndClean, undefined, dragResizeHT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
 
-	var hb = document.createElement("div");
-	hb.classList.add("hb");
-	hb.id = "hb"+win_num_g;
-	hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="n-resize"}, moveUpAndClean,  undefined, dragResizeHB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
+		var hb = document.createElement("div");
+		hb.classList.add("hb");
+		hb.id = "hb"+win_num_g;
+		hb.addEventListener("mousedown", e => {dragAdd(e, `#${hb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="n-resize"}, moveUpAndClean,  undefined, dragResizeHB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
 
-	var whlt = document.createElement("div");
-	whlt.classList.add("whlt");
-	whlt.id = "whlt"+win_num_g;
-	whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="se-resize"}, moveUpAndClean, undefined, dragResizeWHLT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, true)});
+		var whlt = document.createElement("div");
+		whlt.classList.add("whlt");
+		whlt.id = "whlt"+win_num_g;
+		whlt.addEventListener("mousedown", e => {dragAdd(e, `#${whlt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="se-resize"}, moveUpAndClean, undefined, dragResizeWHLT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, true)});
 
-	var whrt = document.createElement("div");
-	whrt.classList.add("whrt");
-	whrt.id = "whrt"+win_num_g;
-	whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="sw-resize"}, moveUpAndClean, undefined, dragResizeWHRT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
+		var whrt = document.createElement("div");
+		whrt.classList.add("whrt");
+		whrt.id = "whrt"+win_num_g;
+		whrt.addEventListener("mousedown", e => {dragAdd(e, `#${whrt.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="sw-resize"}, moveUpAndClean, undefined, dragResizeWHRT, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, true)});
 
-	var whlb = document.createElement("div");
-	whlb.classList.add("whlb");
-	whlb.id = "whlb"+win_num_g;
-	whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="nw-resize"}, moveUpAndClean, undefined, dragResizeWHLB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
+		var whlb = document.createElement("div");
+		whlb.classList.add("whlb");
+		whlb.id = "whlb"+win_num_g;
+		whlb.addEventListener("mousedown", e => {dragAdd(e, `#${whlb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="nw-resize"}, moveUpAndClean, undefined, dragResizeWHLB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, true, false)});
 
-	var whrb = document.createElement("div");
-	whrb.classList.add("whrb");
-	whrb.id = "whrb"+win_num_g;
-	whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="ne-resize"}, moveUpAndClean, undefined, dragResizeWHRB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
+		var whrb = document.createElement("div");
+		whrb.classList.add("whrb");
+		whrb.id = "whrb"+win_num_g;
+		whrb.addEventListener("mousedown", e => {dragAdd(e, `#${whrb.id}`, `#${win.id}`, (e, target, info) => {document.body.style.cursor="ne-resize"}, moveUpAndClean, undefined, dragResizeWHRB, (e, target, info) => {document.body.style.cursor=null}, undefined, undefined, false, false)});
+	}
 
 	window.addEventListener("mouseup", e => {leave(e, `#${win.id}`)});
 
 
-	tab_holder.appendChild(win_tab);
-	tab_holder.appendChild(tab_add);
+	if (addPanel) {
+		tab_holder.appendChild(win_tab);
+		tab_holder.appendChild(tab_add);
 
-	win_resizers.appendChild(split_left);
-	win_resizers.appendChild(win_insert);
-	win_resizers.appendChild(split_right);
+		win_resizers.appendChild(split_left);
+		win_resizers.appendChild(win_insert);
+		win_resizers.appendChild(split_right);
 
-	win_control.appendChild(win_fullsize);
-	win_control.appendChild(win_minimalize);
-	win_control.appendChild(win_close);
+		win_control.appendChild(win_fullsize);
+		win_control.appendChild(win_minimalize);
+		win_control.appendChild(win_close);
 
-	win_panel_buttons.appendChild(win_resizers);
-	win_panel_buttons.appendChild(win_control);
-	
-	panel.appendChild(tab_holder);
-	panel.appendChild(win_panel_buttons);
+		win_panel_buttons.appendChild(win_resizers);
+		win_panel_buttons.appendChild(win_control);
+		
+		panel.appendChild(tab_holder);
+		panel.appendChild(win_panel_buttons);
+	}
 
 	content_holder.appendChild(makeClone && content.cloneNode(true) || content);
 	container.appendChild(content_holder);
 
-	win.appendChild(panel);
+	if (addPanel) {
+		win.appendChild(panel);
+	}
 	win.appendChild(container);
-	win.appendChild(icon_block);
-	win.appendChild(wl);
-	win.appendChild(wr);
-	win.appendChild(hb);
-	win.appendChild(ht);
-	win.appendChild(whlt);
-	win.appendChild(whrt);
-	win.appendChild(whlb);
-	win.appendChild(whrb);
+	if (icon_src) {
+		win.appendChild(icon_block);
+	}
+	if (addResize) {
+		win.appendChild(wl);
+		win.appendChild(wr);
+		win.appendChild(hb);
+		win.appendChild(ht);
+		win.appendChild(whlt);
+		win.appendChild(whrt);
+		win.appendChild(whlb);
+		win.appendChild(whrb);
+	}
 
 	win_num_g += 1;
 	return win;
@@ -940,7 +968,7 @@ const appBarGenerate = apps_list_l => { // local app list
 				underlines.appendChild(underline);
 
 				// create window
-				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], undefined, undefined, true);
+				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], true);
 				document.body.appendChild(win);
 				win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
 			});
@@ -1015,17 +1043,32 @@ const scrollBarGenerate = scroll_list_l => {
 	scroll_bar.appendChild(child);
 	if (!scroll_bar.hasScroll) {
 		scroll_bar.addEventListener("wheel", e => {
-			if (e.deltaY > 0) {
-				scroll_list.pos += parseInt((scroll_list.pos >= scroll_list.items.length-1) && `${-1*scroll_list.items.length+1}` || "1");
+			if (keys.includes(16)) {
+				if (e.deltaY > 0) {
+					scroll_list.pos += parseInt((scroll_list.pos >= scroll_list.items.length-1) && `${-1*scroll_list.items.length+1}` || "1");
+				}
+				else {
+					scroll_list.pos -= parseInt((scroll_list.pos <= 0) && `${-1*scroll_list.items.length+1}` || "1");
+				}
+				scrollBarGenerate(scroll_list);
 			}
-			else {
-				scroll_list.pos -= parseInt((scroll_list.pos <= 0) && `${-1*scroll_list.items.length+1}` || "1");
-			}
-			scrollBarGenerate(scroll_list);
 		});
 		scroll_bar.hasScroll = true;
 	}
 }
 
+var keys =[];
+window.addEventListener("keydown", e => {
+	keys.push(e.keyCode);
+});
+
+window.addEventListener("keyup", e => {
+	for (var i = 0; i < keys.length; i++) {
+		if (e.keyCode == keys[i]) {
+			keys.splice(i, 1);
+		}
+	}
+});
+
 window.addEventListener("mousemove", drag); // add main drag check
-document.body.addEventListener("mouseleave", leaveAll); // add out of bounds check
+document.body.addEventListener("mouseleave", e => {leaveAll(e); keys=[];}); // add out of bounds check

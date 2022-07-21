@@ -735,6 +735,50 @@ var info_bar = document.querySelector(".info-bar");
 info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".info-bar")});
 
+// -- S E T T I N G S -- //
+
+var menu_content = document.createElement("div");
+menu_content.classList.add("menu-content");
+
+// -- M A I N  T I T L E
+var menu_title = document.createElement("div");
+menu_title.classList.add("menu-title");
+menu_title.innerHTML = "Menu";
+menu_content.appendChild(menu_title);
+
+var menu_main = document.createElement("div");
+menu_main.classList.add("menu-main");
+
+var menu_placeholder = document.createElement("div");
+menu_placeholder.classList.add("menu-placeholder");
+menu_placeholder.innerHTML = "There is no content here for now...";
+menu_main.appendChild(menu_placeholder);
+
+menu_content.appendChild(menu_main);
+// -- //
+
+var menuLaunched = false;
+document.querySelector("#avdan-menu").addEventListener("click", e => {
+	if (menuLaunched) {
+		var menu = document.querySelector(".avdan-menu");
+		closeWindow(e, menu);
+		menuLaunched = false;
+	}
+	else {
+		var menu = makeWindow(menu_content, undefined, "Menu", ["avdan-menu"], false, false, false);
+		document.body.appendChild(menu);
+		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
+		menuLaunched = true;
+	}
+});
+
+window.addEventListener("resize", e => {
+	var menu = document.querySelector(".avdan-menu");
+	if (menu) {
+		menu.style.transform = `translate3d(${window.innerWidth/2-menu.offsetWidth/2}px, ${(window.innerHeight-document.querySelector('.dock').offsetHeight)-(menu.offsetHeight+16)}px, 0)`;
+	}
+});
+
 if (window.navigator.userAgent.match("Firefox")) {
 	var app_bar = document.querySelector(".app-bar");
 	app_bar.querySelectorAll(".img-wrapper img").forEach(item => {
