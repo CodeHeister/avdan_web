@@ -403,23 +403,138 @@ lale_content.appendChild(lale_searchbar_holder);
 // -- //
 
 // -- T E S T S  ( P L A C E H O L D E R S )
+
+// -- M A I L -- //
+
 var mail_content = document.createElement("div");
-mail_content.innerHTML = "Hi";
+mail_content.classList.add("mail-content");
+
+// -- M A I N  T I T L E
+var mail_title = document.createElement("div");
+mail_title.classList.add("mail-title");
+mail_title.innerHTML = "Mail";
+mail_content.appendChild(mail_title);
+
+var mail_main = document.createElement("div");
+mail_main.classList.add("mail-main");
+
+var mail_placeholder = document.createElement("div");
+mail_placeholder.classList.add("mail-placeholder");
+mail_placeholder.innerHTML = "There is no content here for now...";
+mail_main.appendChild(mail_placeholder);
+
+mail_content.appendChild(mail_main);
+// -- //
+
+// -- C A L E N D A R -- //
 
 var calendar_content = document.createElement("div");
-calendar_content.innerHTML = "Hi";
+calendar_content.classList.add("calendar-content");
+
+// -- M A I N  T I T L E
+var calendar_title = document.createElement("div");
+calendar_title.classList.add("calendar-title");
+calendar_title.innerHTML = "Calendar";
+calendar_content.appendChild(calendar_title);
+
+var calendar_main = document.createElement("div");
+calendar_main.classList.add("calendar-main");
+
+var calendar_placeholder = document.createElement("div");
+calendar_placeholder.classList.add("calendar-placeholder");
+calendar_placeholder.innerHTML = "There is no content here for now...";
+calendar_main.appendChild(calendar_placeholder);
+
+calendar_content.appendChild(calendar_main);
+// -- //
+
+// -- N O T E S -- //
 
 var notes_content = document.createElement("div");
-notes_content.innerHTML = "Hi";
+notes_content.classList.add("notes-content");
+
+// -- M A I N  T I T L E
+var notes_title = document.createElement("div");
+notes_title.classList.add("notes-title");
+notes_title.innerHTML = "Notes";
+notes_content.appendChild(notes_title);
+
+var notes_main = document.createElement("div");
+notes_main.classList.add("notes-main");
+
+var notes_placeholder = document.createElement("div");
+notes_placeholder.classList.add("notes-placeholder");
+notes_placeholder.innerHTML = "There is no content here for now...";
+notes_main.appendChild(notes_placeholder);
+
+notes_content.appendChild(notes_main);
+// -- //
+
+// -- S E T T I N G S -- //
 
 var settings_content = document.createElement("div");
-settings_content.innerHTML = "Hi";
+settings_content.classList.add("settings-content");
+
+// -- M A I N  T I T L E
+var settings_title = document.createElement("div");
+settings_title.classList.add("settings-title");
+settings_title.innerHTML = "Settings";
+settings_content.appendChild(settings_title);
+
+var settings_main = document.createElement("div");
+settings_main.classList.add("settings-main");
+
+var settings_placeholder = document.createElement("div");
+settings_placeholder.classList.add("settings-placeholder");
+settings_placeholder.innerHTML = "There is no content here for now...";
+settings_main.appendChild(settings_placeholder);
+
+settings_content.appendChild(settings_main);
+// -- //
+
+// -- M U S I C -- //
 
 var music_content = document.createElement("div");
-music_content.innerHTML = "Hi";
+music_content.classList.add("music-content");
+
+// -- M A I N  T I T L E
+var music_title = document.createElement("div");
+music_title.classList.add("music-title");
+music_title.innerHTML = "Music";
+music_content.appendChild(music_title);
+
+var music_main = document.createElement("div");
+music_main.classList.add("music-main");
+
+var music_placeholder = document.createElement("div");
+music_placeholder.classList.add("music-placeholder");
+music_placeholder.innerHTML = "There is no content here for now...";
+music_main.appendChild(music_placeholder);
+
+music_content.appendChild(music_main);
+// -- //
+
+// -- M E S S G E S -- //
 
 var messages_content = document.createElement("div");
-messages_content.innerHTML = "Hi";
+messages_content.classList.add("messages-content");
+
+// -- M A I N  T I T L E
+var messages_title = document.createElement("div");
+messages_title.classList.add("messages-title");
+messages_title.innerHTML = "Messages";
+messages_content.appendChild(messages_title);
+
+var messages_main = document.createElement("div");
+messages_main.classList.add("messages-main");
+
+var messages_placeholder = document.createElement("div");
+messages_placeholder.classList.add("messages-placeholder");
+messages_placeholder.innerHTML = "There is no content here for now...";
+messages_main.appendChild(messages_placeholder);
+
+messages_content.appendChild(messages_main);
+// -- //
 
 mail_content.classList.add("noselect");
 lale_content.classList.add("noselect");
