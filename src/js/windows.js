@@ -266,150 +266,193 @@ const remakeWindow = (e, target, info) => {
 	var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
 	var icon_src = icon_block.querySelector("img").src; // get icon src
 
-	if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
-		var container = win.querySelector(".container");
+	if (keys.includes(16)) {
+		var panel = target.parentElement;
+		var insAfter = false;
 
-		// get current window container coords
-		var container_x1 = x1 + container.offsetLeft;
-		var container_x2 = container_x1 + container.offsetWidth;
-		var container_y1 = y1 + container.offsetTop;
-		var container_y2 = container_y1 + container.offsetHeight;
-		
-		if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
-			win.querySelector("#content-holder"+id_num).style.display = null; // make visible
-		}
-		
-		// set transition and smooth return to topbar
-		target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
-		target.style.transform = null;
-	}
-	else { // if out the current window
-		// get highest window by z-index
-		var highestWin = "";
+		panel.querySelectorAll(".win-tab").forEach(item => {
+			if (item != target) {
+				if (item != panel.firstChild) {
+					var win_tab_x1 = x1 + panel.offsetLeft + item.offsetLeft
+					var win_tab_x2 = win_tab_x1 + item.offsetWidth;
+					var win_tab_y1 = y1 + panel.offsetTop + item.offsetTop;
+					var win_tab_y2 = win_tab_y1 + item.offsetHeight;
 
-		// check all windows
-		document.querySelectorAll(".window").forEach(item => {
-			if (win != item) {
-				// get translate
-				var targetTransformX = 0;
-				var targetTransformY = 0;
-				if (item.style.transform != '') {
-				
-					var nums = item.style.transform.split("translate3d")[1];
-					nums = nums.slice(1, nums.length-1).split("px,");
-					
-					targetTransformX = parseInt(nums[0]);
-					targetTransformY = parseInt(nums[1]);
-				}
+					if (win_tab_x1 <= e.clientX && e.clientX <= win_tab_x2 && win_tab_y1 <= e.clientY && e.clientY <= win_tab_y2) {
 
-				// get coords (rewrite current window coords)
-				x1 = item.offsetLeft+targetTransformX;
-				x2 = x1+item.offsetWidth;
-				y1 = item.offsetTop+targetTransformY;
-				y2 = y1+item.offsetHeight;
-
-				if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
-					if (highestWin == "") { 
-						highestWin = item;
+						var item_id = item.id.match("[0-9]+")[0];
+						target.style.transform = null;
+						var item_content_holder = win.querySelector("#content-holder"+item_id);
+						var item_icon_block = win.querySelector("#icon-block"+item_id);
+						
+						if (insAfter) {
+							item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder.nextSibling);
+							item_icon_block.parentElement.insertBefore(icon_block, item_icon_block.nextSibling);
+							panel.insertBefore(target, item.nextSibling);
+						}
+						else {
+							item_content_holder.parentElement.insertBefore(target_content_holder, item_content_holder);
+							item_icon_block.parentElement.insertBefore(icon_block, item_icon_block);
+							panel.insertBefore(target, item);
+						}
 					}
 					else {
-						highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
+						target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
+						target.style.transform = null;
 					}
 				}
 			}
+			else {
+				insAfter = true;
+			}
 		});
+	}
+	else {
+		if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // check if over current window
+			var container = win.querySelector(".container");
 
-		if (!highestWin) { // if default left (no window under cursor)
+			// get current window container coords
+			var container_x1 = x1 + container.offsetLeft;
+			var container_x2 = container_x1 + container.offsetWidth;
+			var container_y1 = y1 + container.offsetTop;
+			var container_y2 = container_y1 + container.offsetHeight;
+			
+			if (container_x1 <= e.clientX && e.clientX <= container_x2 && container_y1 <= e.clientY && e.clientY <= container_y2) { // if over container
+				win.querySelector("#content-holder"+id_num).style.display = null; // make visible
+			}
+			
+			// set transition and smooth return to topbar
+			target.style.transition = "background-color 0.1s ease-in-out, transform 0.1s ease-in-out";
+			target.style.transform = null;
+		}
+		else { // if out the current window
+			// get highest window by z-index
+			var highestWin = "";
 
-			// find icon match in appbar
-			document.querySelectorAll(".img-container").forEach(item => {
-				if (icon_src == item.querySelector("img").src) { // if matches
-					// get selected underlines
-					var underlines = item.querySelector(".underlines");
+			// check all windows
+			document.querySelectorAll(".window").forEach(item => {
+				if (win != item) {
+					// get translate
+					var targetTransformX = 0;
+					var targetTransformY = 0;
+					if (item.style.transform != '') {
+					
+						var nums = item.style.transform.split("translate3d")[1];
+						nums = nums.slice(1, nums.length-1).split("px,");
+						
+						targetTransformX = parseInt(nums[0]);
+						targetTransformY = parseInt(nums[1]);
+					}
 
-					// create new underline
-					var underline = document.createElement("div");
-					underline.classList.add("underline");
-					underline.id = "underline"+win_num_g; // set new id
+					// get coords (rewrite current window coords)
+					x1 = item.offsetLeft+targetTransformX;
+					x2 = x1+item.offsetWidth;
+					y1 = item.offsetTop+targetTransformY;
+					y2 = y1+item.offsetHeight;
 
-					// add minimalize function
-					underline.addEventListener("click", e => {
-						var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
-						if (win.style.display) {
-							e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
-							win.style.display = null;
+					if (x1, x2, y1, y2, x1 <= e.clientX && e.clientX <= x2 && y1 <= e.clientY && e.clientY <= y2) { // if over a window
+						if (highestWin == "") { 
+							highestWin = item;
 						}
 						else {
-							e.currentTarget.style.backgroundColor = "var(--light-bg)";
-							win.style.display = "none";
+							highestWin = (highestWin.style.zIndex > item.style.zIndex) && highestWin || item; // if bigger z-index then rewrite
 						}
-					});
-
-					underlines.appendChild(underline); // add underline 
+					}
 				}
 			});
 
-			// recreate window
-			var win = makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
-			document.body.appendChild(win);
-			win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
-			win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+			if (!highestWin) { // if default left (no window under cursor)
 
-			// erase elements from the current window 
-			target.parentElement.removeChild(target);
-			icon_block.parentElement.removeChild(icon_block);
-			target_content_holder.parentElement.removeChild(target_content_holder);
-		}
-		else { // if window under cursor
+				// find icon match in appbar
+				document.querySelectorAll(".img-container").forEach(item => {
+					if (icon_src == item.querySelector("img").src) { // if matches
+						// get selected underlines
+						var underlines = item.querySelector(".underlines");
 
-			// get selected window topbar
-			var winPanel = highestWin.querySelector(".win-panel");
-			
-			// get topbar coords
-			var panel_x1 = x1 + winPanel.offsetLeft;
-			var panel_x2 = panel_x1 + winPanel.offsetWidth;
-			var panel_y1 = y1 + winPanel.offsetTop;
-			var panel_y2 = panel_y1 + winPanel.offsetHeight;
-			
-			// delete target's transform
-			target.style.transform = null;
+						// create new underline
+						var underline = document.createElement("div");
+						underline.classList.add("underline");
+						underline.id = "underline"+win_num_g; // set new id
 
-			// move tab to the new window
-			highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
+						// add minimalize function
+						underline.addEventListener("click", e => {
+							var win = document.querySelector("#window"+e.currentTarget.id.match("[0-9]+")[0]); // catch new window (with new id)
+							if (win.style.display) {
+								e.currentTarget.style.backgroundColor = "var(--light-bg-hl)";
+								win.style.display = null;
+							}
+							else {
+								e.currentTarget.style.backgroundColor = "var(--light-bg)";
+								win.style.display = "none";
+							}
+						});
 
-			// if already has drag function (was once moved)
-			if (!target.hasDrag) {
-				target.hasDrag = true;
-				target.addEventListener("mousedown", e => {
-					dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow); // add this function to tab
+						underlines.appendChild(underline); // add underline 
+					}
 				});
-				window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)}); // add global drop check for this tab
+
+				// recreate window
+				var win = makeWindow(target_content_holder.firstChild || document.createElement("div"), icon_src, target.innerHTML);
+				document.body.appendChild(win);
+				win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
+				win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
+
+				// erase elements from the current window 
+				target.parentElement.removeChild(target);
+				icon_block.parentElement.removeChild(icon_block);
+				target_content_holder.parentElement.removeChild(target_content_holder);
+			}
+			else { // if window under cursor
+
+				// get selected window topbar
+				var winPanel = highestWin.querySelector(".win-panel");
+				
+				// get topbar coords
+				var panel_x1 = x1 + winPanel.offsetLeft;
+				var panel_x2 = panel_x1 + winPanel.offsetWidth;
+				var panel_y1 = y1 + winPanel.offsetTop;
+				var panel_y2 = panel_y1 + winPanel.offsetHeight;
+				
+				// delete target's transform
+				target.style.transform = null;
+
+				// move tab to the new window
+				highestWin.querySelector(".tab-holder").insertBefore(target, highestWin.querySelector(".tab-add"));
+
+				// if already has drag function (was once moved)
+				if (!target.hasDrag) {
+					target.hasDrag = true;
+					target.addEventListener("mousedown", e => {
+						dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow); // add this function to tab
+					});
+					window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)}); // add global drop check for this tab
+				}
+
+				if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
+					target_content_holder.style.display = "none";
+				}
+				else { // else tile window
+					target_content_holder.style.display = null;
+				}
+
+				// move container to the selected window
+				highestWin.querySelector(".container").appendChild(target_content_holder);
+
+				// hide icon block and move it to the selected window
+				icon_block.style.display = "none";
+				highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
+			
+				// recreate min-width for selected window
+				highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
+
+				// place selected window over other windows
+				highestWin.style.zIndex = z_index_g;
+				z_index_g += 1;
 			}
 
-			if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
-				target_content_holder.style.display = "none";
-			}
-			else { // else tile window
-				target_content_holder.style.display = null;
-			}
-
-			// move container to the selected window
-			highestWin.querySelector(".container").appendChild(target_content_holder);
-
-			// hide icon block and move it to the selected window
-			icon_block.style.display = "none";
-			highestWin.insertBefore(icon_block, highestWin.querySelector(".wl"));
-		
-			// recreate min-width for selected window
-			highestWin.style.minWidth = (highestWin.querySelector(".tab-holder").children.length-1)*150+280+"px";
-
-			// place selected window over other windows
-			highestWin.style.zIndex = z_index_g;
-			z_index_g += 1;
+			// recreate min-width for current window if tab out
+			win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
 		}
-
-		// recreate min-width for current window if tab out
-		win.style.minWidth = (win.querySelector(".tab-holder").children.length-1)*150+280+"px";
 	}
 }
 
