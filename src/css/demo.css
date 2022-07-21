@@ -696,7 +696,7 @@ html, body {
  * +-------------------+
  */
 
-.photos-content {
+.photos-content, .messages-content, .music-content, .settings-content, .notes-content, .calendar-content, .mail-content {
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
@@ -705,21 +705,21 @@ html, body {
     box-sizing: border-box;
 }
 
-.photos-title {
+.photos-title, .messages-title, .music-title, .settings-title, .notes-title, .calendar-title, .mail-title {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 1.2rem;
 }
 
-.photos-main {
+.photos-main, .messages-main, .music-main, .settings-main, .notes-main, .calendar-main, .mail-main {
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
-.photos-placeholder {
+.photos-placeholder, .messages-placeholder, .music-placeholder, .settings-placeholder, .notes-placeholder, .calendar-placeholder, .mail-placeholder {
 	width: 100%;
 	height: 100%;
 	font-size: 0.85rem;
