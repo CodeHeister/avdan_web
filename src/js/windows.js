@@ -1035,12 +1035,15 @@ var scroll_list;
 const scrollBarGenerate = scroll_list_l => {
 	scroll_list = scroll_list_l;
 	var scroll_bar = document.querySelector(".scroll-bar");
-	scroll_bar.querySelectorAll(".scroll-item").forEach(item => {
-		scroll_bar.removeChild(item);
-	});
+	var oldChild = scroll_bar.querySelector(".scroll-item");
 	var child = scroll_list_l.items[scroll_list_l.pos];
 	child.classList.add("scroll-item");
-	scroll_bar.appendChild(child);
+	if (oldChild) {
+		scroll_bar.replaceChild(child, oldChild);
+	}
+	else {
+		scroll_bar.appendChild(child);
+	}
 	if (!scroll_bar.hasScroll) {
 		scroll_bar.addEventListener("wheel", e => {
 			if (keys.includes(16)) {
