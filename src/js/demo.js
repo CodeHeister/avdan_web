@@ -544,7 +544,6 @@ var messages_chat_list_items = [
 	{
 		"name" : "Test1",
 		"status" : "offline",
-		"id" : 0,
 		"messages" : [
 			{
 				"send_by" : "person",
@@ -561,7 +560,6 @@ var messages_chat_list_items = [
 	{
 		"name" : "Test2",
 		"status" : "offline",
-		"id" : 1,
 		"messages" : [
 			{
 				"send_by" : "person",
@@ -576,6 +574,10 @@ var messages_chat_list_items = [
 		]
 	},
 ];
+
+for (var i = 0; i < messages_chat_list_items.length; i++) {
+	messages_chat_list_items[i].id = i;
+}
 
 messages_left_side.appendChild(messages_chat_list);
 
@@ -734,7 +736,7 @@ const messageListeners = content => {
 
 	var type_input = content.querySelector(".messages-type-input");
 	type_input.addEventListener("keypress", e => {
-		if (e.keyCode == 13) {
+		if (e.keyCode == 13 && type_input.value != "") {
 			var date = new Date;
 			var send_date = `${(date.getHours() >= 12) && (date.getHours() - 12) || date.getHours()}:${(date.getMinutes() < 10) && "0"+date.getMinutes() || date.getMinutes()} ${(date.getHours() >= 12) && 'PM' || 'AM'}`;
 
