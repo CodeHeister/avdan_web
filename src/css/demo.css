@@ -32,7 +32,7 @@
 	--dark-bg: rgba(0,0,0,0.575);
 }
 
-html {
+body {
 	background-color: #01012b;
     background-image: url(../images/avdan_vert.png);
     background-repeat: no-repeat;
@@ -189,6 +189,10 @@ html, body {
 	white-space: nowrap; 
 	overflow: hidden;
 	text-overflow: ellipsis; 
+}
+
+.tab-add {
+	cursor: pointer;
 }
 
 .tab-add, .win-tab, .win-minimalize, .win-close, .win-fullsize, .split-right, .split-left, .win-insert  {
@@ -905,10 +909,12 @@ html, body {
 
 .you .messages-message {
     background-color: var(--light-bg-hl);
+	animation: 0.2s linear appearFromRight;
 }
 
 .person .messages-message {
     background-color: var(--light-bg);
+	animation: 0.2s linear appearFromLeft;
 }
 
 .messages-message sub {
@@ -920,6 +926,28 @@ html, body {
 	width: fit-content;
 	padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     border-radius: 0.5rem;
+}
+
+@keyframes appearFromLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-10%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
+}
+
+@keyframes appearFromRight {
+	0% {
+		opacity: 0;
+		transform: translateX(10%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0%);
+	}
 }
 
 .messages-type {

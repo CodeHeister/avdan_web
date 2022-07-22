@@ -426,6 +426,18 @@ const remakeWindow = (e, target, info) => {
 						dragAdd(e, `#${target.id}`, `#${target.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow); // add this function to tab
 					});
 					window.addEventListener("mouseup", e => {leave(e, `#${target.id}`)}); // add global drop check for this tab
+					item.addEventListener("dblclick", e => {
+						var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
+						var win = e.currentTarget;
+						while (!win.classList.contains("window")) {
+							win = win.parentElement;
+						}
+						var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+						var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+						e.currentTarget.parentElement.removeChild(e.currentTarget);
+						target_content_holder.parentElement.removeChild(target_content_holder);
+						icon_block.parentElement.removeChild(icon_block);
+					});
 				}
 
 				if (panel_x1 <= e.clientX && e.clientX <= panel_x2 && panel_y1 <= e.clientY && e.clientY <= panel_y2) { // if over panel
@@ -633,6 +645,18 @@ const insertCheck = (e, target, info) => {
 					dragAdd(e, `#${item.id}`, `#${item.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow);
 				});
 				window.addEventListener("mouseup", e => {leave(e, `#${item.id}`)});
+				item.addEventListener("dblclick", e => {
+					var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
+					var win = e.currentTarget;
+					while (!win.classList.contains("window")) {
+						win = win.parentElement;
+					}
+					var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+					var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+					e.currentTarget.parentElement.removeChild(e.currentTarget);
+					target_content_holder.parentElement.removeChild(target_content_holder);
+					icon_block.parentElement.removeChild(icon_block);
+				});
 			}
 
 		});
@@ -732,6 +756,42 @@ const moveIcon = (e, target, info) => {
 	target.style.zIndex = null;
 }
 
+const newTab = (e, target) => {
+	var win = document.querySelector(target);
+	var tab_holder = win.querySelector(".tab-holder");
+	var container = win.querySelector(".container");
+	var icon_block = win.querySelector(".icon-block");
+
+	var new_tab = document.createElement("div");
+	new_tab.classList.add("win-tab");
+	new_tab.id = "win-tab"+win_num_g;
+	new_tab.innerHTML = "New Tab";
+
+	new_tab.addEventListener("click", e => {
+		if (keys.includes(17)) {
+			click(e, `#${content_holder.id}`, undefined, showContent)
+		}
+		else {
+			click(e, `#${content_holder.id}`, hideAllContent, showContent)
+		}
+	});
+	
+	new_tab.addEventListener("dblclick", e => {
+		var id_num = e.currentTarget.id.match("[0-9]+"); // get id to catch element from window
+		var win = e.currentTarget;
+		while (!win.classList.contains("window")) {
+			win = win.parentElement;
+		}
+		var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+		var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+		e.currentTarget.parentElement.removeChild(e.currentTarget);
+		target_content_holder.parentElement.removeChild(target_content_holder);
+		icon_block.parentElement.removeChild(icon_block);
+	});
+	
+	tab_holder.insertBefore(new_tab, e.currentTarget);
+}
+
 // W I N D O W  G E N E R A T O R
 
 var win_num_g = 1; // global window id number 
@@ -760,7 +820,11 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 		panel.classList.add("noselect");
 		panel.id = "win-panel"+win_num_g;
 		panel.addEventListener("mousedown", e => {dragAdd(e, `#${panel.id}`, `#${win.id}`, undefined, moveUpAndClean, undefined, undefined, undefined, undefined, attach)});
-		panel.addEventListener("dblclick", e => {fullsize(e, win)});
+		panel.addEventListener("dblclick", e => {
+			if (e.target == e.currentTarget) {
+				fullsize(e, win)
+			}
+		});
 
 		var tab_holder = document.createElement("div");
 		tab_holder.classList.add("tab-holder");
@@ -783,6 +847,7 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 		tab_add.classList.add("tab-add");
 		tab_add.id = "tab-add"+win_num_g;
 		tab_add.innerHTML = "+";
+		tab_add.addEventListener("click", e => {newTab(e, `#${win.id}`)});
 
 		var win_panel_buttons = document.createElement("div");
 		win_panel_buttons.classList.add("win-panel-buttons");
