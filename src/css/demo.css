@@ -32,19 +32,19 @@
 	--dark-bg: rgba(0,0,0,0.575);
 }
 
+html, body {
+	overflow: hidden;
+	margin: 0;
+	width: 100%;
+    height: 100%;
+}
+
 body {
 	background-color: #01012b;
     background-image: url(../images/avdan_vert.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-}
-
-html, body {
-	overflow: hidden;
-	margin: 0;
-	width: 100%;
-    height: 100%;
 }
 
 @font-face {
@@ -395,7 +395,8 @@ html, body {
 .menu-bar, .info-bar {
 	align-items: center;
 	gap: 0.5rem;
-	padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+	height: 100%;
+	padding: 0 1.25rem 0 1.25rem;
 }
 
 .bar-split {
@@ -417,7 +418,7 @@ html, body {
 }
 
 .menu-icon {
-	height: 50%;
+	height: 40%;
 }
 
 .menu-bar svg linearGradient stop:nth-child(1) {
@@ -433,7 +434,7 @@ html, body {
 }
 
 .info-icon {
-	height: 60%;
+	height: 55%;
 	stroke: white;
 }
 
@@ -549,6 +550,56 @@ html, body {
 
 .player-control svg:nth-child(n+2):hover {
 	transform: scale(1.1) !important;
+}
+
+/* 
+ * +--------------------+
+ * | :: N E W  T A B :: |
+ * +--------------------+
+ */
+
+.new-tab-content {
+    display: flex;
+	justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.apps-holder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+	gap: 1.25rem 1rem;
+	width: 80%;
+}
+
+.app-holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	border-radius: 1rem;
+	transition: background-color 0.1s ease-in-out;
+	padding: 0.5rem 0 0.5rem 0;
+	cursor: pointer;
+}
+
+.app-holder:hover {
+	background-color: var(--light-bg-hl);
+}
+
+.app-holder:hover .app-icon {
+	transform: scale(1.1);
+}
+
+.app-icon-holder {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.app-icon {
+	width: 50%;
+	transition: transform 0.1s ease-in-out;
 }
 
 /*
