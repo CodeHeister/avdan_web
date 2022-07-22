@@ -767,12 +767,21 @@ const newTab = (e, target) => {
 	new_tab.id = "win-tab"+win_num_g;
 	new_tab.innerHTML = "New Tab";
 
+	var new_content_holder = document.createElement("div");
+	new_content_holder.classList.add("content-holder");
+	new_content_holder.id = "content-holder"+win_num_g;
+
+	var new_icon_block = document.createElement("div");
+	new_icon_block.classList.add("icon-block");
+	new_icon_block.style.display = "none";
+	new_icon_block.id = "icon-block"+win_num_g;
+
 	new_tab.addEventListener("click", e => {
 		if (keys.includes(17)) {
-			click(e, `#${content_holder.id}`, undefined, showContent)
+			click(e, `#${new_content_holder.id}`, undefined, showContent)
 		}
 		else {
-			click(e, `#${content_holder.id}`, hideAllContent, showContent)
+			click(e, `#${new_content_holder.id}`, hideAllContent, showContent)
 		}
 	});
 	
@@ -788,8 +797,52 @@ const newTab = (e, target) => {
 		target_content_holder.parentElement.removeChild(target_content_holder);
 		icon_block.parentElement.removeChild(icon_block);
 	});
-	
+
+	var new_tab_content = document.createElement("div");
+	new_tab_content.classList.add("new-tab-content");
+
+	var apps_holder = document.createElement("div");
+	apps_holder.classList.add("apps-holder");
+	apps_holder.classList.add("noselect");
+
+	apps_list.forEach(item => {
+		if (item.content != "hr") {
+			var app_holder = document.createElement("div");
+			app_holder.classList.add("app-holder");
+
+			var app_icon_holder = document.createElement("div");
+			app_icon_holder.classList.add("app-icon-holder");
+
+			var app_icon = document.createElement("img");
+			app_icon.classList.add("app-icon");
+			app_icon.src = item.src;
+
+			var app_title = document.createElement("div");
+			app_title.classList.add("app-title");
+			app_title.innerHTML = item.title;
+
+			app_icon_holder.appendChild(app_icon);
+
+			app_holder.appendChild(app_icon_holder);
+			app_holder.appendChild(app_title);
+
+			apps_holder.appendChild(app_holder);
+		}
+	});
+
+	new_tab_content.appendChild(apps_holder);
+	new_content_holder.appendChild(new_tab_content);
+
+	if (!keys.includes(17)) {
+		hideAllContent(e, win);
+	}
+
 	tab_holder.insertBefore(new_tab, e.currentTarget);
+	container.appendChild(new_content_holder);
+	win.querySelector(".wl").appendChild(new_icon_block);
+
+	win.style.minWidth = (tab_holder.children.length-1)*150+280+"px";
+	win_num_g += 1;
 }
 
 // W I N D O W  G E N E R A T O R
@@ -929,6 +982,7 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 		icon_block.classList.add("icon-block");
 		icon_block.style.display = "none";
 		icon_block.id = "icon-block"+win_num_g;
+
 		var icon = document.createElement("img");
 		icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
 		icon.setAttribute('draggable', false);
