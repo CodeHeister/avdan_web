@@ -542,7 +542,7 @@ messages_chat_list.classList.add("messages-chat-list");
 
 var messages_chat_list_items = [
 	{
-		"name" : "Test1",
+		"name" : "John",
 		"status" : "offline",
 		"messages" : [
 			{
@@ -551,25 +551,288 @@ var messages_chat_list_items = [
 				"time" : "9:07 PM"
 			},
 			{
-				"send_by" : "you",
-				"content" : "Not yet",
-				"time" : "9:08 PM"
-			},
-		]
-	},
-	{
-		"name" : "Test2",
-		"status" : "offline",
-		"messages" : [
-			{
 				"send_by" : "person",
-				"content" : "Works?",
+				"content" : "It's really cool",
 				"time" : "9:07 PM"
 			},
 			{
 				"send_by" : "you",
-				"content" : "Yes",
+				"content" : "Not yet, how can i try it?",
 				"time" : "9:08 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Just hold cursor over the weather widget and scroll mouse wheel",
+				"time" : "9:09 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Oh, and don't forget to hold Shift",
+				"time" : "9:09 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Did it work?",
+				"time" : "9:11 PM"
+			},
+		]
+	},
+	{
+		"name" : "Jane",
+		"status" : "offline",
+		"messages" : [
+			{
+				"send_by" : "you",
+				"content" : "Hi, Jane. I can't figure out how tab system works",
+				"time" : "9:13 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Oh, there are guidelines on Github",
+				"time" : "9:17 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Can you send me the link?",
+				"time" : "9:18 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "<a href='https://github.com/CodeHeister/avdan_web'>Avdan Demo</a>",
+				"time" : "9:18 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "But it will be easier for me to explain it here",
+				"time" : "9:19 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "So, how can i use tabs?",
+				"time" : "9:21 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Double click to close it, if it's not the first one in a row",
+				"time" : "9:22 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Hold shift and and drag it",
+				"time" : "9:22 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "In that case you can change it's place droping it over other tabs in the same window",
+				"time" : "9:23 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "?!",
+				"time" : "9:24 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Just try it",
+				"time" : "9:24 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "It really works 🤨",
+				"time" : "9:26 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "That's not all",
+				"time" : "9:26 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Really?",
+				"time" : "9:26 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Yes, you can also tile a window using tabs",
+				"time" : "9:27 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "😵‍💫",
+				"time" : "9:27 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Just hold Ctrl and press a tab",
+				"time" : "9:28 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "You'll see",
+				"time" : "9:28 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "You can also drag and drop it out of the window",
+				"time" : "9:29 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Or you can even drop it in another window 😏",
+				"time" : "9:31 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "So, what do you think about it?",
+				"time" : "9:31 PM"
+			},
+		]
+	},
+	{
+		"name" : "James",
+		"status" : "offline",
+		"messages" : [
+			{
+				"send_by" : "person",
+				"content" : "Well, i told you 100 times to try it",
+				"time" : "1:20 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Are you here?",
+				"time" : "1:22 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Yes, i was busy, so, what are talking about?",
+				"time" : "9:03 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "🤨",
+				"time" : "9:07 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "I said you about app icon swapping",
+				"time" : "9:09 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "You can drag it and change their order",
+				"time" : "9:09 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "They are in the dock below",
+				"time" : "9:10 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "There's also an arrow to hide them",
+				"time" : "9:12 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "You can place unused apps after the line and hide them it 😌",
+				"time" : "9:13 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "It saves a lot of place",
+				"time" : "9:13 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "I wrote about it to Jane, but she didn't answer",
+				"time" : "9:15 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Do you know where she is?",
+				"time" : "9:15 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Hey, where you are?",
+				"time" : "9:17 PM"
+			},
+		]
+	},
+	{
+		"name" : "William",
+		"status" : "offline",
+		"messages" : [
+			{
+				"send_by" : "person",
+				"content" : "This AvdanOS is amazing",
+				"time" : "8:47 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "I can drop a window in another window",
+				"time" : "8:48 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "And it will tile it, the same thing works with draggable tabs",
+				"time" : "8:48 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "Or you can just drop them in window's topbar",
+				"time" : "8:50 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "And what will happen? I'm busy, so i can't test it",
+				"time" : "9:52 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "It will add it without tilling",
+				"time" : "9:53 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "It's hard to notice from the first try",
+				"time" : "8:53 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Oh, really?!",
+				"time" : "9:11 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "It's cool",
+				"time" : "9:11 PM"
+			},
+		]
+	},
+	{
+		"name" : "Sarah",
+		"status" : "offline",
+		"messages" : [
+			{
+				"send_by" : "you",
+				"content" : "I accidentally dragged a bar in dock",
+				"time" : "9:24 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Is it a bug?",
+				"time" : "9:24 PM"
+			},
+			{
+				"send_by" : "person",
+				"content" : "No, you can merge and unmerge them",
+				"time" : "9:26 PM"
+			},
+			{
+				"send_by" : "you",
+				"content" : "Wow",
+				"time" : "9:27 PM"
 			},
 		]
 	},
