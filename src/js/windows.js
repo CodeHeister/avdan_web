@@ -766,6 +766,7 @@ const newTab = (e, target) => {
 	new_tab.classList.add("win-tab");
 	new_tab.id = "win-tab"+win_num_g;
 	new_tab.innerHTML = "New Tab";
+	new_tab.hasDrag = true;
 
 	var new_content_holder = document.createElement("div");
 	new_content_holder.classList.add("content-holder");
@@ -810,6 +811,38 @@ const newTab = (e, target) => {
 			var app_holder = document.createElement("div");
 			app_holder.classList.add("app-holder");
 
+			app_holder.addEventListener("click", e => {
+				new_tab.innerHTML = item.title;
+				new_tab.addEventListener("mousedown", e => {
+					dragAdd(e, `#${new_tab.id}`, `#${new_tab.id}`, undefined, dropTransition, undefined, undefined, undefined, remakeWindow);
+				});
+				window.addEventListener("mouseup", e => {leave(e, `#${new_tab.id}`)});
+
+				var id_num = new_tab.id.match("[0-9]+"); // get id to catch element from window
+				var win = new_tab;
+				while (!win.classList.contains("window")) {
+					win = win.parentElement;
+				}
+				var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
+				var target_icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+
+				target_content_holder.innerHTML = "";
+
+				var innerContent = item.content.cloneNode(true);
+				target_content_holder.appendChild(innerContent);
+
+				if (item.listenerAdder) {
+					item.listenerAdder(innerContent);
+				}
+
+				var new_icon = document.createElement("img");
+				new_icon.src = item.src;
+				new_icon.setAttribute('draggable', false);
+				new_icon.classList.add("noselect");
+				new_icon.id = "icon"+id_num;
+				target_icon_block.appendChild(new_icon);
+			});
+
 			var app_icon_holder = document.createElement("div");
 			app_icon_holder.classList.add("app-icon-holder");
 
@@ -839,7 +872,7 @@ const newTab = (e, target) => {
 
 	tab_holder.insertBefore(new_tab, e.currentTarget);
 	container.appendChild(new_content_holder);
-	win.querySelector(".wl").appendChild(new_icon_block);
+	win.insertBefore(new_icon_block, win.querySelector(".wl"));
 
 	win.style.minWidth = (tab_holder.children.length-1)*150+280+"px";
 	win_num_g += 1;
