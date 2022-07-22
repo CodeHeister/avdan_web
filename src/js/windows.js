@@ -735,7 +735,7 @@ const moveIcon = (e, target, info) => {
 // W I N D O W  G E N E R A T O R
 
 var win_num_g = 1; // global window id number 
-const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true) => {
+const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = true, addResize = true, listenerAdder = content => {}) => {
 	var win = document.createElement("div");
 	if (addPanel) {
 		win.classList.add("window");
@@ -936,8 +936,11 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 		panel.appendChild(win_panel_buttons);
 	}
 
-	content_holder.appendChild(makeClone && content.cloneNode(true) || content);
+	var innerContent = makeClone && content.cloneNode(true) || content;
+	content_holder.appendChild(innerContent);
 	container.appendChild(content_holder);
+
+	listenerAdder(innerContent);
 
 	if (addPanel) {
 		win.appendChild(panel);
@@ -1011,7 +1014,8 @@ const appBarGenerate = apps_list_l => { // local app list
 				underlines.appendChild(underline);
 
 				// create window
-				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], true);
+				var defaultFunc = content => {};
+				var win = makeWindow(item.content, item.src, item.title, item.extraClass || [], true, true, true, item.listenerAdder || defaultFunc);
 				document.body.appendChild(win);
 				win.style.transform = `translate3d(${window.innerWidth/2-win.offsetWidth/2}px, ${window.innerHeight/2-win.offsetHeight/2}px, 0)`;
 			});
