@@ -1160,12 +1160,6 @@ weather_time.appendChild(weather_panel);
 var currentAudioIndex = 0;
 var audios = [
 	{
-		"title" : "Rain",
-		"artist" : "Papa Khan",
-		"url" : "src/audio/Papa Khan - Rain.mp3",
-		"src" : "src/images/Papa Khan - Rain.jpg"
-	},
-	{
 		"title" : "AWOL",
 		"artist" : "Papa Khan",
 		"url" : "src/audio/Papa Khan - AWOL.mp3",
@@ -1176,6 +1170,12 @@ var audios = [
 		"artist" : "NF",
 		"url" : "src/audio/NF - The Search.mp3",
 		"src" : "src/images/NF - The Search.jpg"
+	},
+	{
+		"title" : "Rain",
+		"artist" : "Papa Khan",
+		"url" : "src/audio/Papa Khan - Rain.mp3",
+		"src" : "src/images/Papa Khan - Rain.jpg"
 	},
 	{
 		"title" : "Let You Down",
@@ -1199,36 +1199,55 @@ duration_bar.classList.add("duration-bar");
 
 var durationBarInterval;
 
-audio.addEventListener("play", e => {
+const reloadPlayer = () => {
+	audio = new Audio(audios[currentAudioIndex].url);
+	audio.addEventListener("canplay", e => {
+		audio.play();
+	});
+	player_title.innerHTML = audios[currentAudioIndex].title;
+	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+	player_icon_img.src = audios[currentAudioIndex].src;
+	duration_bar.style.width = `0%`;
+	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+
+	audio.addEventListener("play", e => {
+		playAudio();
+	});
+
+	audio.addEventListener("pause", e => {
+		pauseAudio();
+	});
+}
+
+const nextTrack = () => {
+	currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
+	reloadPlayer();
+}
+
+const previousTrack = () => {
+	currentAudioIndex -= parseInt((currentAudioIndex <= 0) && `${-1*audios.length+1}` || "1");
+	reloadPlayer();
+}
+
+const playAudio = () => {
 	durationBarInterval = setInterval(() => {
 		duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
 	}, 500);
+}
+
+const pauseAudio = () => {
+	clearInterval(durationBarInterval);
+	if (audio.currentTime == audio.duration) {
+		nextTrack();
+	}
+}
+
+audio.addEventListener("play", e => {
+	playAudio();
 });
 
 audio.addEventListener("pause", e => {
-	clearInterval(durationBarInterval);
-	if (audio.currentTime == audio.duration) {
-		currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
-		audio = new Audio(audios[currentAudioIndex].url);
-		audio.addEventListener("canplay", e => {
-			audio.play();
-		});
-		player_title.innerHTML = audios[currentAudioIndex].title;
-		plyer_artist.innerHTML = audios[currentAudioIndex].artist;
-		player_icon_img.src = audios[currentAudioIndex].src;
-		duration_bar.style.width = `0%`;
-		player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
-
-		audio.addEventListener("play", e => {
-			durationBarInterval = setInterval(() => {
-				duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
-			}, 500);
-		});
-
-		audio.addEventListener("pause", e => {
-			clearInterval(durationBarInterval);
-		});
-	}
+	pauseAudio();
 });
 
 var player_holder = document.createElement("div");
@@ -1268,27 +1287,7 @@ player_prev.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 
 player_prev.style.transform = "rotate(180deg)";
 player_prev.style.fill = "#ffffff";
 player_prev.addEventListener("click", e => {
-	currentAudioIndex -= parseInt((currentAudioIndex <= 0) && `${-1*audios.length+1}` || "1");
-	audio.pause();
-	audio = new Audio(audios[currentAudioIndex].url);
-	audio.addEventListener("canplay", e => {
-		audio.play();
-	});
-	player_title.innerHTML = audios[currentAudioIndex].title;
-	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
-	player_icon_img.src = audios[currentAudioIndex].src;
-	duration_bar.style.width = `0%`;
-	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
-
-	audio.addEventListener("play", e => {
-		durationBarInterval = setInterval(() => {
-			duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
-		}, 500);
-	});
-
-	audio.addEventListener("pause", e => {
-		clearInterval(durationBarInterval);
-	});
+	previousTrack();
 });
 
 var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1311,27 +1310,7 @@ player_next.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_next.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 1.5 1.5 0 3 l -12 7.5 c 0 0 -4 1 -3 -3 z m 12 -16 c 0 0 -2 0 -1 2.268 l 5.888 3.732 c 0 0 1 1 0 2 l -3.888 2.732 c 0 0 -4.5 2.5 -1 3.268 l 11 -6 c 0 0 1 -1 0 -2 l -11 -6 z"></path>';
 player_next.style.fill = "#ffffff";
 player_next.addEventListener("click", e => {
-	currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
-	audio.pause();
-	audio = new Audio(audios[currentAudioIndex].url);
-	audio.addEventListener("canplay", e => {
-		audio.play();
-	});
-	player_title.innerHTML = audios[currentAudioIndex].title;
-	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
-	player_icon_img.src = audios[currentAudioIndex].src;
-	duration_bar.style.width = `0%`;
-	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
-
-	audio.addEventListener("play", e => {
-		durationBarInterval = setInterval(() => {
-			duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
-		}, 500);
-	});
-
-	audio.addEventListener("pause", e => {
-		clearInterval(durationBarInterval);
-	});
+	nextTrack();
 });
 
 player_control.appendChild(player_prev);
