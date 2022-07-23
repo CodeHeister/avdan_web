@@ -1200,7 +1200,7 @@ duration_bar.classList.add("duration-bar");
 var durationBarInterval;
 
 const reloadPlayer = () => {
-	audio = new Audio(audios[currentAudioIndex].url);
+	audio.src = audios[currentAudioIndex].url;
 	audio.addEventListener("canplay", e => {
 		audio.play();
 	});
