@@ -704,7 +704,7 @@ var messages_chat_list_items = [
 			},
 			{
 				"send_by" : "you",
-				"content" : "Yes, i was busy, so, what are talking about?",
+				"content" : "Yes, i was busy, so, what are you talking about?",
 				"time" : "9:03 PM"
 			},
 			{
@@ -967,6 +967,7 @@ const messageListeners = content => {
 
 	var name = content.querySelector(".messages-header-name");
 	var chat_status = content.querySelector(".messages-header-status");
+	var chat_icon = content.querySelector(".messages-header-icon img");
 
 	messages_chat_list_items.forEach(item => {
 		messages_chat_list_children[i].addEventListener("click", e => {
@@ -979,6 +980,7 @@ const messageListeners = content => {
 			chat_status.innerHTML = item.status;
 			chat.innerHTML = "";
 			chat.item_id = item.id;
+			chat_icon.src = item.src || "src/images/demo/icons/Start/DefaultProfilePicture.png";
 
 			item.messages.forEach(chat_item => {
 				var message_holder = document.createElement("div");
@@ -1155,15 +1157,58 @@ weather_time.appendChild(weather_panel);
 
 // -- //
 
+var currentAudioIndex = 0;
+var audios = [
+	{
+		"title" : "Rain",
+		"artist" : "Papa Khan",
+		"url" : "src/audio/Papa Khan - Rain.mp3",
+		"src" : "src/images/Papa Khan - Rain.jpg"
+	},
+	{
+		"title" : "AWOL",
+		"artist" : "Papa Khan",
+		"url" : "src/audio/Papa Khan - AWOL.mp3",
+		"src" : "src/images/Papa Khan - AWOL.jpg"
+	},
+]
+
+var audio = new Audio(audios[currentAudioIndex].url);
+
+var duration_bar_holder = document.createElement("div");
+duration_bar_holder.classList.add("duration-bar-holder");
+duration_bar_holder.addEventListener("click", e => {
+	audio.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*audio.duration;
+	duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+});
+
+var duration_bar = document.createElement("div");
+duration_bar.classList.add("duration-bar");
+
+var durationBarInterval;
+
+audio.addEventListener("play", e => {
+	durationBarInterval = setInterval(() => {
+		duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+	}, 500);
+});
+
+audio.addEventListener("pause", e => {
+	clearInterval(durationBarInterval);
+});
+
+var player_holder = document.createElement("div");
+player_holder.classList.add("player-holder");
+player_holder.classList.add("noselect");
+
 var player = document.createElement("div");
 player.classList.add("player");
-player.classList.add("noselect");
 
 var player_icon = document.createElement("div");
 player_icon.classList.add("player-icon");
 
 var player_icon_img = document.createElement("img");
-player_icon_img.src = "src/images/player_img.jpg";
+player_icon_img.src = audios[currentAudioIndex].src;
 player_icon.appendChild(player_icon_img);
 
 var player_info = document.createElement("div");
@@ -1171,11 +1216,11 @@ player_info.classList.add("player-info");
 
 var player_title = document.createElement("div");
 player_title.classList.add("player-title");
-player_title.innerHTML = "Une belle historie";
+player_title.innerHTML = audios[currentAudioIndex].title;
 
 var plyer_artist = document.createElement("div");
 plyer_artist.classList.add("player-artist");
-plyer_artist.innerHTML = "Michel Fugain";
+plyer_artist.innerHTML = audios[currentAudioIndex].artist;
 
 player_info.appendChild(player_title);
 player_info.appendChild(plyer_artist);
@@ -1188,16 +1233,72 @@ player_prev.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_prev.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 1.5 1.5 0 3 l -12 7.5 c 0 0 -4 1 -3 -3 z m 12 -16 c 0 0 -2 0 -1 2.268 l 5.888 3.732 c 0 0 1 1 0 2 l -3.888 2.732 c 0 0 -4.5 2.5 -1 3.268 l 11 -6 c 0 0 1 -1 0 -2 l -11 -6 z"></path>';
 player_prev.style.transform = "rotate(180deg)";
 player_prev.style.fill = "#ffffff";
+player_prev.addEventListener("click", e => {
+	currentAudioIndex -= parseInt((currentAudioIndex <= 0) && `${-1*audios.length+1}` || "1");
+	audio.pause();
+	audio = new Audio(audios[currentAudioIndex].url);
+	audio.addEventListener("canplay", e => {
+		audio.play();
+	});
+	player_title.innerHTML = audios[currentAudioIndex].title;
+	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+	player_icon_img.src = audios[currentAudioIndex].src;
+	duration_bar.style.width = `0%`;
+	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+
+	audio.addEventListener("play", e => {
+		durationBarInterval = setInterval(() => {
+			duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+		}, 500);
+	});
+
+	audio.addEventListener("pause", e => {
+		clearInterval(durationBarInterval);
+	});
+});
 
 var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
-player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
 player_pause.style.fill = "#ffffff";
+player_pause.addEventListener("click", e => {
+	if (audio.paused) {
+		audio.play();
+		player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+	}
+	else {
+		audio.pause();
+		player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+	}
+});
 
 var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_next.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_next.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 1.5 1.5 0 3 l -12 7.5 c 0 0 -4 1 -3 -3 z m 12 -16 c 0 0 -2 0 -1 2.268 l 5.888 3.732 c 0 0 1 1 0 2 l -3.888 2.732 c 0 0 -4.5 2.5 -1 3.268 l 11 -6 c 0 0 1 -1 0 -2 l -11 -6 z"></path>';
 player_next.style.fill = "#ffffff";
+player_next.addEventListener("click", e => {
+	currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
+	audio.pause();
+	audio = new Audio(audios[currentAudioIndex].url);
+	audio.addEventListener("canplay", e => {
+		audio.play();
+	});
+	player_title.innerHTML = audios[currentAudioIndex].title;
+	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+	player_icon_img.src = audios[currentAudioIndex].src;
+	duration_bar.style.width = `0%`;
+	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+
+	audio.addEventListener("play", e => {
+		durationBarInterval = setInterval(() => {
+			duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+		}, 500);
+	});
+
+	audio.addEventListener("pause", e => {
+		clearInterval(durationBarInterval);
+	});
+});
 
 player_control.appendChild(player_prev);
 player_control.appendChild(player_pause);
@@ -1207,13 +1308,18 @@ player.appendChild(player_icon);
 player.appendChild(player_info);
 player.appendChild(player_control);
 
+duration_bar_holder.appendChild(duration_bar);
+
+player_holder.appendChild(player);
+player_holder.appendChild(duration_bar_holder);
+
 // -- S C R O L L  B A R  C O N F I G S
 
 var scroll_list_g = { 
 	"pos" : 0,
 	"items" : [
 		weather_time,
-		player,
+		player_holder,
 	]
 }
 
