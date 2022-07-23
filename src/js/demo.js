@@ -1171,6 +1171,18 @@ var audios = [
 		"url" : "src/audio/Papa Khan - AWOL.mp3",
 		"src" : "src/images/Papa Khan - AWOL.jpg"
 	},
+	{
+		"title" : "The Search",
+		"artist" : "NF",
+		"url" : "src/audio/NF - The Search.mp3",
+		"src" : "src/images/NF - The Search.jpg"
+	},
+	{
+		"title" : "Let You Down",
+		"artist" : "NF",
+		"url" : "src/audio/NF - Let You Down.mp3",
+		"src" : "src/images/NF - Let You Down.webp"
+	},
 ]
 
 var audio = new Audio(audios[currentAudioIndex].url);
@@ -1196,7 +1208,7 @@ audio.addEventListener("play", e => {
 audio.addEventListener("pause", e => {
 	clearInterval(durationBarInterval);
 	if (audio.currentTime == audio.duration) {
-		currentAudioIndex += 1;
+		currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
 		audio = new Audio(audios[currentAudioIndex].url);
 		audio.addEventListener("canplay", e => {
 			audio.play();
