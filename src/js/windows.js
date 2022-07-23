@@ -5,7 +5,7 @@ var z_index_g = 1; // global z-index counter
 // on insert window drag
 const iconify = (e, target, info) => {
 	target.style.transition = null;
-	target.lastMinWidth = target.style.minWidth || "450px";
+	target.lastMinWidth = target.lastMinWidth || target.style.minWidth || "450px";
 	target.style.minWidth = "initial";
 	target.style.minHeight = "initial";
 	target.style.width = target.offsetWidth/2+"px";
@@ -41,6 +41,8 @@ const attach = (e, target, info) => {
 	target.lastTransform = target.lastTransform || target.style.transform;
 	target.lastWidth = target.lastWidth || target.offsetWidth;
 	target.lastHeight = target.lastHeight || target.offsetHeight;
+	target.lastMinWidth = target.lastMinWidth || target.style.minWidth || "450px";
+	target.style.minWidth = "initial";
 	if (e.screenX > window.innerWidth/2) {
 		target.style.top = 0;
 		target.style.left = "50%";
@@ -68,11 +70,15 @@ const leftAttach = (e, target) => {
 		target.style.width = target.lastWidth+"px";
 		target.style.height = target.lastHeight+"px";
 		target.style.transform = target.lastTransform;
+		target.style.minWidth = target.lastMinWidth;
 		target.lastTransform = undefined;
 		target.lastWidth = undefined;
 		target.lastHeight = undefined;
+		target.lastMinWidth = undefined;
 	}
 	else {
+		target.lastMinWidth = target.lastMinWidth || target.style.minWidth || "450px";
+		target.style.minWidth = "initial";
 		target.lastTransform = target.lastTransform || target.style.transform;
 		target.lastWidth = target.lastWidth || target.offsetWidth;
 		target.lastHeight = target.lastHeight || target.offsetHeight;
@@ -95,11 +101,15 @@ const rightAttach = (e, target) => {
 		target.style.width = target.lastWidth+"px";
 		target.style.height = target.lastHeight+"px";
 		target.style.transform = target.lastTransform;
+		target.style.minWidth = target.lastMinWidth;
 		target.lastTransform = undefined;
 		target.lastWidth = undefined;
 		target.lastHeight = undefined;
+		target.lastMinWidth = undefined;
 	}
 	else {
+		target.lastMinWidth = target.lastMinWidth || target.style.minWidth || "450px";
+		target.style.minWidth = "initial";
 		target.lastTransform = target.lastTransform || target.style.transform;
 		target.lastWidth = target.lastWidth || target.offsetWidth;
 		target.lastHeight = target.lastHeight || target.offsetHeight;
@@ -122,11 +132,15 @@ const fullsize = (e, target) => {
 		target.style.width = target.lastWidth+"px";
 		target.style.height = target.lastHeight+"px";
 		target.style.transform = target.lastTransform;
+		target.style.minWidth = target.lastMinWidth;
 		target.lastTransform = undefined;
 		target.lastWidth = undefined;
 		target.lastHeight = undefined;
+		target.lastMinWidth = undefined;
 	}
 	else {
+		target.lastMinWidth = target.lastMinWidth || target.style.minWidth || "450px";
+		target.style.minWidth = "initial";
 		target.lastTransform = target.lastTransform || target.style.transform;
 		target.lastWidth = target.lastWidth || target.offsetWidth;
 		target.lastHeight = target.lastHeight || target.offsetHeight;
@@ -397,6 +411,15 @@ const remakeWindow = (e, target, info) => {
 				win.style.top = window.innerHeight/2-win.offsetHeight/2+"px";
 				win.style.left = window.innerWidth/2-win.offsetWidth/2+"px";
 
+				var i = 1;
+				var content_holders = win.querySelectorAll(".content-holder");
+				content_holders.forEach(item => {
+					if (item.style.display) {i+=1}
+				});
+				if (i == content_holders.length) {
+					target_content_holder.previousSibling.style.display = null;
+				}
+
 				// erase elements from the current window 
 				target.parentElement.removeChild(target);
 				icon_block.parentElement.removeChild(icon_block);
@@ -432,8 +455,19 @@ const remakeWindow = (e, target, info) => {
 						while (!win.classList.contains("window")) {
 							win = win.parentElement;
 						}
+
 						var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
 						var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+
+						var i = 1;
+						var content_holders = win.querySelectorAll(".content-holder");
+						content_holders.forEach(item => {
+							if (item.style.display) {i+=1}
+						});
+						if (i == content_holders.length) {
+							target_content_holder.previousSibling.style.display = null;
+						}
+
 						e.currentTarget.parentElement.removeChild(e.currentTarget);
 						target_content_holder.parentElement.removeChild(target_content_holder);
 						icon_block.parentElement.removeChild(icon_block);
@@ -794,6 +828,15 @@ const newTab = (e, target) => {
 		}
 		var target_content_holder = win.querySelector("#content-holder"+id_num); // catch content
 		var icon_block = win.querySelector("#icon-block"+id_num); // catch icon
+
+		var i = 1;
+		var content_holders = win.querySelectorAll(".content-holder");
+		content_holders.forEach(item => {
+			if (item.style.display) {i+=1}
+		});
+		if (i == content_holders.length) {
+			target_content_holder.previousSibling.style.display = null;
+		}
 		e.currentTarget.parentElement.removeChild(e.currentTarget);
 		target_content_holder.parentElement.removeChild(target_content_holder);
 		icon_block.parentElement.removeChild(icon_block);
