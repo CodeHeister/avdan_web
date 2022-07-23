@@ -1010,18 +1010,17 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 	content_holder.classList.add("content-holder");
 	content_holder.id = "content-holder"+win_num_g;
 
-	if (icon_src) {
-		var icon_block = document.createElement("div");
-		icon_block.classList.add("icon-block");
-		icon_block.style.display = "none";
-		icon_block.id = "icon-block"+win_num_g;
+	var icon_block = document.createElement("div");
+	icon_block.classList.add("icon-block");
+	icon_block.style.display = "none";
+	icon_block.id = "icon-block"+win_num_g;
 
+	if (icon_src) {
 		var icon = document.createElement("img");
 		icon.src = icon_src || "src/images/demo/icons/Apps/TextEditor.png";
 		icon.setAttribute('draggable', false);
 		icon.classList.add("noselect");
 		icon.id = "icon"+win_num_g;
-		icon_block.appendChild(icon);
 	}
 
 	if (addResize) {
@@ -1097,10 +1096,14 @@ const makeWindow = (content, icon_src, title, extraClass, makeClone, addPanel = 
 	if (addPanel) {
 		win.appendChild(panel);
 	}
+	
 	win.appendChild(container);
+	
 	if (icon_src) {
-		win.appendChild(icon_block);
+		icon_block.appendChild(icon);
 	}
+	win.appendChild(icon_block);
+
 	if (addResize) {
 		win.appendChild(wl);
 		win.appendChild(wr);
