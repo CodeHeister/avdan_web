@@ -172,7 +172,7 @@ files_open_list_items.forEach(item => {
 		else if (folder.src == "folder") { // if colored folder needed
 			files_open_list_item_folder_src = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 			files_open_list_item_folder_src.setAttributeNS(null, "viewBox", "0 0 96 96");
-			files_open_list_item_folder_src.innerHTML = '<path d="M 12 8.5 L 30 8.5 C 30 8.5 35 8.5 38 12 L 41 14.5 C 41 14.5 44 17 46 16.5 L 82 16.5 C 82 16.5 88 18 91 26 L 91.5 79 C 91.5 79 91.75 88.75 83 88.5 L 13 88.5 C 13 88.5 5 88 4 79 L 4 20 C 4 20 4 11 12 8.5 Z"></path><path d="M 4 44 L 4 79 C 4 79 5 88 13 88.5 L 83 88.5 C 83 88.5 91.75 88.75 91.5 79 L 91.5 44 C 91.5 44 89 38 83 38 L 13 38 C 13 38 6 37 4 44 Z"></path>';
+			files_open_list_item_folder_src.innerHTML = '<path d="M12 8.5L30 8.5C30 8.5 35 8.5 38 12L41 14.5C41 14.5 44 17 46 16.5L82 16.5C82 16.5 88 18 91 26L91.5 79C91.5 79 91.75 88.75 83 88.5L13 88.5C13 88.5 5 88 4 79L4 20C4 20 4 11 12 8.5Z"></path><path d="M 4 44L4 79C4 79 5 88 13 88.5L83 88.5C83 88.5 91.75 88.75 91.5 79L91.5 44C91.5 44 89 38 83 38L13 38C13 38 6 37 4 44Z"></path>';
 			files_open_list_item_folder_src.style.fill = folder.color || "#519fc4";
 		}
 		else { // default img 
@@ -272,7 +272,7 @@ files_closed_items.forEach(item => {
 		if (folder.src == "folder") { // if colored folder needed
 			var files_closed_folder_icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 			files_closed_folder_icon.setAttributeNS(null, "viewBox", "0 0 96 96");
-			files_closed_folder_icon.innerHTML = '<path d="M 12 8.5 L 30 8.5 C 30 8.5 35 8.5 38 12 L 41 14.5 C 41 14.5 44 17 46 16.5 L 82 16.5 C 82 16.5 88 18 91 26 L 91.5 79 C 91.5 79 91.75 88.75 83 88.5 L 13 88.5 C 13 88.5 5 88 4 79 L 4 20 C 4 20 4 11 12 8.5 Z"></path><path d="M 4 44 L 4 79 C 4 79 5 88 13 88.5 L 83 88.5 C 83 88.5 91.75 88.75 91.5 79 L 91.5 44 C 91.5 44 89 38 83 38 L 13 38 C 13 38 6 37 4 44 Z"></path>';
+			files_closed_folder_icon.innerHTML = '<path d="M12 8.5L30 8.5C30 8.5 35 8.5 38 12L41 14.5C41 14.5 44 17 46 16.5L82 16.5C82 16.5 88 18 91 26L91.5 79C91.5 79 91.75 88.75 83 88.5L13 88.5C13 88.5 5 88 4 79L4 20C4 20 4 11 12 8.5Z"></path><path d="M 4 44L4 79C4 79 5 88 13 88.5L83 88.5C83 88.5 91.75 88.75 91.5 79L91.5 44C91.5 44 89 38 83 38L13 38C13 38 6 37 4 44Z"></path>';
 			files_closed_folder_icon.style.fill = folder.color || "#519fc4";
 		}
 		else { // default img
@@ -1208,7 +1208,7 @@ const reloadPlayer = () => {
 	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
 	player_icon_img.src = audios[currentAudioIndex].src;
 	duration_bar.style.width = `0%`;
-	player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+	player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
 
 	audio.addEventListener("play", e => {
 		playAudio();
@@ -1283,7 +1283,7 @@ player_control.classList.add("player-control");
 
 var player_prev = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_prev.setAttributeNS(null, "viewBox", "0 0 24 24");
-player_prev.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 1.5 1.5 0 3 l -12 7.5 c 0 0 -4 1 -3 -3 z m 12 -16 c 0 0 -2 0 -1 2.268 l 5.888 3.732 c 0 0 1 1 0 2 l -3.888 2.732 c 0 0 -4.5 2.5 -1 3.268 l 11 -6 c 0 0 1 -1 0 -2 l -11 -6 z"></path>';
+player_prev.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 3l-12 7.5c0 0-4 1-3-3zm12-16c 0 0-2 0-1 2.268l5.888 3.732c0 0 1 1 0 2l-3.888 2.732c0 0-4.5 2.5-1 3.268l11-6c0 0 1-1 0-2 l-11-6z"></path>';
 player_prev.style.transform = "rotate(180deg)";
 player_prev.style.fill = "#ffffff";
 player_prev.addEventListener("click", e => {
@@ -1292,12 +1292,12 @@ player_prev.addEventListener("click", e => {
 
 var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
-player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
 player_pause.style.fill = "#ffffff";
 player_pause.addEventListener("click", e => {
 	if (audio.paused) {
 		audio.play();
-		player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+		player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
 	}
 	else {
 		audio.pause();
@@ -1307,7 +1307,7 @@ player_pause.addEventListener("click", e => {
 
 var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 player_next.setAttributeNS(null, "viewBox", "0 0 24 24");
-player_next.innerHTML = '<path d="M0 21 v -15 c 0 0 -0.5 -4 3 -3 l 12 7.5 c 0 0 1.5 1.5 0 3 l -12 7.5 c 0 0 -4 1 -3 -3 z m 12 -16 c 0 0 -2 0 -1 2.268 l 5.888 3.732 c 0 0 1 1 0 2 l -3.888 2.732 c 0 0 -4.5 2.5 -1 3.268 l 11 -6 c 0 0 1 -1 0 -2 l -11 -6 z"></path>';
+player_next.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 3l-12 7.5c0 0-4 1-3-3zm12-16c 0 0-2 0-1 2.268l5.888 3.732c0 0 1 1 0 2l-3.888 2.732c0 0-4.5 2.5-1 3.268l11-6c0 0 1-1 0-2 l-11-6z"></path>';
 player_next.style.fill = "#ffffff";
 player_next.addEventListener("click", e => {
 	nextTrack();
