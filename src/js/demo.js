@@ -1195,6 +1195,28 @@ audio.addEventListener("play", e => {
 
 audio.addEventListener("pause", e => {
 	clearInterval(durationBarInterval);
+	if (audio.currentTime == audio.duration) {
+		currentAudioIndex += 1;
+		audio = new Audio(audios[currentAudioIndex].url);
+		audio.addEventListener("canplay", e => {
+			audio.play();
+		});
+		player_title.innerHTML = audios[currentAudioIndex].title;
+		plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+		player_icon_img.src = audios[currentAudioIndex].src;
+		duration_bar.style.width = `0%`;
+		player_pause.innerHTML = '<path d="M10 24 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z m 10 0 h -3 c 0 0 -3 0 -3 -3 v -18 c 0 0 0 -3 3 -3 c 0 0 3 0 3 3 v 18 c 0 0 0 3 -3 3 z"></path>';
+
+		audio.addEventListener("play", e => {
+			durationBarInterval = setInterval(() => {
+				duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+			}, 500);
+		});
+
+		audio.addEventListener("pause", e => {
+			clearInterval(durationBarInterval);
+		});
+	}
 });
 
 var player_holder = document.createElement("div");
