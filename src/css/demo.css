@@ -847,7 +847,14 @@ body {
 	display: flex;
 	flex-direction: column;
 	width: 40%;
+	max-width: 220px;
 	padding: 1rem;
+	gap: 2.5rem;
+	box-sizing: border-box;
+}
+
+.music-left-side hr {
+	width: 100%;
 }
 
 .music-left-side-section, .music-left-side-playlists, .music-left-side-main-playlists, .music-left-side-personal-playlists {
@@ -869,11 +876,14 @@ body {
 	height: 100%;
 }
 
-.music-left-side-sections-item-icon, .music-left-side-main-playlist-icon  {
+.music-left-side-sections-item-icon, .music-left-side-main-playlist-icon {
 	height: 100%;
 	max-height: 50px;
 	stroke: #fff;
 	stroke-width: 4px;
+}
+
+.music-left-side-sections-item:hover .music-left-side-sections-item-icon, .music-left-side-main-playlist:hover .music-left-side-main-playlist-icon {
 	animation: 5s linear infinite alternate moveStroke;
 }
 
@@ -884,22 +894,28 @@ body {
 	}
 	25% {
 		stroke-dasharray: 60rem;
-		stroke-dashoffset: 60rem;
+		stroke-dashoffset: -60rem;
 	}
-	50% {
-		stroke-dasharray: 30rem;
+	75% {
+		stroke-dasharray: 60rem;
 		stroke-dashoffset: 0rem;
 	}
 	100% {
 		stroke-dasharray: 60rem;
-		stroke-dashoffset: -60rem;
+		stroke-dashoffset: 60rem;
 	}
 }
 
 .music-left-side-sections-item-label, .music-left-side-main-playlist-label, .music-left-side-personal-label {
+	font-size: 0.85rem;
 	text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.music-left-side-personal-playlist-label {
+	color: var(--light-bg-hl);
+	font-size: 0.9rem;
 }
 
 .music-right-side {
@@ -911,8 +927,64 @@ body {
 .music-bottom-side {
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	width: 100%;
 	height: 15%;
+	max-height: 100px;
+	padding: 1rem;
+	box-sizing: border-box;
+}
+
+.music-bottom-left-side, .music-bottom-right-side {
+	display: flex;
+    align-items: center;
+    flex-direction: row;
+	gap: 0.75rem;
+}
+
+.music-bottom-left-side {
+	margin-right: auto;
+}
+
+.music-bottom-side-icon-holder {
+	height: 100%;
+}
+
+.music-bottom-side-icon {
+	height: 100%;
+	border-radius: 0.25rem;
+}
+
+.music-bottom-side-player-title {
+	font-size: 0.9rem;
+}
+
+.music-bottom-side-player-artist {
+	color: var(--light-bg-hl);
+	font-size: 0.8rem;
+}
+
+.music-bottom-side-player {
+	margin: auto;
+}
+
+.music-bottom-side-volume-bar-holder {
+	position: relative;
+    width: 4px;
+	height: 90%;
+    background-color: var(--light-bg-hl);
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.music-bottom-side-volume-bar {
+	position: absolute;
+	bottom: 0;
+    width: 4px;
+	height: 100%;
+    background-color: #fff;
+	border-radius: 0.25rem;
+	pointer-events: none;
 }
 
 /*

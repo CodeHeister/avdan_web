@@ -534,8 +534,18 @@ const reloadPlayer = () => {
 		audio.play();
 	});
 	player_title.innerHTML = audios[currentAudioIndex].title;
+	document.querySelectorAll(".music-bottom-side-player-title").forEach(item => {
+		item.innerHTML = audios[currentAudioIndex].title;
+
+	});
 	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+	document.querySelectorAll(".music-bottom-side-player-artist").forEach(item => {
+		item.innerHTML = audios[currentAudioIndex].artist;
+	});
 	player_icon_img.src = audios[currentAudioIndex].src;
+	document.querySelectorAll(".music-bottom-side-icon").forEach(item => {
+		item.src = audios[currentAudioIndex].src;
+	});
 	duration_bar.style.width = `0%`;
 	player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
 
@@ -734,7 +744,63 @@ music_content.appendChild(music_main);
 */
 
 const musicListeners = content => {
+	var bottom_bar = content.querySelector(".music-bottom-side");
+	
+	var left_bottom = document.createElement("div");
+	left_bottom.classList.add("music-bottom-left-side");
 
+	var icon_holder = document.createElement("div");
+	icon_holder.classList.add("music-bottom-side-icon-holder");
+
+	var icon = document.createElement("img");
+	icon.classList.add("music-bottom-side-icon");
+	icon.src = audios[currentAudioIndex].src;
+
+	var info = document.createElement("div");
+	info.classList.add("music-bottom-side-player-info");
+	
+	var title = document.createElement("div"); 
+	title.classList.add("music-bottom-side-player-title");
+	title.innerHTML = audios[currentAudioIndex].title;
+
+	var artist = document.createElement("div"); 
+	artist.classList.add("music-bottom-side-player-artist");
+	artist.innerHTML = audios[currentAudioIndex].artist;
+
+	info.appendChild(title);
+	info.appendChild(artist);
+
+	icon_holder.appendChild(icon);
+	
+	left_bottom.appendChild(icon_holder);
+	left_bottom.appendChild(info);
+
+	bottom_bar.appendChild(left_bottom);
+
+	var player = document.createElement("div");
+	player.classList.add("music-bottom-side-player");
+
+	bottom_bar.appendChild(player);
+
+	var right_bottom = document.createElement("div");
+	right_bottom.classList.add("music-bottom-right-side");
+
+	var volume_bar_holder = document.createElement("div");
+	volume_bar_holder.classList.add("music-bottom-side-volume-bar-holder");
+
+	var volume_bar = document.createElement("div");
+	volume_bar.classList.add("music-bottom-side-volume-bar");
+
+	volume_bar_holder.addEventListener("click", e => {
+		audio.volume = (e.currentTarget.offsetHeight-e.offsetY)/e.currentTarget.offsetHeight;
+		e.currentTarget.querySelector(".music-bottom-side-volume-bar").style.height = `${audio.volume*100}%`;
+	});
+
+	volume_bar_holder.appendChild(volume_bar);
+
+	right_bottom.appendChild(volume_bar_holder);
+
+	bottom_bar.appendChild(right_bottom);
 }
 
 // -- //
