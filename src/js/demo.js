@@ -494,10 +494,229 @@ settings_content.appendChild(settings_main);
 
 // -- M U S I C -- //
 
+var currentAudioIndex = 0;
+var audios = [
+	{
+		"title" : "AWOL",
+		"artist" : "Papa Khan",
+		"url" : "src/audio/Papa Khan - AWOL.mp3",
+		"src" : "src/images/Papa Khan - AWOL.jpg"
+	},
+	{
+		"title" : "The Search",
+		"artist" : "NF",
+		"url" : "src/audio/NF - The Search.mp3",
+		"src" : "src/images/NF - The Search.jpg"
+	},
+	{
+		"title" : "Rain",
+		"artist" : "Papa Khan",
+		"url" : "src/audio/Papa Khan - Rain.mp3",
+		"src" : "src/images/Papa Khan - Rain.jpg"
+	},
+	{
+		"title" : "Let You Down",
+		"artist" : "NF",
+		"url" : "src/audio/NF - Let You Down.mp3",
+		"src" : "src/images/NF - Let You Down.webp"
+	},
+]
+
+for (var i = 0; i < audios.length; i++) {
+	audios[i].id = i;
+}
+
+var audio = new Audio(audios[currentAudioIndex].url);
+
+const reloadPlayer = () => {
+	audio.src = audios[currentAudioIndex].url;
+	audio.addEventListener("canplay", e => {
+		audio.play();
+	});
+	player_title.innerHTML = audios[currentAudioIndex].title;
+	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
+	player_icon_img.src = audios[currentAudioIndex].src;
+	duration_bar.style.width = `0%`;
+	player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+
+	audio.addEventListener("play", e => {
+		playAudio();
+	});
+
+	audio.addEventListener("pause", e => {
+		pauseAudio();
+	});
+}
+
+const nextTrack = () => {
+	currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
+	reloadPlayer();
+}
+
+const previousTrack = () => {
+	currentAudioIndex -= parseInt((currentAudioIndex <= 0) && `${-1*audios.length+1}` || "1");
+	reloadPlayer();
+}
+
+const playAudio = () => {
+	durationBarInterval = setInterval(() => {
+		duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+	}, 500);
+}
+
+const pauseAudio = () => {
+	clearInterval(durationBarInterval);
+	if (audio.currentTime == audio.duration) {
+		nextTrack();
+	}
+}
+
+
 var music_content = document.createElement("div");
 music_content.classList.add("music-content");
 
-// -- M A I N  T I T L E
+var music_left_side = document.createElement("div");
+music_left_side.classList.add("music-left-side");
+
+var music_left_side_items = document.createElement("div");
+music_left_side_items.classList.add("music-left-side-items");
+
+var music_left_side_sections = document.createElement("div");
+music_left_side_sections.classList.add("music-left-side-section");
+
+music_left_side_sections_items = [
+	{
+		"src" : "home",
+		"label" : "Home"
+	},
+	{
+		"src" : "home",
+		"label" : "Search"
+	},
+	{
+		"src" : "home",
+		"label" : "Your Library"
+	},
+]
+
+music_left_side_sections_items.forEach(item => {
+	var music_left_side_sections_item = document.createElement("div");
+	music_left_side_sections_item.classList.add("music-left-side-sections-item");
+
+	var music_left_side_sections_item_icon_holder = document.createElement("div");
+	music_left_side_sections_item_icon_holder.classList.add("music-left-side-sections-item-icon-holder");
+	if (item.src == "home") { // if colored folder needed
+		var music_left_side_sections_item_icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		music_left_side_sections_item_icon.setAttributeNS(null, "viewBox", "0 0 196 196");
+		music_left_side_sections_item_icon.classList.add("music-left-side-sections-item-icon");
+		music_left_side_sections_item_icon.innerHTML = '<path d="m 54.253,194.747 c 7.35695,0 16.747,-3.95785 16.747,-10.878 v -44.783 c 0,0 -0.83176,-8.1372 10.416,-8.54422 11.247769,-0.40702 33.168,0 33.168,0 0,0 10.416,-1.1125 10.416,8.54422 v 44.46 c 0,8.40413 9.35218,11.201 16.747,11.201 H 178 c 0,0 16.74701,1.33209 16.747,-11.201 0,0 -5e-5,-76.24649 -5e-5,-95.816 C 194.74695,73.126372 183.2,65.088 183.2,65.088 L 116.78272,8.0140635 c 0,0 -15.55026,-15.2658229 -34.213176,0 L 12.795,65.088 c 0,0 -11.533,7.268738 -11.533,22.642 0,8.58803 0,96.48922 0,96.48922 0,0 -0.058669,10.54188 13.102057,10.52778 h 16.219975 z"></path>';
+	}
+	else {
+		var music_left_side_sections_item_icon = document.createElement("img");
+		music_left_side_sections_item_icon.classList.add("music-left-side-sections-item-icon");
+		music_left_side_sections_item_icon.src = item.src;
+	}
+
+	var music_left_side_sections_item_label = document.createElement("div");
+	music_left_side_sections_item_label.classList.add("music-left-side-sections-item-label");
+	music_left_side_sections_item_label.innerHTML = item.label;
+
+	music_left_side_sections_item_icon_holder.appendChild(music_left_side_sections_item_icon);
+
+	music_left_side_sections_item.appendChild(music_left_side_sections_item_icon_holder);
+	music_left_side_sections_item.appendChild(music_left_side_sections_item_label);
+
+	music_left_side_sections.appendChild(music_left_side_sections_item);
+});
+
+var music_left_side_playlists = document.createElement("div");
+music_left_side_playlists.classList.add("music-left-side-playlists");
+
+var music_left_side_main_playlists_items = [
+	{
+		"src" : "src/images/home.svg",
+		"label" : "Create Playlist"
+	},
+	{
+		"src" : "src/images/home.svg",
+		"label" : "Liked Songs"
+	},
+]
+
+var music_left_side_personal_playlists_items = [
+	{
+		"label" : "Guest's best"
+	},
+]
+
+var music_left_side_main_playlists = document.createElement("div");
+music_left_side_main_playlists.classList.add("music-left-side-main-playlists");
+
+music_left_side_main_playlists_items.forEach(item => {
+	var music_left_side_main_playlist = document.createElement("div");
+	music_left_side_main_playlist.classList.add("music-left-side-main-playlist");
+
+	var music_left_side_main_playlist_icon_holder = document.createElement("div");
+	music_left_side_main_playlist_icon_holder.classList.add("music-left-side-main-playlist-icon-holder");
+
+	var music_left_side_main_playlist_icon = document.createElement("img");
+	music_left_side_main_playlist_icon.classList.add("music-left-side-main-playlist-icon");
+	music_left_side_main_playlist_icon.src = item.src;
+
+	var music_left_side_main_playlist_label = document.createElement("div");
+	music_left_side_main_playlist_label.classList.add("music-left-side-main-playlist-label");
+	music_left_side_main_playlist_label.innerHTML = item.label;
+
+	music_left_side_main_playlist_icon_holder.appendChild(music_left_side_main_playlist_icon);
+
+	music_left_side_main_playlist.appendChild(music_left_side_main_playlist_icon_holder);
+	music_left_side_main_playlist.appendChild(music_left_side_main_playlist_label);
+
+	music_left_side_main_playlists.appendChild(music_left_side_main_playlist);
+});
+
+var music_left_side_personal_playlists = document.createElement("div");
+music_left_side_personal_playlists.classList.add("music-left-side-personal-playlists");
+
+music_left_side_personal_playlists_items.forEach(item => {
+	var music_left_side_personal_playlist = document.createElement("div");
+	music_left_side_personal_playlist.classList.add("music-left-side-personal-playlist");
+
+	var music_left_side_personal_playlist_label = document.createElement("div");
+	music_left_side_personal_playlist_label.classList.add("music-left-side-personal-playlist-label");
+	music_left_side_personal_playlist_label.innerHTML = item.label;
+
+	music_left_side_personal_playlist.appendChild(music_left_side_personal_playlist_label);
+
+	music_left_side_personal_playlists.appendChild(music_left_side_personal_playlist);
+});
+
+music_left_side_playlists.appendChild(music_left_side_main_playlists);
+music_left_side_playlists.appendChild(document.createElement("hr"));
+music_left_side_playlists.appendChild(music_left_side_personal_playlists);
+
+music_left_side_items.appendChild(music_left_side_sections);
+
+music_left_side.appendChild(music_left_side_sections);
+music_left_side.appendChild(music_left_side_playlists);
+
+var music_right_side = document.createElement("div");
+music_right_side.classList.add("music-right-side");
+
+var music_bottom_side = document.createElement("div");
+music_bottom_side.classList.add("music-bottom-side");
+
+var music_main = document.createElement("div");
+music_main.classList.add("music-main");
+
+music_main.appendChild(music_left_side);
+music_main.appendChild(music_right_side);
+
+music_content.appendChild(music_main);
+music_content.appendChild(music_bottom_side);
+
+
+/*
 var music_title = document.createElement("div");
 music_title.classList.add("music-title");
 music_title.innerHTML = "Music";
@@ -512,6 +731,12 @@ music_placeholder.innerHTML = "There is no content here for now...";
 music_main.appendChild(music_placeholder);
 
 music_content.appendChild(music_main);
+*/
+
+const musicListeners = content => {
+
+}
+
 // -- //
 
 // -- M E S S G E S -- //
@@ -1093,7 +1318,8 @@ var apps_list_g = [
 	{
 		"title" : "Music",
 		"src" : "src/images/demo/icons/Apps/Music.png",
-		"content" : music_content
+		"content" : music_content,
+		"listenerAdder" : musicListeners
 	},
 	{
 		"title" : "Messages",
@@ -1157,36 +1383,6 @@ weather_time.appendChild(weather_panel);
 
 // -- //
 
-var currentAudioIndex = 0;
-var audios = [
-	{
-		"title" : "AWOL",
-		"artist" : "Papa Khan",
-		"url" : "src/audio/Papa Khan - AWOL.mp3",
-		"src" : "src/images/Papa Khan - AWOL.jpg"
-	},
-	{
-		"title" : "The Search",
-		"artist" : "NF",
-		"url" : "src/audio/NF - The Search.mp3",
-		"src" : "src/images/NF - The Search.jpg"
-	},
-	{
-		"title" : "Rain",
-		"artist" : "Papa Khan",
-		"url" : "src/audio/Papa Khan - Rain.mp3",
-		"src" : "src/images/Papa Khan - Rain.jpg"
-	},
-	{
-		"title" : "Let You Down",
-		"artist" : "NF",
-		"url" : "src/audio/NF - Let You Down.mp3",
-		"src" : "src/images/NF - Let You Down.webp"
-	},
-]
-
-var audio = new Audio(audios[currentAudioIndex].url);
-
 var duration_bar_holder = document.createElement("div");
 duration_bar_holder.classList.add("duration-bar-holder");
 duration_bar_holder.addEventListener("click", e => {
@@ -1198,49 +1394,6 @@ var duration_bar = document.createElement("div");
 duration_bar.classList.add("duration-bar");
 
 var durationBarInterval;
-
-const reloadPlayer = () => {
-	audio.src = audios[currentAudioIndex].url;
-	audio.addEventListener("canplay", e => {
-		audio.play();
-	});
-	player_title.innerHTML = audios[currentAudioIndex].title;
-	plyer_artist.innerHTML = audios[currentAudioIndex].artist;
-	player_icon_img.src = audios[currentAudioIndex].src;
-	duration_bar.style.width = `0%`;
-	player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
-
-	audio.addEventListener("play", e => {
-		playAudio();
-	});
-
-	audio.addEventListener("pause", e => {
-		pauseAudio();
-	});
-}
-
-const nextTrack = () => {
-	currentAudioIndex += parseInt((currentAudioIndex >= audios.length-1) && `${-1*audios.length+1}` || "1");
-	reloadPlayer();
-}
-
-const previousTrack = () => {
-	currentAudioIndex -= parseInt((currentAudioIndex <= 0) && `${-1*audios.length+1}` || "1");
-	reloadPlayer();
-}
-
-const playAudio = () => {
-	durationBarInterval = setInterval(() => {
-		duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
-	}, 500);
-}
-
-const pauseAudio = () => {
-	clearInterval(durationBarInterval);
-	if (audio.currentTime == audio.duration) {
-		nextTrack();
-	}
-}
 
 audio.addEventListener("play", e => {
 	playAudio();
