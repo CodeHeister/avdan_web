@@ -943,7 +943,7 @@ body {
 }
 
 .music-bottom-left-side {
-	margin-right: auto;
+	width: 25%;
 }
 
 .music-bottom-side-icon-holder {
@@ -965,7 +965,40 @@ body {
 }
 
 .music-bottom-side-player {
-	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin-right: auto;
+}
+
+.music-bottom-side-player-control {
+    display: flex;
+    flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+    height: 90%;
+}
+
+.music-bottom-side-player-control svg {
+	height: 50%;
+	cursor: pointer;
+}
+
+.music-bottom-side-duration-bar-holder {
+	width: 75%;
+	height: 4px;
+    background-color: var(--light-bg-hl);
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.music-bottom-side-duration-bar {
+	width: 0%;
+	height: 4px;
+    background-color: #fff;
+	border-radius: 0.25rem;
+	pointer-events: none;
 }
 
 .music-bottom-side-volume-bar-holder {
