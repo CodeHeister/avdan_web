@@ -495,6 +495,7 @@ settings_content.appendChild(settings_main);
 // -- M U S I C -- //
 
 var currentAudioIndex = 0;
+var durationBarInterval;
 var audios = [
 	{
 		"title" : "AWOL",
@@ -571,6 +572,9 @@ const previousTrack = () => {
 const playAudio = () => {
 	durationBarInterval = setInterval(() => {
 		duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+		document.querySelectorAll(".music-bottom-side-duration-bar").forEach(item => {
+			item.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+		});
 	}, 500);
 }
 
@@ -581,6 +585,30 @@ const pauseAudio = () => {
 	}
 }
 
+const changeCurrentAudioTime = () => {
+	audio.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*audio.duration;
+	duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+	document.querySelectorAll(".music-bottom-side-volume-bar").forEach(item => {
+		item.style.height = `${audio.volume*100}%`;
+	});
+}
+
+const playPauseAudio = () => {
+	if (audio.paused) {
+		audio.play();
+		player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+		document.querySelectorAll(".music-bottom-side-pause").forEach(item => {
+			item.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+		});
+	}
+	else {
+		audio.pause();
+		player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+		document.querySelectorAll(".music-bottom-side-pause").forEach(item => {
+			item.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+		});
+	}
+}
 
 var music_content = document.createElement("div");
 music_content.classList.add("music-content");
@@ -725,24 +753,6 @@ music_main.appendChild(music_right_side);
 music_content.appendChild(music_main);
 music_content.appendChild(music_bottom_side);
 
-
-/*
-var music_title = document.createElement("div");
-music_title.classList.add("music-title");
-music_title.innerHTML = "Music";
-music_content.appendChild(music_title);
-
-var music_main = document.createElement("div");
-music_main.classList.add("music-main");
-
-var music_placeholder = document.createElement("div");
-music_placeholder.classList.add("music-placeholder");
-music_placeholder.innerHTML = "There is no content here for now...";
-music_main.appendChild(music_placeholder);
-
-music_content.appendChild(music_main);
-*/
-
 const musicListeners = content => {
 	var bottom_bar = content.querySelector(".music-bottom-side");
 	
@@ -779,6 +789,55 @@ const musicListeners = content => {
 
 	var player = document.createElement("div");
 	player.classList.add("music-bottom-side-player");
+
+	var player_control = document.createElement("div");
+	player_control.classList.add("music-bottom-side-player-control");
+
+	var player_prev = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	player_prev.classList.add("music-bottom-side-prev");
+	player_prev.setAttributeNS(null, "viewBox", "0 0 24 24");
+	player_prev.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 3l-12 7.5c0 0-4 1-3-3zm12-16c 0 0-2 0-1 2.268l5.888 3.732c0 0 1 1 0 2l-3.888 2.732c0 0-4.5 2.5-1 3.268l11-6c0 0 1-1 0-2 l-11-6z"></path>';
+	player_prev.style.transform = "rotate(180deg)";
+	player_prev.style.fill = "#ffffff";
+	player_prev.addEventListener("click", e => {
+		previousTrack();
+	});
+
+	var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	player_pause.classList.add("music-bottom-side-pause");
+	player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
+	player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
+	player_pause.style.fill = "#ffffff";
+	player_pause.addEventListener("click", e => {
+		playPauseAudio();
+	});
+
+	var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	player_next.classList.add("music-bottom-side-next");
+	player_next.setAttributeNS(null, "viewBox", "0 0 24 24");
+	player_next.innerHTML = '<path d="M0 21v-15c 0 0-0.5-4 3-3l12 7.5c0 0 1.5 1.5 0 3l-12 7.5c0 0-4 1-3-3zm12-16c 0 0-2 0-1 2.268l5.888 3.732c0 0 1 1 0 2l-3.888 2.732c0 0-4.5 2.5-1 3.268l11-6c0 0 1-1 0-2 l-11-6z"></path>';
+	player_next.style.fill = "#ffffff";
+	player_next.addEventListener("click", e => {
+		nextTrack();
+	});
+
+	var duration_bar_holder = document.createElement("div");
+	duration_bar_holder.classList.add("music-bottom-side-duration-bar-holder");
+	duration_bar_holder.addEventListener("click", e => {
+		changeCurrentAudioTime();
+	});
+
+	var duration_bar = document.createElement("div");
+	duration_bar.classList.add("music-bottom-side-duration-bar");
+
+	player_control.appendChild(player_prev);
+	player_control.appendChild(player_pause);
+	player_control.appendChild(player_next);
+
+	duration_bar_holder.appendChild(duration_bar);
+
+	player.appendChild(player_control);
+	player.appendChild(duration_bar_holder);
 
 	bottom_bar.appendChild(player);
 
@@ -1452,14 +1511,11 @@ weather_time.appendChild(weather_panel);
 var duration_bar_holder = document.createElement("div");
 duration_bar_holder.classList.add("duration-bar-holder");
 duration_bar_holder.addEventListener("click", e => {
-	audio.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*audio.duration;
-	duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
+	changeCurrentAudioTime();
 });
 
 var duration_bar = document.createElement("div");
 duration_bar.classList.add("duration-bar");
-
-var durationBarInterval;
 
 audio.addEventListener("play", e => {
 	playAudio();
@@ -1514,14 +1570,7 @@ player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
 player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
 player_pause.style.fill = "#ffffff";
 player_pause.addEventListener("click", e => {
-	if (audio.paused) {
-		audio.play();
-		player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
-	}
-	else {
-		audio.pause();
-		player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
-	}
+	playPauseAudio();
 });
 
 var player_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
