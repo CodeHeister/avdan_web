@@ -549,6 +549,20 @@ const reloadPlayer = () => {
 	});
 	duration_bar.style.width = `0%`;
 	player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+	document.querySelectorAll(".music-bottom-side-pause").forEach(item => {
+		item.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+	});
+
+	document.querySelectorAll(".music-right-side").forEach(item => {
+		item.querySelectorAll(".music-right-side-music-list-line").forEach(line => {
+			if (line.item_id == currentAudioIndex) {
+				line.style.backgroundColor = "var(--light-bg)";
+			}
+			else {
+				line.style.backgroundColor = null;
+			}
+		});
+	});
 
 	audio.addEventListener("play", e => {
 		playAudio();
@@ -585,11 +599,11 @@ const pauseAudio = () => {
 	}
 }
 
-const changeCurrentAudioTime = () => {
+const changeCurrentAudioTime = (e) => {
 	audio.currentTime = (e.offsetX/e.currentTarget.offsetWidth)*audio.duration;
 	duration_bar.style.width = `${(audio.currentTime/audio.duration)*100}%`;
-	document.querySelectorAll(".music-bottom-side-volume-bar").forEach(item => {
-		item.style.height = `${audio.volume*100}%`;
+	document.querySelectorAll(".music-bottom-side-duration-bar").forEach(item => {
+		item.style.width = `${(audio.currentTime/audio.duration)*100}%`;
 	});
 }
 
@@ -603,9 +617,9 @@ const playPauseAudio = () => {
 	}
 	else {
 		audio.pause();
-		player_pause.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+		player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
 		document.querySelectorAll(".music-bottom-side-pause").forEach(item => {
-			item.innerHTML = '<path d="M3 22v-20l18 10-18 10z"></path>';
+			item.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
 		});
 	}
 }
@@ -754,6 +768,79 @@ music_content.appendChild(music_main);
 music_content.appendChild(music_bottom_side);
 
 const musicListeners = content => {
+	var music_list_holder = content.querySelector(".music-right-side");
+
+	var music_list = document.createElement("div");
+	music_list.classList.add("music-right-side-music-list");
+
+	var music_list_header = document.createElement("div");
+	music_list_header.classList.add("music-right-side-music-list-header");
+	
+	var music_list_header_ids = document.createElement("div");
+	music_list_header_ids.style.textAlign = "center";
+	music_list_header_ids.innerHTML = "#";
+
+	var music_list_header_titles = document.createElement("div");
+	music_list_header_titles.innerHTML = "TITLE";
+
+	var music_list_header_durations = document.createElement("div");
+	music_list_header_durations.style.textAlign = "center";
+	music_list_header_durations.innerHTML = "DURATION";
+
+	var music_list_split = document.createElement("hr");
+
+	music_list_header.appendChild(music_list_header_ids);
+	music_list_header.appendChild(music_list_header_titles);
+	music_list_header.appendChild(music_list_header_durations);
+
+	music_list.appendChild(music_list_header);
+	music_list.appendChild(music_list_split);
+
+	const addDuration = (i) => {
+		var item = music_list_holder.querySelectorAll(".music-right-side-music-list-line")[i];
+		var duration = item.querySelector(".music-right-side-music-list-line-duration");
+		duration.innerHTML = `${(item.tmp_audio.duration - item.tmp_audio.duration%60)/60}:${(parseInt(item.tmp_audio.duration%60) < 10) && '0'+parseInt(item.tmp_audio.duration%60) || parseInt(item.tmp_audio.duration%60)}`;
+		item.tmp_audio = null;
+	}
+
+	var i = 0;
+	while (i < audios.length) {
+		var music_list_line = document.createElement("div");
+		music_list_line.classList.add("music-right-side-music-list-line");
+		music_list_line.item_id = audios[i].id;
+		music_list_line.style.backgroundColor = (i == currentAudioIndex) && "var(--light-bg)";
+		music_list_line.addEventListener("click", e => {
+			currentAudioIndex = e.currentTarget.item_id;
+			reloadPlayer();
+		});
+
+		var music_list_line_id = document.createElement("div");
+		music_list_line_id.classList.add("music-right-side-music-list-line-id");
+		music_list_line_id.innerHTML = audios[i].id + 1;
+
+		var music_list_line_title = document.createElement("div");
+		music_list_line_title.classList.add("music-right-side-music-list-line-title");
+		music_list_line_title.innerHTML = audios[i].title;
+
+		var music_list_line_duration = document.createElement("div");
+		music_list_line_duration.classList.add("music-right-side-music-list-line-duration");
+
+		music_list_line.tmp_audio = new Audio(audios[i].url);
+		music_list_line.tmp_audio.item_id = audios[i].id;
+		music_list_line.tmp_audio.addEventListener("loadedmetadata", e => {
+			addDuration(e.currentTarget.item_id);
+		});
+
+		music_list_line.appendChild(music_list_line_id);
+		music_list_line.appendChild(music_list_line_title);
+		music_list_line.appendChild(music_list_line_duration);
+
+		music_list.appendChild(music_list_line);
+		i += 1;
+	}
+
+	music_list_holder.appendChild(music_list);
+
 	var bottom_bar = content.querySelector(".music-bottom-side");
 	
 	var left_bottom = document.createElement("div");
@@ -824,7 +911,7 @@ const musicListeners = content => {
 	var duration_bar_holder = document.createElement("div");
 	duration_bar_holder.classList.add("music-bottom-side-duration-bar-holder");
 	duration_bar_holder.addEventListener("click", e => {
-		changeCurrentAudioTime();
+		changeCurrentAudioTime(e);
 	});
 
 	var duration_bar = document.createElement("div");
@@ -1398,7 +1485,6 @@ music_content.classList.add("noselect");
 messages_content.classList.add("noselect");
 // -- //
 
-
 // -- A P P B A R  C O N F I G S
 var apps_list_g = [
 	{
@@ -1511,7 +1597,7 @@ weather_time.appendChild(weather_panel);
 var duration_bar_holder = document.createElement("div");
 duration_bar_holder.classList.add("duration-bar-holder");
 duration_bar_holder.addEventListener("click", e => {
-	changeCurrentAudioTime();
+	changeCurrentAudioTime(e);
 });
 
 var duration_bar = document.createElement("div");
