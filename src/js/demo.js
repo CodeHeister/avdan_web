@@ -810,8 +810,10 @@ const musicListeners = content => {
 		music_list_line.item_id = audios[i].id;
 		music_list_line.style.backgroundColor = (i == currentAudioIndex) && "var(--light-bg)";
 		music_list_line.addEventListener("click", e => {
-			currentAudioIndex = e.currentTarget.item_id;
-			reloadPlayer();
+			if (currentAudioIndex != e.currentTarget.item_id || audio.paused) {
+				currentAudioIndex = e.currentTarget.item_id;
+				reloadPlayer();
+			}
 		});
 
 		var music_list_line_id = document.createElement("div");
@@ -893,7 +895,12 @@ const musicListeners = content => {
 	var player_pause = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 	player_pause.classList.add("music-bottom-side-pause");
 	player_pause.setAttributeNS(null, "viewBox", "0 0 24 24");
-	player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
+	if (audio.paused) {
+		player_pause.innerHTML = '<path d="M3 22v-17c0 0-0.5-4 3-3l15 8.5c0 0 1.5 1.5 0 3l-15 8.5c 0 0-4 1-3-3z"></path>';
+	}
+	else {
+		player_pause.innerHTML = '<path d="M10 24h-3c 0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18c 0 0 0 3-3 3zm10 0h-3c0 0-3 0-3-3v-18c0 0 0-3 3-3c0 0 3 0 3 3v18 c 0 0 0 3-3 3z"></path>';
+	}
 	player_pause.style.fill = "#ffffff";
 	player_pause.addEventListener("click", e => {
 		playPauseAudio();
@@ -1694,19 +1701,19 @@ scrollBarGenerate(scroll_list_g);
 // -- //
 
 var app_bar = document.querySelector(".app-bar");
-app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+app_bar.addEventListener("mousedown", e => {dragAdd(e, ".app-bar", ".app-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".app-bar")});
 
 var menu_bar = document.querySelector(".menu-bar");
-menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+menu_bar.addEventListener("mousedown", e => {dragAdd(e, ".menu-bar", ".menu-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".menu-bar")});
 
 var scroll_bar = document.querySelector(".scroll-bar");
-scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+scroll_bar.addEventListener("mousedown", e => {dragAdd(e, ".scroll-bar", ".scroll-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".scroll-bar")});
 
 var info_bar = document.querySelector(".info-bar");
-info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, undefined, undefined, insertBar)});
+info_bar.addEventListener("mousedown", e => {dragAdd(e, ".info-bar", ".info-bar", barDropTransition, undefined, swapBar, undefined, insertBar)});
 window.addEventListener("mouseup", e => {leave(e, ".info-bar")});
 
 // -- S E T T I N G S -- //

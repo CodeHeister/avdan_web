@@ -893,11 +893,11 @@ body {
 		stroke-dasharray: 60rem;
 		stroke-dashoffset: 0rem;
 	}
-	25% {
+	33% {
 		stroke-dasharray: 60rem;
 		stroke-dashoffset: -60rem;
 	}
-	75% {
+	67% {
 		stroke-dasharray: 60rem;
 		stroke-dashoffset: 0rem;
 	}
@@ -1031,6 +1031,15 @@ body {
 .music-bottom-side-player-control svg {
 	height: 50%;
 	cursor: pointer;
+	transition: transform 0.1s ease-in-out;
+}
+
+.music-bottom-side-pause:hover, .music-bottom-side-next:hover {
+	transform: scale(1.1);
+}
+
+.music-bottom-side-prev:hover {
+	transform: rotate(180deg) scale(1.1) !important;
 }
 
 .music-bottom-side-duration-bar-holder {
