@@ -79,11 +79,12 @@
 }
 
 .info {
-	background: var(--shadow-color);
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 	width: 100%;
 	gap: 5rem;
+	opacity: 0;
+	transition: opacity 0.75s ease-in-out;
 	padding: 3rem 2rem 3rem 2rem;
 	box-sizing: border-box;
 }

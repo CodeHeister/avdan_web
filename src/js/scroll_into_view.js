@@ -11,9 +11,17 @@ function onScrollIntoView(target, k, into, out) { // on scroll into view event
 	}
 }
 
+const appear = target => {
+	target.style.opacity = '1';
+}
+
+const disappear = target => {
+	target.style.opacity = null;
+}
+
 function scroll_check() { 
-	document.querySelectorAll(".text").forEach(item => {
-		onScrollIntoView(item, 1, move, moveBack);
+	document.querySelectorAll(".info").forEach(item => {
+		onScrollIntoView(item, 0.5, appear, disappear);
 	});
 }
 
