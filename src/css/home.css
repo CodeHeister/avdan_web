@@ -113,6 +113,7 @@
 }
 
 .slide-labels {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -122,12 +123,13 @@
 }
 
 .slide-label {
+	position: absolute;
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 	width: 85%;
 	opacity: 0;
-	transition: opacity var(--swap-speed) ease-in-out;
+	transition: opacity var(--swap-speed) ease-in-out, transform var(--swap-speed) ease-in-out;
 }
 
 .slide-label-title {
@@ -141,6 +143,7 @@
 }
 
 .slide-images {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -150,9 +153,10 @@
 }
 
 .slide-image {
+	position: absolute;
 	width: 85%;
 	opacity: 0;
-	transition: opacity var(--swap-speed) ease-in-out;
+	transition: opacity var(--swap-speed) ease-in-out, transform var(--swap-speed) ease-in-out;
 }
 
 .slide-image img {

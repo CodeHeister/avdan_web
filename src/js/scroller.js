@@ -8,9 +8,14 @@ document.querySelectorAll(".slide-point").forEach(item => {
 		first = false;
 	}
 	item.addEventListener("click", e => {
-		document.querySelectorAll(".slide-image, .slide-label").forEach(item => {
+		document.querySelectorAll(".slide-image").forEach(item => {
 			item.style.opacity = null;
-			item.style.display = "none";
+			item.style.transform = "translateX(150%)";
+		});
+
+		document.querySelectorAll(".slide-label").forEach(item => {
+			item.style.opacity = null;
+			item.style.transform = "translateX(-150%)";
 		});
 
 		document.querySelectorAll(".slide-point").forEach(item => {
@@ -25,11 +30,11 @@ document.querySelectorAll(".slide-point").forEach(item => {
 		
 		var item = document.querySelector(".slide-images").children[slider_index];
 		item.style.opacity = 1;
-		item.style.display = null;
+		item.style.transform = null;
 
 		var item = document.querySelector(".slide-labels").children[slider_index];
 		item.style.opacity = 1;
-		item.style.display = null;
+		item.style.transform = null;
 
 		e.currentTarget.style.backgroundColor = "var(--icon-fill)";
 	});
@@ -42,7 +47,7 @@ document.querySelectorAll(".slide-image").forEach(item => {
 		first = false;
 	}
 	else {
-		item.style.display = "none";
+		item.style.transform = "translateX(150%)";
 	}
 });
 
@@ -53,6 +58,6 @@ document.querySelectorAll(".slide-label").forEach(item => {
 		first = false;
 	}
 	else {
-		item.style.display = "none";
+		item.style.transform = "translateX(-150%)";
 	}
 });
