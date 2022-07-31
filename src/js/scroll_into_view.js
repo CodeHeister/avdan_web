@@ -20,13 +20,23 @@ const disappear = target => {
 }
 
 function scroll_check() { 
-	document.querySelectorAll(".info").forEach(item => {
+	document.querySelectorAll(".info, .slide-section").forEach(item => {
 		onScrollIntoView(item, 0.5, appear, disappear);
 	});
 }
 
-scroll_check();
-window.addEventListener("scroll", function(){
+if (document.querySelector(".intro")) {
+	setTimeout(() => {
+		scroll_check();
+		window.addEventListener("scroll", function(){
+			scroll_check();
+		});
+	}, 5700);
+}
+else {
 	scroll_check();
-});
+	window.addEventListener("scroll", function(){
+		scroll_check();
+	});
+}
 

@@ -50,6 +50,12 @@ const enableCursor = e => {
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
 	});
 
+	document.querySelectorAll(".slide-point").forEach(item => { 
+		item.addEventListener("mouseover", e => {setCursor(e, 1.1, ["toggle-dragged"], undefined)});
+		item.addEventListener("mousemove", e => {coordinateCursor(e, 5, 0, undefined, undefined, ["scale(1.05)"])});
+		item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
+	});
+
 	document.querySelectorAll(".join-discord a, .view-more a, .footer-text span, footer p a").forEach(item => { 
 	item.addEventListener("mouseover", e => {setCursor(e, 1, ["link-dragged"], ["link-active"])});
 	item.addEventListener("mousemove", e => {coordinateCursor(e)});
