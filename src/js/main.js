@@ -51,8 +51,8 @@ const enableCursor = e => {
 	});
 
 	document.querySelectorAll(".slide-point").forEach(item => { 
-		item.addEventListener("mouseover", e => {setCursor(e, 1.1, ["toggle-dragged"], undefined)});
-		item.addEventListener("mousemove", e => {coordinateCursor(e, 5, 0, undefined, undefined, ["scale(1.05)"])});
+		item.addEventListener("mouseover", e => {setCursor(e, 1, ["toggle-dragged"], undefined)});
+		item.addEventListener("mousemove", e => {coordinateCursor(e, 0, 0, undefined, undefined, ["scale(1)"])});
 		item.addEventListener("mouseout", e => {unsetCursor(e, ["toggle-dragged"])});
 	});
 

@@ -8,6 +8,10 @@ document.querySelectorAll(".slide-point").forEach(item => {
 		first = false;
 	}
 	item.addEventListener("click", e => {
+		clearInterval(slideTimeout);
+
+		slideTimeout = setInterval(moveSlide, 5000);
+
 		document.querySelectorAll(".slide-image").forEach(item => {
 			item.style.opacity = null;
 			item.style.transform = "translateX(150%)";
@@ -61,3 +65,34 @@ document.querySelectorAll(".slide-label").forEach(item => {
 		item.style.transform = "translateX(-150%)";
 	}
 });
+
+const moveSlide = () => {
+	var len = document.querySelectorAll(".slide-point");
+	slider_index += parseInt((slider_index >= len.length-1) && `${-1*len.length+1}` || "1");
+
+	document.querySelectorAll(".slide-image").forEach(item => {
+		item.style.opacity = null;
+		item.style.transform = "translateX(150%)";
+	});
+
+	document.querySelectorAll(".slide-label").forEach(item => {
+		item.style.opacity = null;
+		item.style.transform = "translateX(-150%)";
+	});
+
+	document.querySelectorAll(".slide-point").forEach(item => {
+		item.style.backgroundColor = null;
+	});
+
+	var item = document.querySelector(".slide-images").children[slider_index];
+	item.style.opacity = 1;
+	item.style.transform = null;
+
+	var item = document.querySelector(".slide-labels").children[slider_index];
+	item.style.opacity = 1;
+	item.style.transform = null;
+
+	document.querySelector(".slide-control").children[slider_index].style.backgroundColor = "var(--icon-fill)";
+}
+
+slideTimeout = setInterval(moveSlide, 5000);
