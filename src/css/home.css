@@ -110,6 +110,7 @@
 	max-height: 100%;
 	padding: 2rem;
 	box-sizing: border-box;
+	overflow: hidden;
 }
 
 .slide-labels {
@@ -155,7 +156,7 @@
 .slide-image {
 	position: absolute;
 	display: flex;
-	align-items: center
+	align-items: center;
 	width: 85%;
 	height: 100%;
 	opacity: 0;
