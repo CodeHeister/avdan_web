@@ -157,6 +157,7 @@
 	position: absolute;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	width: 85%;
 	height: 100%;
 	opacity: 0;
@@ -164,7 +165,7 @@
 }
 
 .slide-image img {
-	width: 100%;
+	max-width: 100%;
 	max-height: 100%;
 	border-radius: 0.25rem;
 }
@@ -277,6 +278,10 @@
 	.info {
 		grid-template-columns: 1fr !important;
 		margin: initial !important;
+	}
+
+	.slide-holder {
+		grid-template-columns: 1fr !important;
 	}
 }
 /* ----------------- */
