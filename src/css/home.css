@@ -105,6 +105,7 @@
 .slide-holder {
 	display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 1.5rem 0;
 	width: 100%;
 	min-height: 50vh;
 	max-height: 100%;
