@@ -10,7 +10,7 @@
  */
 
 .frame {
-	height: 100vh;
+	height: 75vh;
 	width: 100%;
 	padding: 0 2rem 0 2rem;
 	box-sizing: border-box;
@@ -70,7 +70,7 @@
 
 .introduction .demo-button, .introduction .download-button {
 	padding: 0.5rem 2rem 0.5rem 2rem;
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 	font-size: calc(0.65rem + 0.3vw);
 }
 
@@ -168,7 +168,7 @@
 .slide-image img {
 	max-width: 100%;
 	max-height: 100%;
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 }
 
 .slide-control {
@@ -180,7 +180,7 @@
 
 .slide-point {
 	background-color: var(--card-bg);
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 	height: 8px;
 	transition: background-color var(--swap-speed) ease-in-out, transform var(--swap-speed) ease-in-out;
 }
@@ -208,7 +208,7 @@
 .discord-list {
 	display: flex;
 	align-self: center;
-	border-radius: 1rem;
+	border-radius: 0.75rem;
 	overflow: hidden;
 }
 
@@ -220,7 +220,7 @@
 	gap: calc(1rem + 1vw);;
 	padding: 2rem;
 	background-color: var(--card-bg);
-	border-radius: 1rem;
+	border-radius: 0.75rem;
 	transition: background-color var(--swap-speed) ease-in-out;
 }
 
@@ -247,7 +247,7 @@
 	padding: calc(1rem + 1vh);
 	background-color: var(--card-bg);
 	transition: transform 0.1s ease-in-out;
-	border-radius: 1rem;
+	border-radius: 0.75rem;
 	box-shadow: var(--card-shadow) 0px 4px 12px;
 	transition: background-color var(--swap-speed) ease-in-out, transform var(--swap-speed) ease-in-out;
 }
@@ -266,7 +266,7 @@
 
 .github-list hr {
 	width: 90%;
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 	background-color: var(--font-primary);
 	transition: backdround-color var(--swap-speed) ease-in-out;
 }
@@ -283,6 +283,10 @@
 
 	.slide-holder {
 		grid-template-columns: 1fr !important;
+	}
+	
+	.slide-section {
+		height: fit-content;
 	}
 }
 /* ----------------- */

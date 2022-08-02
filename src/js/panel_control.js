@@ -9,7 +9,7 @@ const panelModify = e => {
 		document.querySelector(".map").style.background = "none";
 		document.querySelector(".map").style.margin = "auto";
 		document.querySelector(".map").style.margin = "initial";
-		document.querySelector(".mobile-menu").style.borderRadius = "0 0 2rem 0";
+		document.querySelector(".mobile-menu").style.borderRadius = "0 0 0.75rem 0";
 	}
 	else {
 		document.querySelectorAll(".toggle-lang, .toggle-theme, .menu-download, .github-shortcut").forEach(item => {item.style.display = null;});

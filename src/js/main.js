@@ -27,9 +27,9 @@ const enableCursor = e => {
 	});
 
 	document.querySelectorAll(".icon").forEach(item => { 
-		item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["default-dragged"], undefined, true)});
+		item.addEventListener("mouseover", e => {setCursor(e, 0.9, ["icon-dragged"], undefined, true)});
 		item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.2)"], true)});
-		item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
+		item.addEventListener("mouseout", e => {unsetCursor(e, ["icon-dragged"])});
 	});
 
 	document.querySelectorAll(".lang-close").forEach(item => { 
