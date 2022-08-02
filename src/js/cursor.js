@@ -89,11 +89,22 @@ const moveCursorScroll = e => { // scroll sync
 const setCursor = (e, sizeRate, additionalCursorClasses, additionalTargetClasses, addScrollOffset, f) => { // get target position
 
 	if(!cursorIcon.classList.contains('cursor-focus')) { // if not mousedown
-
 		var addScrollOffset = addScrollOffset || false;
 
 		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // calc X
 		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // calc Y
+
+		var itemParent = e.currentTarget.parentElement;
+
+		while (itemParent != document.body) {
+			var styles = getComputedStyle(itemParent);
+			if (styles["backdropFilter"] != "none") {
+				mouseX += itemParent.offsetLeft;
+				mouseY += itemParent.offsetTop;
+			}
+			itemParent = itemParent.parentElement;
+		}
+		
 
 		cursorIcon.classList.add("dragged"); // disables cursor following
 
@@ -133,6 +144,17 @@ const coordinateCursor = (e, coordinationPercent, targetMovementRate, centrify, 
 
 		mouseX = e.currentTarget.offsetLeft+e.currentTarget.offsetWidth/2; // may be commented to optimize (only if no target resizing)
 		mouseY = e.currentTarget.offsetTop+e.currentTarget.offsetHeight/2; // may be commented to optimize (only if no target resizing)
+
+		var itemParent = e.currentTarget.parentElement;
+
+		while (itemParent != document.body) {
+			var styles = getComputedStyle(itemParent);
+			if (styles["backdropFilter"] != "none") {
+				mouseX += itemParent.offsetLeft;
+				mouseY += itemParent.offsetTop;
+			}
+			itemParent = itemParent.parentElement;
+		}
 
 		var coordinateX = coordinationPercent && parseInt((e.offsetX/e.currentTarget.offsetWidth-0.5)*coordinationPercent) || 0;
 		var coordinateY = coordinationPercent && parseInt((e.offsetY/e.currentTarget.offsetHeight-0.5)*coordinationPercent) || 0;

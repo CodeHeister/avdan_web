@@ -39,9 +39,9 @@ const enableCursor = e => {
 	});
 
 	document.querySelectorAll(".footer-icon a").forEach(item => { 
-		item.addEventListener("mouseover", e => {setCursor(e, 1.2, ["default-dragged"], undefined)});
-		item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined)});
-		item.addEventListener("mouseout", e => {unsetCursor(e, ["default-dragged"])});
+		item.addEventListener("mouseover", e => {setCursor(e, 1.25, ["icon-dragged"], undefined)});
+		item.addEventListener("mousemove", e => {coordinateCursor(e, 20, 0.1, undefined, undefined, ["scale(1.05)"])});
+		item.addEventListener("mouseout", e => {unsetCursor(e, ["icon-dragged"])});
 	});
 
 	document.querySelectorAll(".toggle-theme, .toggle-lang, .menu-download, .github-shortcut").forEach(item => { 
@@ -81,7 +81,7 @@ const enableCursor = e => {
 			text.style.fontSize = "1rem";
 			text.style.textAlign = "center";
 			text.style.color = "black";
-			e.currentTarget.style.transform = "scale(1.2)";
+			e.currentTarget.style.transform = "scale(1.1)";
 			cursorIcon.appendChild(text);
 		});
 		item.addEventListener("mouseout", e => {
