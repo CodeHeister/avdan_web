@@ -289,5 +289,9 @@
 	.slide-section {
 		height: fit-content;
 	}
+
+	.discord-list {
+		display: none !important;
+	}
 }
 /* ----------------- */
