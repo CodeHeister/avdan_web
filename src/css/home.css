@@ -63,19 +63,27 @@
 	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, transform 0.15s ease;
 }
 
+.introduction .demo-button:hover {
+	color: var(--demo-bg);
+	background-color: var(--demo-color);
+}
+
 .introduction .download-button {
 	color: white;
 	background-color: #0070f3;
+	transition: color var(--swap-speed) ease-in-out, background-color var(--swap-speed) ease-in-out, transform 0.15s ease;
+}
+
+.introduction .download-button:hover {
+	color: #0070f3;
+	background-color: white;
+	border: 1px solid #0070f3;
 }
 
 .introduction .demo-button, .introduction .download-button {
 	padding: 0.5rem 2rem 0.5rem 2rem;
 	border-radius: 0.5rem;
 	font-size: calc(0.65rem + 0.3vw);
-}
-
-.introduction .download-button {
-	transition: transform 0.15s ease;
 }
 
 .slide-section {

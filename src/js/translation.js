@@ -147,7 +147,7 @@ var langs = [
 	}
 ]
 
-var lang = getCookie("lang");
+var lang = Cookie.get("lang");
 
 if (lang == "") {
 	var drop = false;
