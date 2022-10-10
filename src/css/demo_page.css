@@ -1,0 +1,42 @@
+.frame {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	width: 100%;
+	min-height: 100vh;
+}
+
+.frame-title {
+	font-size: calc(1.5rem + 2vw);
+	font-weight: 900;
+}
+
+.frame-description {
+	font-size: calc(0.9rem + 0.5vw);
+	font-weight: 700;
+	text-align: center;
+    margin: 0 2rem 0 2rem;
+}
+
+.frame-description a {
+	color: var(--link-color);
+}
+
+.frame-demo {
+	border-radius: 0.5rem;
+	width: 90%;
+	height: 70vh;
+	box-shadow: var(--card-shadow) 0px 4px 12px;
+	box-sizing: border-box;
+	cursor: default !important;
+}
+
+.demo-body {
+	border-radius: 0.5rem;
+}
+
+.demo-body:fullscreen {
+	border-radius: 0px !important;
+}

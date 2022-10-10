@@ -1,26 +1,27 @@
 :root {
 	--font-primary: #fff;
 	--font-secondary: #a0a0a0;
-	--scrollbar-track-bg: #101010;
-	--scrollbar-thumb-bg: #333;
+	--scrollbar-track-bg: rgba(14,15,20,1);
+	--scrollbar-thumb-bg: #b6b6b6;
 	--icon-fill: white;
 	--swap-speed: 0.2s;
 	--toggle-theme-color: #ffc107;
-	--map-bg: 48,48,48;
-	--menu-bg: rgba(48,48,48,0);
-	--menu-bg-scrolled: rgba(48,48,48,0.8);
+	--map-bg: 46,47,54;
+	--menu-bg: rgba(46,47,54,0);
+	--menu-bg-scrolled: rgba(46,47,54,0.8);
 	--link-color: #3291ff;
 	--shadow-color: black;
 	--title-shadow-color: black;
-	--card-bg: rgba(48,48,48,0.5);
+	--card-bg: rgba(46,47,54,0.5);
 	--card-black: black;
 	--card-shadow: rgba(0,0,0,0.1);
-	--footer-bg: rgba(48,48,48,1); 
+	--footer-bg: rgba(46,47,54,1); 
 	--lines-color: #5E5E5E;
 	--mobile-panel-speed: 0.3s;
-	--footer-card-bg: #444444;
+	--footer-card-bg: #32393d;
 	--start-color: #9a9a9a;
 	--finish-color: #fbfbfb;
+	--body-bg: rgba(14,15,20,1);
 }
 
 @font-face {
@@ -42,7 +43,7 @@ body, html {
 }
 
 body {
-	background: var(--shadow-color);
+	background-color: var(--body-bg);
 	overflow-x: hidden;
 }
 

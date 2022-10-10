@@ -19,12 +19,6 @@ const disappear = target => {
 	target.style.opacity = null;
 }
 
-function scroll_check() { 
-	document.querySelectorAll(".info, .slide-section").forEach(item => {
-		onScrollIntoView(item, 0.5, appear, disappear);
-	});
-}
-
 if (document.querySelector(".intro")) {
 	setTimeout(() => {
 		scroll_check();
@@ -39,4 +33,3 @@ else {
 		scroll_check();
 	});
 }
-
